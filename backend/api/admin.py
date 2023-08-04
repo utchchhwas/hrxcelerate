@@ -5,6 +5,7 @@ from .models import (
     Company,
     Employee,
     Department,
+    JobRole,
 )
 
 
@@ -56,3 +57,5 @@ admin.site.register(Company)
 admin.site.register(Employee)
 
 admin.site.register(Department)
+
+admin.site.register(JobRole)
