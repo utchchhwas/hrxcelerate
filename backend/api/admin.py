@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import MyUser
 from .models import Company
+from .models import Employee
 
 
 class MyUserAdmin(UserAdmin):
@@ -48,3 +49,5 @@ class MyUserAdmin(UserAdmin):
 admin.site.register(MyUser, MyUserAdmin)
 
 admin.site.register(Company)
+
+admin.site.register(Employee)
