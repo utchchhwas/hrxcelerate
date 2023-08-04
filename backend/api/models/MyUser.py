@@ -7,7 +7,7 @@ class MyUserManager(BaseUserManager):
     Custom User Manager.
     """
 
-    def create_user(self, email, username, password):
+    def create_user(self, email, password):
         """
         Create a new user with email as primary identifier.
         """
@@ -18,7 +18,7 @@ class MyUserManager(BaseUserManager):
         if not password:
             raise ValueError("User must have a password.")
 
-        user = self.model(email=self.normalize_email(email), username=username)
+        user = self.model(email=self.normalize_email(email))
 
         user.set_password(password)
 
@@ -26,12 +26,12 @@ class MyUserManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, email, username, password):
+    def create_superuser(self, email, password):
         """
         Create a new user with superuser privileges.
         """
 
-        user = self.create_user(email, username, password)
+        user = self.create_user(email, password)
 
         user.is_staff = True  # Make accessible from Django Admin
         user.is_superuser = True  # Grant all permission in Django Admin

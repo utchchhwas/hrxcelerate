@@ -15,6 +15,9 @@ class Employee(models.Model):
     company = models.ForeignKey(
         Company, on_delete=models.CASCADE, verbose_name="Company"
     )
+    manager = models.ForeignKey(
+        "Employee", on_delete=models.SET_NULL, null=True, verbose_name="Manager"
+    )
     is_admin = models.BooleanField("Is Admin", default=False)
     is_active = models.BooleanField("Is Active", default=True)
     gender = models.CharField(
