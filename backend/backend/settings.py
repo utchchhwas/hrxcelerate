@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # 3rd Party apps
     "rest_framework",
     "django_countries",
+    "djmoney",
     # My apps
     "api",
 ]
