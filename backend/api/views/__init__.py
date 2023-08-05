@@ -1,2 +1,3 @@
 from .RetrieveUpdateCompanyView import RetrieveUpdateCompanyView
 from .EmployeeViewSet import EmployeeViewSet
+from .DepartmentViewSet import DepartmentViewSet
