@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # 3rd Party apps
     "rest_framework",
+    "rest_framework_simplejwt",
     "django_countries",
     "djmoney",
     # My apps
@@ -56,6 +57,20 @@ MIDDLEWARE = [
 ]
 
 AUTH_USER_MODEL = "api.MyUser"  # Custom User Model
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+}
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+}
 
 ROOT_URLCONF = "backend.urls"
 
