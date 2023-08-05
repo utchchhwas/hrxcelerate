@@ -5,10 +5,12 @@ from rest_framework import authentication
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from api.permissions import IsSafeMethod, IsCompanyAdmin
 
 
 class RetrieveUpdateCompanyView(generics.RetrieveUpdateAPIView):
-    queryset = Company.objects.all()
+    permission_classes = [IsAuthenticated, IsSafeMethod | IsCompanyAdmin]
     serializer_class = CompanySerializer
-    authentication_classes = [SessionAuthentication, JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user.employee.company

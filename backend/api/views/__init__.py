@@ -1,1 +1,1 @@
-from .CompanyViews import RetrieveUpdateCompanyView
+from .RetrieveUpdateCompanyView import RetrieveUpdateCompanyView

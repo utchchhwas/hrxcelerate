@@ -10,5 +10,5 @@ from api.views import RetrieveUpdateCompanyView
 urlpatterns = [
     path("auth/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    path("company/<int:pk>", RetrieveUpdateCompanyView.as_view()),
+    path("company/", RetrieveUpdateCompanyView.as_view()),
 ]
