@@ -53,7 +53,11 @@ class MyUserAdmin(UserAdmin):
 
 admin.site.register(MyUser, MyUserAdmin)
 
-admin.site.register(Company)
+
+@admin.register(Company)
+class CompanyAdmin(admin.ModelAdmin):
+    list_display = ("name", "id")
+
 
 admin.site.register(Employee)
 
