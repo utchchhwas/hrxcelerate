@@ -1,3 +1,4 @@
 from .CompanySerializer import CompanySerializer
 from .EmployeeSerializer import EmployeeSerializer
 from .DepartmentSerializer import DepartmentSerializer
+from .JobRoleSerializer import JobRoleSerializer

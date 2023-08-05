@@ -7,6 +7,7 @@ from rest_framework_simplejwt.views import (
 from api.views import RetrieveUpdateCompanyView
 from api.views import EmployeeViewSet
 from api.views import DepartmentViewSet
+from api.views import JobRoleViewSet
 
 urlpatterns = [
     path("auth/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
@@ -18,5 +19,6 @@ urlpatterns = [
 router = DefaultRouter()
 router.register(r"employee", EmployeeViewSet, basename="employee")
 router.register(r"department", DepartmentViewSet, basename="department")
+router.register(r"job-role", JobRoleViewSet, basename="job-role")
 
 urlpatterns += router.urls
