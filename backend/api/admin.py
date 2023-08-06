@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import (
-    MyUser,
+    CustomUser,
     Company,
     Employee,
     Department,
@@ -10,7 +10,7 @@ from .models import (
 )
 
 
-class MyUserAdmin(UserAdmin):
+class CustomUserAdmin(UserAdmin):
     """
     Custom User Admin.
     """
@@ -51,18 +51,18 @@ class MyUserAdmin(UserAdmin):
     )
 
 
-admin.site.register(MyUser, MyUserAdmin)
+admin.site.register(CustomUser, CustomUserAdmin)
 
 
-@admin.register(Company)
-class CompanyAdmin(admin.ModelAdmin):
-    list_display = ("name", "id")
-
-
-admin.site.register(Employee)
-
-admin.site.register(Department)
-
-admin.site.register(JobRole)
-
-admin.site.register(Employment)
+# @admin.register(Company)
+# class CompanyAdmin(admin.ModelAdmin):
+#     list_display = ("name", "id")
+#
+#
+# admin.site.register(Employee)
+#
+# admin.site.register(Department)
+#
+# admin.site.register(JobRole)
+#
+# admin.site.register(Employment)
