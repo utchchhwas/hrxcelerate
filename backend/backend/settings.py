@@ -11,6 +11,13 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+
+
+# Load environment variables
+load_dotenv()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -109,11 +116,11 @@ WSGI_APPLICATION = "backend.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "hrxcelerate_db",
-        "USER": "hrxcelerate_db",
-        "PASSWORD": "HyLyIvUk0jYBdHfz18FxfR3pQOpLQC9m",
-        "HOST": "dpg-cj7s8akl975s73durr50-a.singapore-postgres.render.com",
-        "PORT": "5432",
+        "NAME": os.getenv("RENDER_POSTGRESQL_NAME"),
+        "USER": os.getenv("RENDER_POSTGRESQL_USER"),
+        "PASSWORD": os.getenv("RENDER_POSTGRESQL_PASS"),
+        "HOST": os.getenv("RENDER_POSTGRESQL_HOST"),
+        "PORT": os.getenv("RENDER_POSTGRESQL_PORT"),
     }
 }
 
