@@ -8,11 +8,18 @@ class Department(models.Model):
     """
 
     company = models.ForeignKey(
-        Company, on_delete=models.CASCADE, verbose_name="Company"
+        Company,
+        on_delete=models.CASCADE,
+        verbose_name="Company",
     )
-    name = models.CharField("Department Name", max_length=150)
+    name = models.CharField(
+        "Department Name",
+        max_length=150,
+    )
     description = models.TextField(
-        "Department Description", max_length=1000, blank=True
+        "Department Description",
+        max_length=1000,
+        blank=True,
     )
 
     class Meta:
