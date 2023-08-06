@@ -23,8 +23,8 @@ from api.views import TimeOffViewSet
 from api.views import TrackingViewSet
 
 urlpatterns = [
-    path("auth/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh")
+    path("login/", TokenObtainPairView.as_view(), name="obtain-token-pair"),
+    path("refresh-token/", TokenRefreshView.as_view(), name="refresh-token"),
 ]
 
 
@@ -39,7 +39,9 @@ router.register(r"employment", EmploymentViewSet, basename="employment")
 router.register(r"interviewer", InterviewerViewSet, basename="interviewer")
 router.register(r"interviewresult", InterviewResultViewSet, basename="interviewresult")
 router.register(r"jobposting", JobPostingViewSet, basename="jobposting")
-router.register(r"jobpostingsalary", JobPostingSalaryViewSet, basename="jobpostingsalary")
+router.register(
+    r"jobpostingsalary", JobPostingSalaryViewSet, basename="jobpostingsalary"
+)
 router.register(r"jobrole", JobRoleViewSet, basename="jobrole")
 router.register(r"notification", NotificationViewSet, basename="notification")
 router.register(r"payslip", PayslipViewSet, basename="payslip")

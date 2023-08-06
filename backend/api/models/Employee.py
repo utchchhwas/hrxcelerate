@@ -3,6 +3,10 @@ from django.conf import settings
 from api.models import Company
 
 
+class EmployeeManager(models.Manager):
+    pass
+
+
 class Employee(models.Model):
     """
     Model representing an employee of a company.
