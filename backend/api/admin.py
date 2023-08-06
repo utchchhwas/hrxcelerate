@@ -1,13 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import (
-    CustomUser,
-    Company,
-    Employee,
-    Department,
-    JobRole,
-    Employment,
-)
+from api.models import *
 
 
 @admin.register(CustomUser)
@@ -30,15 +23,17 @@ class CustomUserAdmin(UserAdmin):
     filter_horizontal = ()
 
 
-# @admin.register(Company)
-# class CompanyAdmin(admin.ModelAdmin):
-#     list_display = ("name", "id")
-#
-#
-# admin.site.register(Employee)
-#
-# admin.site.register(Department)
-#
-# admin.site.register(JobRole)
-#
-# admin.site.register(Employment)
+admin.site.register(Applicant)
+admin.site.register(Company)
+admin.site.register(Department)
+admin.site.register(Employee)
+admin.site.register(Employment)
+admin.site.register(Interviewer)
+admin.site.register(InterviewResult)
+admin.site.register(JobPosting)
+admin.site.register(JobPostingSalary)
+admin.site.register(JobRole)
+admin.site.register(Notification)
+admin.site.register(Payslip)
+admin.site.register(TimeOff)
+admin.site.register(Tracking)

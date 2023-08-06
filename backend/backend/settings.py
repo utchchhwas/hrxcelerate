@@ -99,10 +99,21 @@ WSGI_APPLICATION = "backend.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "hrxcelerate_db",
+        "USER": "hrxcelerate_db",
+        "PASSWORD": "HyLyIvUk0jYBdHfz18FxfR3pQOpLQC9m",
+        "HOST": "dpg-cj7s8akl975s73durr50-a.singapore-postgres.render.com",
+        "PORT": "5432",
     }
 }
 
