@@ -10,6 +10,7 @@ from .models import (
 )
 
 
+@admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
     """
     Custom User Admin.
@@ -18,40 +19,15 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (None, {"fields": ("email", "password")}),
         ("Personal info", {"fields": ("first_name", "last_name")}),
-        (
-            "Permissions",
-            {
-                "fields": (
-                    "is_active",
-                    "is_staff",
-                    "is_superuser",
-                    "groups",
-                    "user_permissions",
-                ),
-            },
-        ),
-        ("Important dates", {"fields": ("last_login", "date_joined")}),
+        ("Permissions", {"fields": ("is_active", "is_staff", "is_superuser")}),
     )
     add_fieldsets = (
-        (
-            None,
-            {
-                "classes": ("wide",),
-                "fields": ("email", "password1", "password2"),
-            },
-        ),
+        (None, {"classes": ("wide",), "fields": ("email", "password1", "password2")}),
     )
-    list_display = ("email", "first_name", "last_name", "is_staff")
-    list_filter = ("is_staff", "is_superuser", "is_active", "groups")
-    search_fields = ("first_name", "last_name", "email")
-    ordering = ("email",)
-    filter_horizontal = (
-        "groups",
-        "user_permissions",
-    )
-
-
-admin.site.register(CustomUser, CustomUserAdmin)
+    list_display = ("email", "id")
+    search_fields = ("email",)
+    ordering = ("id",)
+    filter_horizontal = ()
 
 
 # @admin.register(Company)
