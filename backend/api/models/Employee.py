@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from . import Company
+from api.models import Company
 
 
 class Employee(models.Model):
@@ -10,16 +10,34 @@ class Employee(models.Model):
 
     # An employee has a one-to-one relationship with a user.
     user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Employee"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        verbose_name="User",
     )
     company = models.ForeignKey(
-        Company, on_delete=models.CASCADE, verbose_name="Company"
+        Company,
+        on_delete=models.CASCADE,
+        verbose_name="Company",
     )
     manager = models.ForeignKey(
-        "Employee", on_delete=models.SET_NULL, null=True, verbose_name="Manager"
+        "Employee",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Manager",
     )
-    is_admin = models.BooleanField("Is Admin", default=False)
-    is_active = models.BooleanField("Is Active", default=True)
+    is_owner = models.BooleanField(
+        "Owner",
+        default=False,
+    )
+    is_admin = models.BooleanField(
+        "Admin",
+        default=False,
+    )
+    is_active = models.BooleanField(
+        "Active",
+        default=True,
+    )
     gender = models.CharField(
         "Gender",
         max_length=1,
@@ -28,11 +46,16 @@ class Employee(models.Model):
             ("F", "Female"),
             ("O", "Other"),
         ],
+        blank=True,
     )
-    date_of_birth = models.DateField("Date of Birth")
+    date_of_birth = models.DateField(
+        "Date of Birth",
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         pass
 
     def __str__(self):
-        return self.user.email
+        return f"{self.user.email}"

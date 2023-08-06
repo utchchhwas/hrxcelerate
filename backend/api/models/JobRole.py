@@ -7,11 +7,20 @@ class JobRole(models.Model):
     Model representing a job role in a company under a department.
     """
 
-    name = models.CharField("Job Role Name", max_length=150)
-    department = models.ForeignKey(
-        Department, on_delete=models.CASCADE, verbose_name="Department"
+    name = models.CharField(
+        "Job Role Name",
+        max_length=150,
     )
-    description = models.TextField("Job Role Description", max_length=500, blank=True)
+    department = models.ForeignKey(
+        Department,
+        on_delete=models.CASCADE,
+        verbose_name="Department",
+    )
+    description = models.TextField(
+        "Job Role Description",
+        max_length=500,
+        blank=True,
+    )
 
     class Meta:
         pass

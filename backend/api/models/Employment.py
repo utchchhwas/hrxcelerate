@@ -9,14 +9,29 @@ class Employment(models.Model):
     """
 
     employee = models.ForeignKey(
-        Employee, on_delete=models.CASCADE, verbose_name="Employee"
+        Employee,
+        on_delete=models.CASCADE,
+        verbose_name="Employee",
     )
     job_role = models.ForeignKey(
-        JobRole, on_delete=models.CASCADE, verbose_name="Job Role"
+        JobRole,
+        on_delete=models.CASCADE,
+        verbose_name="Job Role",
     )
-    is_active = models.BooleanField("Is Active", default=True)
-    start_date = models.DateField("Start Date")
-    end_date = models.DateField("End Date")
+    is_active = models.BooleanField(
+        "Active",
+        default=True,
+    )
+    start_date = models.DateField(
+        "Start Date",
+        null=True,
+        blank=True,
+    )
+    end_date = models.DateField(
+        "End Date",
+        null=True,
+        blank=True,
+    )
     employment_type = models.CharField(
         "Employment Type",
         max_length=2,
@@ -25,25 +40,17 @@ class Employment(models.Model):
             ("PT", "Part-Time"),
             ("IS", "Internship"),
         ],
+        blank=True,
     )
-    is_remote = models.BooleanField("Is Remote")
-    salary_frequency = models.CharField(
-        "Salary Frequency",
-        max_length=1,
-        choices=[
-            ("H", "Hourly"),
-            ("D", "Daily"),
-            ("W", "Weekly"),
-            ("B", "Bi-weekly"),
-            ("M", "Monthly"),
-        ],
+    is_remote = models.BooleanField(
+        "Remote",
+        default=False,
     )
-    salary = MoneyField(
-        "Salary",
-        max_digits=25,
-        decimal_places=2,
+    note = models.CharField(
+        "Employment Note",
+        max_length=150,
+        blank=True,
     )
-    note = models.CharField("Employment Note", max_length=150, blank=True)
 
     class Meta:
         pass
