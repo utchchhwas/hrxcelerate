@@ -166,3 +166,5 @@ cython_debug/
 
 # PyCharm
 .idea/
+
+backend/mediafiles/
