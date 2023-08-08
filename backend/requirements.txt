@@ -5,7 +5,9 @@ django-countries==7.5.1
 django-money==3.2.0
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
-psycopg2==2.9.7
+gunicorn==21.2.0
+packaging==23.1
+# psycopg2==2.9.7
 py-moneyed==3.0
 PyJWT==2.8.0
 python-dotenv==1.0.0

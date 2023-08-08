@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - static_volume:/home/hrxcelerate/backend/staticfiles
+      - media_volume:/home/hrxcelerate/backend/mediafiles
+    expose:
+      - 8000
+    env_file:
+      - ./.env.prod
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/home/hrxcelerate/backend/staticfiles
+      - media_volume:/home/hrxcelerate/backend/mediafiles
+    ports:
+      - 1337:80
+    depends_on:
+      - backend
+
+volumes:
+  static_volume:
+  media_volume:
