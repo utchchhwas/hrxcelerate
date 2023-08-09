@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
+import dj_database_url
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -34,9 +35,6 @@ DEBUG = bool(int(os.environ["DEBUG"]))
 # 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
 # For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
 ALLOWED_HOSTS = os.environ["DJANGO_ALLOWED_HOSTS"].split(" ")
-
-if "RENDER_EXTERNAL_HOSTNAME" in os.environ:
-    ALLOWED_HOSTS.append("RENDER_EXTERNAL_HOSTNAME")
 
 
 # Application definition
@@ -109,8 +107,6 @@ WSGI_APPLICATION = "backend.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 if "DATABASE_URL" in os.environ:
-    import dj_database_url
-
     DATABASES = {
         "default": dj_database_url.parse(os.environ.get("DATABASE_URL")),
     }
