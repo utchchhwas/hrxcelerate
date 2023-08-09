@@ -35,6 +35,9 @@ DEBUG = bool(int(os.environ["DEBUG"]))
 # For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
 ALLOWED_HOSTS = os.environ["DJANGO_ALLOWED_HOSTS"].split(" ")
 
+if "RENDER_EXTERNAL_HOSTNAME" in os.environ:
+    ALLOWED_HOSTS.append("RENDER_EXTERNAL_HOSTNAME")
+
 
 # Application definition
 
@@ -105,7 +108,13 @@ WSGI_APPLICATION = "backend.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-if os.environ["DATABASE"] == "postgres":
+if "DATABASE_URL" in os.environ:
+    import dj_database_url
+
+    DATABASES = {
+        "default": dj_database_url.parse(os.environ.get("DATABASE_URL")),
+    }
+elif os.environ["DATABASE"] == "postgres":
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
