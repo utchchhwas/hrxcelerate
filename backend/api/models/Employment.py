@@ -1,6 +1,5 @@
 from django.db import models
 from . import Employee, JobRole
-from djmoney.models.fields import MoneyField
 
 
 class Employment(models.Model):
