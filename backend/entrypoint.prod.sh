@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -o errexit
+
 if [[ "$DATABASE" = "postgres" ]]; then
     echo "Waiting for database..."
 
