@@ -1,8 +1,12 @@
-import React from 'react';
-import Hello from './Components/Hello';
+import './App.css';
+import Dashboard from './Page/Dashboard';
 
-const App = () => {
-  return <Hello />;
-};
+function App() {
+  return (
+    <div>
+      <Dashboard />
+    </div>
+  );
+}
 
 export default App;
