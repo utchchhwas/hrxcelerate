@@ -1,4 +1,4 @@
-from .CustomUser import CustomUser
+from .custom_user_model import CustomUser
 from .company_model import Company
 from .Employee import Employee
 from .Department import Department

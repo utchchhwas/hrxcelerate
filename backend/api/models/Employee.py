@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 from api.models import Company
+from django.dispatch import receiver
+from django.db.models.signals import post_delete
 
 
 class EmployeeManager(models.Manager):
@@ -15,6 +17,7 @@ class Employee(models.Model):
     # An employee has a one-to-one relationship with a user.
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
+        related_name="employee",
         on_delete=models.CASCADE,
         verbose_name="User",
     )
@@ -63,3 +66,8 @@ class Employee(models.Model):
 
     def __str__(self):
         return f"{self.user.email}"
+
+
+@receiver(post_delete, sender=Employee)
+def post_delete_user(sender, instance, *args, **kwargs):
+    instance.user.delete()
