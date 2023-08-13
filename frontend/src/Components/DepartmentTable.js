@@ -8,13 +8,17 @@ import {
   TableRow,
   Paper,
   TableSortLabel,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
 
 function DepartmentTable({ sortOrder }) {
   const [departments, setDepartments] = useState([]);
   const [orderBy, setOrderBy] = useState("id");
   const [order, setOrder] = useState("asc");
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     console.log("Fetching data from API...");
@@ -36,7 +40,11 @@ function DepartmentTable({ sortOrder }) {
     setOrderBy(property);
   };
 
-  let sortedDepartments = [...departments].sort((a, b) => {
+  const filteredDepartments = departments.filter((department) =>
+    department.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  let sortedDepartments = [...filteredDepartments].sort((a, b) => {
     if (order === "asc") {
       return a[orderBy] > b[orderBy] ? 1 : -1;
     } else {
@@ -45,52 +53,70 @@ function DepartmentTable({ sortOrder }) {
   });
 
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              <TableSortLabel
-                active={orderBy === "id"}
-                direction={orderBy === "id" ? order : "asc"}
-                onClick={() => handleSort("id")}
-              >
-                ID
-              </TableSortLabel>
-            </TableCell>
-            <TableCell>
-              <TableSortLabel
-                active={orderBy === "name"}
-                direction={orderBy === "name" ? order : "asc"}
-                onClick={() => handleSort("name")}
-              >
-                Department Name
-              </TableSortLabel>
-            </TableCell>
-            <TableCell>
-              <TableSortLabel
-                active={orderBy === "company"}
-                direction={orderBy === "company" ? order : "asc"}
-                onClick={() => handleSort("company")}
-              >
-                Company
-              </TableSortLabel>
-            </TableCell>
-            <TableCell>Description</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {sortedDepartments.map((department) => (
-            <TableRow key={department.id}>
-              <TableCell>{department.id}</TableCell>
-              <TableCell>{department.name}</TableCell>
-              <TableCell>{department.company}</TableCell>
-              <TableCell>{department.description}</TableCell>
+    <div>
+      <TextField
+        label="Search"
+        variant="outlined"
+        size="small"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+          placeholder: "Department name",
+        }}
+        sx={{ marginBottom: 2 }}
+      />
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <TableSortLabel
+                  active={orderBy === "id"}
+                  direction={orderBy === "id" ? order : "asc"}
+                  onClick={() => handleSort("id")}
+                >
+                  ID
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={orderBy === "name"}
+                  direction={orderBy === "name" ? order : "asc"}
+                  onClick={() => handleSort("name")}
+                >
+                  Department Name
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={orderBy === "company"}
+                  direction={orderBy === "company" ? order : "asc"}
+                  onClick={() => handleSort("company")}
+                >
+                  Company
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>Description</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {sortedDepartments.map((department) => (
+              <TableRow key={department.id}>
+                <TableCell>{department.id}</TableCell>
+                <TableCell>{department.name}</TableCell>
+                <TableCell>{department.company}</TableCell>
+                <TableCell>{department.description}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 }
 
