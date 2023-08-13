@@ -18,7 +18,7 @@ from api.views import NotificationViewSet
 from api.views import PayslipViewSet
 from api.views import TimeOffViewSet
 from api.views import TrackingViewSet
-from api.views import CompanyRetrieveUpdateViewSet
+from api.views import CompanyRetrieveUpdateDestroyViewSet
 
 
 urlpatterns = [
@@ -49,6 +49,6 @@ router = SimpleRouter()
 # router.register(r"time-offs", TimeOffViewSet, basename="time-offs")
 # router.register(r"trackings", TrackingViewSet, basename="trackings")
 
-router.register(r"companies", CompanyRetrieveUpdateViewSet, basename="company")
+router.register(r"companies", CompanyRetrieveUpdateDestroyViewSet, basename="company")
 
 urlpatterns += router.urls

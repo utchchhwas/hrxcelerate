@@ -12,9 +12,20 @@ class IsReadOnly(BasePermission):
         return request.method in SAFE_METHODS
 
 
+class IsCompanyOwner(BasePermission):
+    """
+    Check if the user is the owner of his company.
+    """
+
+    message = "User is not the owner."
+
+    def has_permission(self, request, view):
+        return request.user.employee.is_owner
+
+
 class IsAdminEmployee(BasePermission):
     """
-    Check if the user is an admin employee.
+    Check if the user is an admin employee of his company.
     """
 
     message = "User is not an admin employee."

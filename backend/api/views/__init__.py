@@ -17,4 +17,4 @@ from .PayslipViewSet import PayslipViewSet
 from .TimeOffViewSet import TimeOffViewSet
 from .TrackingViewSet import TrackingViewSet
 
-from .company_views import CompanyRetrieveUpdateViewSet
+from .company_views import CompanyRetrieveUpdateDestroyViewSet
