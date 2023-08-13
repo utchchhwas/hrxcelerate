@@ -6,12 +6,15 @@ from api.permissions import IsCompanyOwner, IsAdminEmployee, IsCompanyObject
 
 
 class CompanyRetrieveUpdateDestroyViewSet(
+    mixins.ListModelMixin,
     mixins.RetrieveModelMixin,
     mixins.UpdateModelMixin,
     mixins.DestroyModelMixin,
     viewsets.GenericViewSet,
 ):
-    """ """
+    """
+    CompanyRetrieveUpdateDestroyViewSet
+    """
 
     serializer_class = CompanySerializer
     queryset = Company.objects.all()

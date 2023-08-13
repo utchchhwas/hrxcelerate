@@ -27,6 +27,7 @@ class CustomUserAdmin(UserAdmin):
 @admin.register(Company)
 class CompanyAdmin(ModelAdmin):
     list_display = ("name", "id")
+    ordering = ("id",)
 
 
 admin.site.register(Applicant)
