@@ -20,7 +20,7 @@ class IsCompanyOwner(BasePermission):
     message = "User is not the owner."
 
     def has_permission(self, request, view):
-        return request.user.employee.is_owner
+        return hasattr(request.user, "employee") and request.user.employee.is_owner
 
 
 class IsAdminEmployee(BasePermission):
@@ -31,7 +31,8 @@ class IsAdminEmployee(BasePermission):
     message = "User is not an admin employee."
 
     def has_permission(self, request, view):
-        return request.user.employee.is_admin
+        print(f"val = {hasattr(request.user, 'employee')}")
+        return hasattr(request.user, "employee") and request.user.employee.is_admin
 
 
 class IsCompanyObject(BasePermission):
