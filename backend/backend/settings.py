@@ -63,6 +63,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 AUTH_USER_MODEL = "api.CustomUser"  # Custom User Model
@@ -101,6 +102,11 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "backend.wsgi.application"
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',  # Replace with your frontend URL
+]
+
 
 
 # Database
