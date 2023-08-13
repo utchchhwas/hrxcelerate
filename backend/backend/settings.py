@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     # 3rd Party apps
     "rest_framework",
     "rest_framework_simplejwt",
+    "cloudinary_storage",
+    "cloudinary",
     # My apps
     "api",
     "upload",
@@ -179,5 +181,10 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Cloudinary credentials
 
-APPEND_SLASH = True
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": os.environ["CLOUDINARY_CLOUD_NAME"],
+    "API_KEY": os.environ["CLOUDINARY_API_KEY"],
+    "API_SECRET": os.environ["CLOUDINARY_API_SECRET"],
+}
