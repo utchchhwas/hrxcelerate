@@ -5,7 +5,6 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from api.views import ApplicantViewSet
-from api.views import CustomUserViewSet
 from api.views import DepartmentViewSet
 from api.views import EmployeeViewSet
 from api.views import EmploymentViewSet
@@ -27,27 +26,7 @@ urlpatterns = [
 ]
 
 
-# Registering viewsets for All models
 router = SimpleRouter()
-# router.register(r"applicants", ApplicantViewSet, basename="applicants")
-# router.register(r"companies", CompanyViewSet, basename="companies")
-# router.register(r"users", CustomUserViewSet, basename="users")
-# router.register(r"departments", DepartmentViewSet, basename="departments")
-# router.register(r"employees", EmployeeViewSet, basename="employees")
-# router.register(r"employments", EmploymentViewSet, basename="employments")
-# router.register(r"interviewers", InterviewerViewSet, basename="interviewers")
-# router.register(
-#     r"interview-results", InterviewResultViewSet, basename="interview-results"
-# )
-# router.register(r"job-postings", JobPostingViewSet, basename="job-postings")
-# router.register(
-#     r"job-posting-salaries", JobPostingSalaryViewSet, basename="job-posting-salaries"
-# )
-# router.register(r"job-roles", JobRoleViewSet, basename="job-roles")
-# router.register(r"notifications", NotificationViewSet, basename="notifications")
-# router.register(r"payslips", PayslipViewSet, basename="payslips")
-# router.register(r"time-offs", TimeOffViewSet, basename="time-offs")
-# router.register(r"trackings", TrackingViewSet, basename="trackings")
 
 router.register(r"companies", CompanyRetrieveUpdateDestroyViewSet, basename="company")
 

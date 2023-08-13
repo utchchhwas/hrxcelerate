@@ -1,6 +1,5 @@
-from django.contrib.auth.models import AbstractUser, BaseUserManager, UserManager
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 
 
 class CustomUserManager(BaseUserManager):
@@ -44,10 +43,10 @@ class CustomUser(AbstractUser):
 
     # Use email as user identifier
     email = models.EmailField(
-        _("email address"),
+        "Email Address",
         unique=True,
         error_messages={
-            "unique": _("A user with that email already exists."),
+            "unique": "A user with that email already exists.",
         },
     )
     username = None  # Remove username field
@@ -59,6 +58,6 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         """
-        Override to show email instead of username
+        Override to show email instead of username.
         """
         return self.email
