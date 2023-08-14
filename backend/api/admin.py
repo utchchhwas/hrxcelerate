@@ -35,8 +35,12 @@ class EmployeeModel(ModelAdmin):
     list_display = ("user", "company")
 
 
+@admin.register(Department)
+class DepartmentModel(ModelAdmin):
+    pass
+
+
 admin.site.register(Applicant)
-admin.site.register(Department)
 admin.site.register(Employment)
 admin.site.register(Interviewer)
 admin.site.register(InterviewResult)
