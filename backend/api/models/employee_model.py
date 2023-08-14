@@ -1,12 +1,17 @@
+from typing import Any, Iterable, Optional
 from django.db import models
 from django.conf import settings
-from api.models import Company
+from api.models import CustomUser, Company
 from django.dispatch import receiver
 from django.db.models.signals import post_delete
 
 
 class EmployeeManager(models.Manager):
-    pass
+    def create_with_user(self, user_data, **kwargs):
+        print("in create with user")
+        print(user_data, kwargs)
+        user = CustomUser.objects.create_user(**user_data)
+        return super().create(user=user, **kwargs)
 
 
 class Employee(models.Model):
@@ -20,11 +25,13 @@ class Employee(models.Model):
         related_name="employee",
         on_delete=models.CASCADE,
         verbose_name="User",
+        blank=True,
     )
     company = models.ForeignKey(
         Company,
         on_delete=models.CASCADE,
         verbose_name="Company",
+        blank=True,
     )
     manager = models.ForeignKey(
         "Employee",
@@ -61,13 +68,18 @@ class Employee(models.Model):
         blank=True,
     )
 
+    objects = EmployeeManager()
+
     class Meta:
         pass
 
-    def __str__(self):
-        return f"{self.user.email}"
+    # def __str__(self):
+    #     return f"{self.user.email}"
 
 
 @receiver(post_delete, sender=Employee)
 def post_delete_user(sender, instance, *args, **kwargs):
+    """
+    Signal for deleting corresponding User when an Employee is deleted.
+    """
     instance.user.delete()

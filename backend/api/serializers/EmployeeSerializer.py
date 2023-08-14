@@ -19,7 +19,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         print(validated_data)
         user_data = validated_data.pop("user")
-        user = CustomUser.objects.create_user(**user_data)
+        # user = CustomUser.objects.create_user(**user_data)
 
         company_data = validated_data.pop("company")
         company = Company.objects.create(**company_data)
@@ -27,9 +27,11 @@ class EmployeeSerializer(serializers.ModelSerializer):
         validated_data["is_owner"] = True
         validated_data["is_admin"] = True
         validated_data["is_active"] = True
-        employee = Employee.objects.create(user=user, company=company, **validated_data)
+        employee = Employee.objects.create_with_user(
+            user_data=user_data, company=company, **validated_data
+        )
         return employee
 
     def update(self, instance, validated_data):
-        print(validated_data)
+        # print(validated_data)
         return super().update(instance, validated_data)

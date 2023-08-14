@@ -1,6 +1,6 @@
 from .custom_user_model import CustomUser
 from .company_model import Company
-from .Employee import Employee
+from .employee_model import Employee
 from .Department import Department
 from .JobRole import JobRole
 from .Employment import Employment

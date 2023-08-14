@@ -1,5 +1,5 @@
 from django.urls import path, include
-from rest_framework.routers import SimpleRouter
+from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -26,8 +26,10 @@ urlpatterns = [
 ]
 
 
-router = SimpleRouter()
+router = DefaultRouter()
 
 router.register(r"companies", CompanyRetrieveUpdateDestroyViewSet, basename="company")
+router.register(r"employees", EmployeeViewSet, basename="employee")
+
 
 urlpatterns += router.urls
