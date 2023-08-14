@@ -4,6 +4,12 @@ from django.conf import settings
 from api.models import CustomUser, Company
 from django.dispatch import receiver
 from django.db.models.signals import post_delete
+from cloudinary_storage.storage import MediaCloudinaryStorage
+from uuid import uuid4
+
+
+def employee_avatar_upload_to(instance, filename):
+    return f"hrx-avatars/{uuid4().hex}"
 
 
 class EmployeeManager(models.Manager):
@@ -23,18 +29,19 @@ class Employee(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         related_name="employee",
+        primary_key=True,
         on_delete=models.CASCADE,
         verbose_name="User",
-        blank=True,
     )
     company = models.ForeignKey(
         Company,
+        related_name="employees",
         on_delete=models.CASCADE,
         verbose_name="Company",
-        blank=True,
     )
     manager = models.ForeignKey(
         "Employee",
+        related_name="managees",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -67,14 +74,20 @@ class Employee(models.Model):
         null=True,
         blank=True,
     )
+    logo = models.ImageField(
+        "Avatar",
+        upload_to=employee_avatar_upload_to,
+        storage=MediaCloudinaryStorage(),
+        blank=True,
+    )
 
     objects = EmployeeManager()
 
     class Meta:
         pass
 
-    # def __str__(self):
-    #     return f"{self.user.email}"
+    def __str__(self):
+        return f"{self.user.email}"
 
 
 @receiver(post_delete, sender=Employee)

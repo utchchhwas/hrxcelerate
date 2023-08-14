@@ -30,9 +30,13 @@ class CompanyAdmin(ModelAdmin):
     ordering = ("id",)
 
 
+@admin.register(Employee)
+class CompanyAdmin(ModelAdmin):
+    pass
+
+
 admin.site.register(Applicant)
 admin.site.register(Department)
-admin.site.register(Employee)
 admin.site.register(Employment)
 admin.site.register(Interviewer)
 admin.site.register(InterviewResult)
