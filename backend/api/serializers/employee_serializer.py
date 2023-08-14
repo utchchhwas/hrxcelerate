@@ -3,6 +3,7 @@ from api.models import Employee, Company, CustomUser
 from api.serializers import CustomUserSerializer, CompanySerializer
 from django.conf import settings
 from rest_framework import validators
+from django.contrib.auth.password_validation import validate_password
 
 
 class CreateCompanyOwnerSerializer(serializers.ModelSerializer):
@@ -20,6 +21,7 @@ class CreateCompanyOwnerSerializer(serializers.ModelSerializer):
     )
     password = serializers.CharField(
         source="user.password",
+        validators=[validate_password],
         write_only=True,
         label="Password",
     )
