@@ -31,8 +31,8 @@ class CompanyAdmin(ModelAdmin):
 
 
 @admin.register(Employee)
-class CompanyAdmin(ModelAdmin):
-    pass
+class EmployeeModel(ModelAdmin):
+    list_display = ("user", "company")
 
 
 admin.site.register(Applicant)
