@@ -10,6 +10,7 @@ class Department(models.Model):
     company = models.ForeignKey(
         Company,
         related_name="departments",
+        
         on_delete=models.CASCADE,
         verbose_name="Company",
     )
@@ -27,4 +28,4 @@ class Department(models.Model):
         pass
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.company.name}"
