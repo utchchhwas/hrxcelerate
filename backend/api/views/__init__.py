@@ -3,7 +3,7 @@
 # Payslip, TimeOff and Tracking models.
 
 from .ApplicantViewSet import ApplicantViewSet
-from .DepartmentViewSet import DepartmentViewSet
+from .department_views import DepartmentViewSet
 
 # from .EmployeeViewSet import EmployeeViewSet
 from .EmploymentViewSet import EmploymentViewSet

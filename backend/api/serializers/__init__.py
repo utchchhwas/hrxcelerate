@@ -7,7 +7,7 @@ from .CustomUserSerializer import CustomUserSerializer
 from .employee_serializer import CreateCompanyOwnerSerializer
 
 from .ApplicantSerializer import ApplicantSerializer
-from .DepartmentSerializer import DepartmentSerializer
+from .department_serializers import DepartmentSerializer
 
 # from .EmployeeSerializer import EmployeeSerializerOld
 from .EmploymentSerializer import EmploymentSerializer

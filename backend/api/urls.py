@@ -35,6 +35,7 @@ urlpatterns = [
 router = SimpleRouter()
 
 router.register(r"companies", CompanyRetrieveUpdateDestroyViewSet, basename="company")
+router.register(r"departments", DepartmentViewSet, basename="department")
 
 
 urlpatterns += router.urls

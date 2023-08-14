@@ -61,3 +61,7 @@ class CreateCompanyOwnerSerializer(serializers.ModelSerializer):
         )
 
         return employee
+
+
+class EmployeeSerializer(serializers.ModelSerializer):
+    pass
