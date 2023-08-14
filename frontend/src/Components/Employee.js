@@ -2,12 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 import Navbar from "./Navbar";
+import EmployeeList from "./EmployeeList";
 
-function People() {
+function Employee() {
   return (
     <div>
         <Navbar />
-        <h1>People</h1>
+        <h1>Employee</h1>
+        <EmployeeList />
     </div>
   );
 }
+
+export default Employee;

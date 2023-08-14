@@ -16,7 +16,7 @@ const Navbar = () => {
             <Stack direction="row" spacing={2}>
                 <Button color='inherit'>Basic Info</Button>
                 <Button color='inherit'>Departments</Button>
-                <Button color='inherit'>People</Button>
+                <Button color='inherit'>Employee</Button>
             </Stack>
         </Toolbar>
     </AppBar>
