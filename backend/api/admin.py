@@ -40,13 +40,17 @@ class DepartmentModel(ModelAdmin):
     pass
 
 
+@admin.register(JobRole)
+class JobRole(ModelAdmin):
+    pass
+
+
 admin.site.register(Applicant)
 admin.site.register(Employment)
 admin.site.register(Interviewer)
 admin.site.register(InterviewResult)
 admin.site.register(JobPosting)
 admin.site.register(JobPostingSalary)
-admin.site.register(JobRole)
 admin.site.register(Notification)
 admin.site.register(Payslip)
 admin.site.register(TimeOff)

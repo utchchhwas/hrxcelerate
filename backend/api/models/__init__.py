@@ -2,7 +2,7 @@ from .custom_user_model import CustomUser
 from .company_model import Company
 from .employee_model import Employee
 from .department_model import Department
-from .JobRole import JobRole
+from .job_role_model import JobRole
 from .Employment import Employment
 from .JobPosting import JobPosting
 from .JobPostingSalary import JobPostingSalary

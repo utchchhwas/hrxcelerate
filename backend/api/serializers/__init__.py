@@ -15,7 +15,7 @@ from .InterviewerSerializer import InterviewerSerializer
 from .InterviewResultSerializer import InterviewResultSerializer
 from .JobPostingSerializer import JobPostingSerializer
 from .JobPostingSalarySerializer import JobPostingSalarySerializer
-from .JobRoleSerializer import JobRoleSerializer
+from .job_role_serializers import JobRoleSerializer
 from .NotificationSerializer import NotificationSerializer
 from .PayslipSerializer import PayslipSerializer
 from .TimeOffSerializer import TimeOffSerializer

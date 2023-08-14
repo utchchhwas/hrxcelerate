@@ -3,6 +3,13 @@ from api.models import JobRole
 
 
 class JobRoleSerializer(ModelSerializer):
+    """ """
+
     class Meta:
         model = JobRole
-        fields = "__all__"
+        fields = [
+            "id",
+            "name",
+            "department",
+            "description",
+        ]

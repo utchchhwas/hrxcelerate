@@ -1,8 +1,13 @@
 from rest_framework import serializers
+from rest_flex_fields.serializers import FlexFieldsSerializerMixin
 from api.models import Department
+from api.serializers import CompanySerializer
 
 
-class DepartmentSerializer(serializers.ModelSerializer):
+class DepartmentSerializer(
+    FlexFieldsSerializerMixin,
+    serializers.ModelSerializer,
+):
     """
     Serializer for Department model.
     """
@@ -15,9 +20,11 @@ class DepartmentSerializer(serializers.ModelSerializer):
             "name",
             "description",
         ]
+        expandable_fields = {
+            "company": CompanySerializer,
+        }
 
     def create(self, validated_data):
-        print("In create")
         user_company = self.context["request"].user.employee.company
         provided_company = validated_data["company"]
 
