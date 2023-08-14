@@ -14,8 +14,6 @@ def employee_avatar_upload_to(instance, filename):
 
 class EmployeeManager(models.Manager):
     def create_with_user(self, user_data, **kwargs):
-        print("in create with user")
-        print(user_data, kwargs)
         user = CustomUser.objects.create_user(**user_data)
         return super().create(user=user, **kwargs)
 
@@ -25,7 +23,6 @@ class Employee(models.Model):
     Model representing an employee of a company.
     """
 
-    # An employee has a one-to-one relationship with a user.
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         related_name="employee",
@@ -74,7 +71,7 @@ class Employee(models.Model):
         null=True,
         blank=True,
     )
-    logo = models.ImageField(
+    avatar = models.ImageField(
         "Avatar",
         upload_to=employee_avatar_upload_to,
         storage=MediaCloudinaryStorage(),

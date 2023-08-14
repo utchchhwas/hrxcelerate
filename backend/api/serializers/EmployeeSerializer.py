@@ -4,7 +4,7 @@ from api.serializers import CustomUserSerializer, CompanySerializer
 from django.conf import settings
 
 
-class EmployeeSerializer(serializers.ModelSerializer):
+class EmployeeSerializerOld(serializers.ModelSerializer):
     user = CustomUserSerializer()
     company = CompanySerializer()
 
