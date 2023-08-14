@@ -48,7 +48,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # 3rd Party apps
     "rest_framework",
+    "django_filters",
     "rest_framework_simplejwt",
+    "cloudinary_storage",
+    "cloudinary",
     # My apps
     "api",
     "upload",
@@ -69,12 +72,16 @@ AUTH_USER_MODEL = "api.CustomUser"  # Custom User Model
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
     ],
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 25,
 }
 
 SIMPLE_JWT = {
@@ -179,5 +186,10 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Cloudinary credentials
 
-APPEND_SLASH = True
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": os.environ["CLOUDINARY_CLOUD_NAME"],
+    "API_KEY": os.environ["CLOUDINARY_API_KEY"],
+    "API_SECRET": os.environ["CLOUDINARY_API_SECRET"],
+}

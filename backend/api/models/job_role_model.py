@@ -1,10 +1,10 @@
 from django.db import models
-from . import Department
+from api.models import Department
 
 
 class JobRole(models.Model):
     """
-    Model representing a job role in a company under a department.
+    Model representing a job role in some department.
     """
 
     name = models.CharField(
@@ -13,17 +13,18 @@ class JobRole(models.Model):
     )
     department = models.ForeignKey(
         Department,
+        related_name="job_roles",
         on_delete=models.CASCADE,
         verbose_name="Department",
     )
     description = models.TextField(
         "Job Role Description",
-        max_length=500,
+        max_length=5000,
         blank=True,
     )
 
     class Meta:
-        pass
+        verbose_name = "Job Role"
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.department.name} - {self.department.company.name}"

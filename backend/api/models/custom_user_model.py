@@ -1,11 +1,11 @@
-from django.contrib.auth.models import AbstractUser, BaseUserManager, UserManager
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 
 
 class CustomUserManager(BaseUserManager):
     """
-    Custom user manager.
+    A custom user manager for creating regular users and superusers
+    with email as primary identification.
     """
 
     def _create_user(self, email, password, **extra_fields):
@@ -39,26 +39,27 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractUser):
     """
-    Custom User model.
+    Custom user model wtih email as primary identifier.
     """
 
-    # Use email as user identifier
+    # Make email unique
     email = models.EmailField(
-        _("email address"),
+        "Email Address",
         unique=True,
         error_messages={
-            "unique": _("A user with that email already exists."),
+            "unique": "A user with this email already exists.",
         },
     )
-    username = None  # Remove username field
+    # Remove username, first_name, and last_name
+    username = None
+    first_name = None
+    last_name = None
 
-    objects = CustomUserManager()  # Use custom user manager
+    # Set custom user manager
+    objects = CustomUserManager()
 
-    USERNAME_FIELD = "email"  # Change username field to email
-    REQUIRED_FIELDS = []  # Remove email from required fields
+    USERNAME_FIELD = "email"  # Field used for identification
+    REQUIRED_FIELDS = []  # Have to remove email from required fields
 
     def __str__(self):
-        """
-        Override to show email instead of username
-        """
         return self.email

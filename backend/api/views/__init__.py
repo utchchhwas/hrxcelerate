@@ -3,16 +3,18 @@
 # Payslip, TimeOff and Tracking models.
 
 from .ApplicantViewSet import ApplicantViewSet
-from .CompanyViewSet import CompanyViewSet
-from .CustomUserViewSet import CustomUserViewSet
-from .DepartmentViewSet import DepartmentViewSet
-from .EmployeeViewSet import EmployeeViewSet
+from .company_views import CompanyRetrieveUpdateDestroyViewSet
+from .custom_user_views import CustomUserViewSet
+from .department_views import DepartmentViewSet
+from .employee_views import CreateCompanyOwnerView, EmployeeViewSet
+
+# from .EmployeeViewSet import EmployeeViewSet
 from .EmploymentViewSet import EmploymentViewSet
 from .InterviewerViewSet import InterviewerViewSet
 from .InterviewResultViewSet import InterviewResultViewSet
-from .JobPostingViewSet import JobPostingViewSet
+from .job_role_views import JobRoleViewSet
 from .JobPostingSalaryViewSet import JobPostingSalaryViewSet
-from .JobRoleViewSet import JobRoleViewSet
+from .JobPostingViewSet import JobPostingViewSet
 from .NotificationViewSet import NotificationViewSet
 from .PayslipViewSet import PayslipViewSet
 from .TimeOffViewSet import TimeOffViewSet
