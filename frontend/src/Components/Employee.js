@@ -1,15 +1,32 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import {
+  ListItemText,
+  Typography,
+  ListItemSecondaryAction,
+} from "@mui/material";
 
-import Navbar from "./Navbar";
-import EmployeeList from "./EmployeeList";
+function Employee(props) {
+  const { name, email, managerName, isOwner, isAdmin, isActive } = props;
 
-function Employee() {
   return (
-    <div>
-        <Navbar />
-        <h1>Employee</h1>
-        <EmployeeList />
+    <div className="employee-box">
+      <div className="left-column">
+        <Typography variant="h6">{name}</Typography>
+        <Typography variant="subtitle1" color="textSecondary">
+          {email}
+        </Typography>
+        <Typography variant="body2" color="textSecondary">
+          Manager: {managerName || "None"}
+        </Typography>
+      </div>
+      <div className="right-column">
+        <Typography variant="body2">
+          {isOwner ? "Owner" : isAdmin ? "Admin" : "Employee"}
+        </Typography>
+        <Typography variant="body2">
+          {isActive ? "Active" : "Inactive"}
+        </Typography>
+      </div>
     </div>
   );
 }

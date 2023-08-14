@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  TableSortLabel,
-} from "@mui/material";
 import axios from "axios";
+import Employee from "./Employee"; // Import the Employee component
+import {
+  Button,
+  Container,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+} from "@mui/material";
+import "./EmployeeListStyle.css";
 
 function EmployeeList() {
   const [employees, setEmployees] = useState([]);
@@ -31,62 +31,60 @@ function EmployeeList() {
   }, []);
 
   const handleSort = (property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
+    if (orderBy === property) {
+      setOrder(order === "asc" ? "desc" : "asc"); // Toggle order if same column is clicked
+    } else {
+      setOrderBy(property);
+      setOrder("asc");
+    }
   };
 
   const sortedEmployees = [...employees].sort((a, b) => {
     if (order === "asc") {
+      if (orderBy === "user.email") {
+        return a.user.email.localeCompare(b.user.email);
+      }
       return a[orderBy] > b[orderBy] ? 1 : -1;
     } else {
+      if (orderBy === "user.email") {
+        return b.user.email.localeCompare(a.user.email);
+      }
       return a[orderBy] < b[orderBy] ? 1 : -1;
     }
   });
 
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              <TableSortLabel
-                active={orderBy === "id"}
-                direction={orderBy === "id" ? order : "asc"}
-                onClick={() => handleSort("id")}
-              >
-                ID
-              </TableSortLabel>
-            </TableCell>
-            <TableCell>
-              <TableSortLabel
-                active={orderBy === "user.email"}
-                direction={orderBy === "user.email" ? order : "asc"}
-                onClick={() => handleSort("user.email")}
-              >
-                Employee Email
-              </TableSortLabel>
-            </TableCell>
-            <TableCell>Is Owner</TableCell>
-            <TableCell>Is Admin</TableCell>
-            <TableCell>Is Active</TableCell>
-            <TableCell>Gender</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {sortedEmployees.map((employee) => (
-            <TableRow key={employee.id}>
-              <TableCell>{employee.id}</TableCell>
-              <TableCell>{employee.user.email}</TableCell>
-              <TableCell>{employee.is_owner ? "Yes" : "No"}</TableCell>
-              <TableCell>{employee.is_admin ? "Yes" : "No"}</TableCell>
-              <TableCell>{employee.is_active ? "Yes" : "No"}</TableCell>
-              <TableCell>{employee.gender}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Container>
+      <h2>Employee List</h2>
+      <div>
+        <Button variant="contained" onClick={() => handleSort("id")}>
+          Sort by ID
+        </Button>
+        <Button variant="contained" onClick={() => handleSort("user.email")}>
+          Sort by Email
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => handleSort("user.first_name")}
+        >
+          Sort by Name
+        </Button>
+      </div>
+      <List>
+        {sortedEmployees.map((employee) => (
+          <ListItem key={employee.id}>
+            <Employee
+              name={`${employee.user.first_name} ${employee.user.last_name}`}
+              email={employee.user.email}
+              managerName={employee.manager} // Pass the manager's name
+              isOwner={employee.is_owner}
+              isAdmin={employee.is_admin}
+              isActive={employee.is_active}
+            />
+          </ListItem>
+        ))}
+      </List>
+    </Container>
   );
 }
 

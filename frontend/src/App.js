@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from './Components/Login';
 import Departments from './Components/Departments';
 import BasicInfo from './Components/BasicInfo';
-import Employee from './Components/Employee';
+import Employee from './Components/Employees';
 
 const App = () => {
   return (
