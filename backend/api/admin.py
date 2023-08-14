@@ -32,7 +32,7 @@ class CompanyAdmin(ModelAdmin):
 
 @admin.register(Employee)
 class EmployeeModel(ModelAdmin):
-    list_display = ("user", "company")
+    pass
 
 
 @admin.register(Department)

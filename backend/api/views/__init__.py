@@ -4,6 +4,7 @@
 
 from .ApplicantViewSet import ApplicantViewSet
 from .department_views import DepartmentViewSet
+from .custom_user_views import CustomUserViewSet
 
 # from .EmployeeViewSet import EmployeeViewSet
 from .EmploymentViewSet import EmploymentViewSet
@@ -18,4 +19,4 @@ from .TimeOffViewSet import TimeOffViewSet
 from .TrackingViewSet import TrackingViewSet
 
 from .company_views import CompanyRetrieveUpdateDestroyViewSet
-from .employee_views import CreateCompanyOwnerView
+from .employee_views import CreateCompanyOwnerView, EmployeeViewSet

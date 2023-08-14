@@ -12,6 +12,8 @@ class DepartmentSerializer(
     Serializer for Department model.
     """
 
+    company = CompanySerializer(read_only=True)
+
     class Meta:
         model = Department
         fields = [

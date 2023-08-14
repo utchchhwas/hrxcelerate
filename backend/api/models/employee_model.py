@@ -84,7 +84,7 @@ class Employee(models.Model):
         pass
 
     def __str__(self):
-        return f"{self.user.email}"
+        return f"{self.user.email} - {self.company.name}"
 
 
 @receiver(post_delete, sender=Employee)
