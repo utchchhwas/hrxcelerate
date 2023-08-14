@@ -11,7 +11,7 @@ from .InterviewerViewSet import InterviewerViewSet
 from .InterviewResultViewSet import InterviewResultViewSet
 from .JobPostingViewSet import JobPostingViewSet
 from .JobPostingSalaryViewSet import JobPostingSalaryViewSet
-from .JobRoleViewSet import JobRoleViewSet
+from .job_role_views import JobRoleViewSet
 from .NotificationViewSet import NotificationViewSet
 from .PayslipViewSet import PayslipViewSet
 from .TimeOffViewSet import TimeOffViewSet

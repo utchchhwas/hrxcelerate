@@ -26,11 +26,20 @@ class DepartmentSerializer(
 
     def create(self, validated_data):
         user_company = self.context["request"].user.employee.company
-        provided_company = validated_data["company"]
+        company = validated_data["company"]
 
-        if user_company != provided_company:
+        if company != user_company:
             raise serializers.ValidationError(
                 "You can only create departments in your company."
             )
 
         return super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        user_company = self.context["request"].user.employee.company
+        company = validated_data.get("company", instance.company)
+
+        if company != user_company:
+            raise serializers.ValidationError("Invalid company field.")
+
+        return super().update(instance, validated_data)

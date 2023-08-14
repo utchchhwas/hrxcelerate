@@ -36,6 +36,7 @@ router = DefaultRouter()
 
 router.register(r"companies", CompanyRetrieveUpdateDestroyViewSet, basename="company")
 router.register(r"departments", DepartmentViewSet, basename="department")
+router.register(r"job-roles", JobRoleViewSet, basename="job-roles")
 
 router.register(r"applicants", ApplicantViewSet, basename="applicants")
 router.register(r"departments", DepartmentViewSet, basename="departments")
@@ -48,7 +49,6 @@ router.register(r"job-postings", JobPostingViewSet, basename="job-postings")
 router.register(
     r"job-posting-salaries", JobPostingSalaryViewSet, basename="job-posting-salaries"
 )
-router.register(r"job-roles", JobRoleViewSet, basename="job-roles")
 router.register(r"notifications", NotificationViewSet, basename="notifications")
 router.register(r"payslips", PayslipViewSet, basename="payslips")
 router.register(r"time-offs", TimeOffViewSet, basename="time-offs")
