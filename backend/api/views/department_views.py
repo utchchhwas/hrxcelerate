@@ -3,10 +3,18 @@ from api.models import Department
 from api.serializers import DepartmentSerializer
 from rest_framework.permissions import IsAuthenticated, SAFE_METHODS
 from api.permissions import IsAdminEmployee
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class DepartmentViewSet(ModelViewSet):
     """ """
+
+    filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
+    search_fields = ["name"]
+    ordering_fields = ["id", "name"]
+    ordering = ["name"]
+    filterset_fields = ["id", "name"]
 
     serializer_class = DepartmentSerializer
 
