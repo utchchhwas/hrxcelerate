@@ -20,3 +20,5 @@ from .NotificationSerializer import NotificationSerializer
 from .PayslipSerializer import PayslipSerializer
 from .TimeOffSerializer import TimeOffSerializer
 from .TrackingSerializer import TrackingSerializer
+
+from .custom_user_serializers import ChangePasswordSerializer
