@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from api.models import Employment
 from rest_flex_fields.serializers import FlexFieldsSerializerMixin
-from django.db.models import Q
 
 
 class EmploymentSerializer(
@@ -23,6 +22,9 @@ class EmploymentSerializer(
             "end_date",
             "employment_type",
             "is_remote",
+            "salary",
+            "salary_currency",
+            "salary_frequency",
             "note",
         ]
         expandable_fields = {

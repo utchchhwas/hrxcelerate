@@ -1,4 +1,5 @@
 from django.db import models
+from djmoney.models.fields import MoneyField
 
 
 class Employment(models.Model):
@@ -45,6 +46,26 @@ class Employment(models.Model):
     is_remote = models.BooleanField(
         "Remote",
         default=False,
+    )
+    salary = MoneyField(
+        "salary",
+        max_digits=19,
+        decimal_places=4,
+        default_currency=None,
+        null=True,
+        blank=True,
+    )
+    salary_frequency = models.CharField(
+        "Salary Frequency",
+        choices=[
+            ("H", "Hourly"),
+            ("D", "Daily"),
+            ("W", "Weekly"),
+            ("B", "Bi-weekly"),
+            ("M", "Monthly"),
+        ],
+        max_length=1,
+        blank=True,
     )
     note = models.CharField(
         "Employment Note",

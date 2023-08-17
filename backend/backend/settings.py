@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "cloudinary_storage",
     "cloudinary",
+    "djmoney",
     # My apps
     "api",
     "upload",
