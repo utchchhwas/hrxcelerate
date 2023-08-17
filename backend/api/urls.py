@@ -41,10 +41,10 @@ urlpatterns = [
 router = DefaultRouter()
 
 router.register(r"companies", RetrieveUpdateDestroyCompanyViewSet, basename="company")
+router.register(r"departments", DepartmentViewSet, basename="department")
 
 # router.register(r"users", CustomUserViewSet, basename="users")
 #
-# router.register(r"departments", DepartmentViewSet, basename="department")
 # router.register(r"job-roles", JobRoleViewSet, basename="job-roles")
 # router.register(r"employees", EmployeeViewSet, basename="employee")
 

@@ -12,6 +12,17 @@ class IsReadOnly(BasePermission):
         return request.method in SAFE_METHODS
 
 
+class IsEmployee(BasePermission):
+    """
+    Check if the user in an employee.
+    """
+
+    message = "User is not an employee."
+
+    def has_permission(self, request, view):
+        return hasattr(request.user, "employee")
+
+
 class IsOwnerEmployee(BasePermission):
     """
     Check if the user is an owner Employee of the company.

@@ -29,16 +29,17 @@ class CompanyAdmin(ModelAdmin):
     ordering = ("id",)
 
 
+@admin.register(Department)
+class DepartmentModel(ModelAdmin):
+    list_display = ("name", "company", "id")
+    ordering = ("id",)
+
+
 @admin.register(Employee)
 class EmployeeModel(ModelAdmin):
     pass
 
 
-#
-# @admin.register(Department)
-# class DepartmentModel(ModelAdmin):
-#     pass
-#
 #
 # @admin.register(JobRole)
 # class JobRole(ModelAdmin):
