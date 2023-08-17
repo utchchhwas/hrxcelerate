@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import Employee, Company, CustomUser
+from api.models import Employee, Company, CustomUser, Employment
 from django.conf import settings
 from rest_framework import validators
 from django.contrib.auth.password_validation import validate_password
@@ -8,6 +8,7 @@ from api.serializers import (
     EmployeeUserSerializer,
     CompanySerializer,
     JobRoleSerializer,
+    EmploymentSerializer,
 )
 from django.utils.crypto import get_random_string
 from django.core.mail import send_mail
@@ -113,6 +114,8 @@ class EmployeeSerializer(
     active_job_role = serializers.PrimaryKeyRelatedField(
         read_only=True, label="Active Job Role"
     )
+    managees = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
+    employments = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
     reset_password = serializers.BooleanField(write_only=True, default=False)
 
     class Meta:
@@ -128,8 +131,9 @@ class EmployeeSerializer(
             "date_of_birth",
             "avatar",
             "active_job_role",
-            "reset_password",
             "managees",
+            "employments",
+            "reset_password",
         ]
         expandable_fields = {
             "company": CompanySerializer,
@@ -138,9 +142,15 @@ class EmployeeSerializer(
             "managees": (
                 ManageeEmployeeSerializer,
                 {
-                    "read_only": True,
                     "many": True,
                     "expand": ["active_job_role"],
+                },
+            ),
+            "employments": (
+                EmploymentSerializer,
+                {
+                    "many": True,
+                    "expand": ["job_role"],
                 },
             ),
         }
