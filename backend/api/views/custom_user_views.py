@@ -13,8 +13,12 @@ from rest_framework import status
 class CustomUserViewSet(ModelViewSet):
     """ """
 
-    queryset = CustomUser.objects.all()
+    permission_classes = [IsAuthenticated, IsAdminEmployee]
     serializer_class = CustomUserSerializer
+
+    def get_queryset(self):
+        user_company = self.request.user.employee.company
+        return CustomUser.objects.filter(employee__company=user_company)
 
 
 class ChangePasswordView(generics.GenericAPIView):

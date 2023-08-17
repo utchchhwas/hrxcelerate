@@ -16,30 +16,7 @@ class CustomUserSerializer(
 
     class Meta:
         model = CustomUser
-        fields = ["id", "email", "password", "old_password"]
-        extra_kwargs = {
-            "password": {
-                "write_only": True,
-                "required": True,
-            },
-        }
-
-    def create(self, validated_data):
-        return CustomUser.objects.create_user(**validated_data)
-
-    def update(self, instance, validated_data):
-        print(validated_data)
-        old_password = validated_data.pop("old_password", None)
-        password = validated_data.pop("password", None)
-        if password:
-            instance.set_password(password)
-            instance.save()
-
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
-        instance.save()
-
-        return instance
+        fields = ["id", "email"]
 
 
 class ChangePasswordSerializer(serializers.Serializer):
