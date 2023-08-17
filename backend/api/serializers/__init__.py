@@ -5,6 +5,7 @@ from .job_role_serializers import JobRoleSerializer
 from .employment_serializers import EmploymentSerializer
 from .employee_serializer import CreateCompanyOwnerSerializer, EmployeeSerializer
 
+from .token_serializers import CustomTokenObtainPairSerializer
 
 from .InterviewerSerializer import InterviewerSerializer
 from .InterviewResultSerializer import InterviewResultSerializer

@@ -23,18 +23,13 @@ from api.views import CreateCompanyOwnerView, EmployeeViewSet
 from api.views import ChangePasswordView
 
 urlpatterns = [
-    path("login/", TokenObtainPairView.as_view(), name="obtain-token-pair"),
-    # path("refresh-token/", TokenRefreshView.as_view(), name="refresh-token"),
-    # path(
-    #     r"create-company-owner/",
-    #     CreateCompanyOwnerView.as_view(),
-    #     name="create-company-owner",
-    # ),
-    # path(
-    #     "change-password/",
-    #     ChangePasswordView.as_view(),
-    #     name="change-password",
-    # ),
+    path("obtain-token-pair/", TokenObtainPairView.as_view(), name="obtain-token-pair"),
+    path("refresh-token/", TokenRefreshView.as_view(), name="refresh-token"),
+    path(
+        "change-password/",
+        ChangePasswordView.as_view(),
+        name="change-password",
+    ),
 ]
 
 
