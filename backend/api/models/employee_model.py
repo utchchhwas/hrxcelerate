@@ -1,7 +1,6 @@
-from typing import Any, Iterable, Optional
 from django.db import models
 from django.conf import settings
-from api.models import CustomUser, Company
+from api.models import CustomUser, Company, JobRole, Employment
 from django.dispatch import receiver
 from django.db.models.signals import post_delete
 from cloudinary_storage.storage import MediaCloudinaryStorage
@@ -85,9 +84,9 @@ class Employee(models.Model):
         blank=True,
     )
     job_roles = models.ManyToManyField(
-        "api.JobRole",
+        JobRole,
         related_name="employees",
-        through="api.Employment",
+        through=Employment,
         verbose_name="Job Roles",
     )
 
@@ -95,6 +94,13 @@ class Employee(models.Model):
 
     class Meta:
         pass
+
+    @property
+    def active_job_role(self):
+        active_employments = self.employments.filter(is_active=True)
+        if active_employments.exists():
+            return active_employments.order_by("start_date").first().job_role
+        return None
 
     def __str__(self):
         return f"{self.user.email} - {self.company.name}"

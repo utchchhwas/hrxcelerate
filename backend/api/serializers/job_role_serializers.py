@@ -1,9 +1,7 @@
-from rest_framework.serializers import ModelSerializer, ValidationError
 from rest_framework import serializers
 from api.models import JobRole
 from rest_flex_fields.serializers import FlexFieldsSerializerMixin
 from api.serializers import DepartmentSerializer
-from api.models import Department
 
 
 class JobRoleSerializer(

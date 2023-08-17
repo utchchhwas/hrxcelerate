@@ -1,5 +1,4 @@
 from django.db import models
-from api.models import Employee, JobRole
 
 
 class Employment(models.Model):
@@ -8,13 +7,13 @@ class Employment(models.Model):
     """
 
     employee = models.ForeignKey(
-        Employee,
+        "api.Employee",
         related_name="employments",
         on_delete=models.CASCADE,
         verbose_name="Employee",
     )
     job_role = models.ForeignKey(
-        JobRole,
+        "api.JobRole",
         related_name="employments",
         on_delete=models.CASCADE,
         verbose_name="Job Role",

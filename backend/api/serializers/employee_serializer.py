@@ -4,7 +4,12 @@ from django.conf import settings
 from rest_framework import validators
 from django.contrib.auth.password_validation import validate_password
 from rest_flex_fields.serializers import FlexFieldsSerializerMixin
-from api.serializers import *
+from api.serializers import (
+    EmployeeUserSerializer,
+    CompanySerializer,
+    JobRoleSerializer,
+    EmploymentSerializer,
+)
 
 
 class CreateCompanyOwnerSerializer(serializers.ModelSerializer):
@@ -72,6 +77,9 @@ class EmployeeSerializer(
     """
 
     user = EmployeeUserSerializer()
+    active_job_role = serializers.PrimaryKeyRelatedField(
+        read_only=True, label="Active Job Role"
+    )
 
     class Meta:
         model = Employee
@@ -85,7 +93,13 @@ class EmployeeSerializer(
             "gender",
             "date_of_birth",
             "avatar",
+            "active_job_role",
         ]
+        expandable_fields = {
+            "company": CompanySerializer,
+            "manager": "api.EmployeeSerializer",
+            "active_job_role": (JobRoleSerializer, {"expand": ["department"]}),
+        }
 
     def validate_user(self, value):
         email = value["email"]
