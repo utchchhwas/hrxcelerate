@@ -30,24 +30,28 @@ class CompanyAdmin(ModelAdmin):
 
 
 @admin.register(Department)
-class DepartmentModel(ModelAdmin):
+class DepartmentAdmin(ModelAdmin):
     list_display = ("name", "company", "id")
     ordering = ("name",)
 
 
 @admin.register(JobRole)
-class JobRole(ModelAdmin):
+class JobRoleAdmin(ModelAdmin):
     list_display = ("name", "department", "id")
     ordering = ("name",)
 
 
 @admin.register(Employee)
-class EmployeeModel(ModelAdmin):
+class EmployeeAdmin(ModelAdmin):
     pass
 
 
+@admin.register(Employment)
+class EmploymentAdmin(ModelAdmin):
+    list_display = ("__str__", "employee", "job_role", "id")
+
+
 # admin.site.register(Applicant)
-# admin.site.register(Employment)
 # admin.site.register(Interviewer)
 # admin.site.register(InterviewResult)
 # admin.site.register(JobPosting)

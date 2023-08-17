@@ -9,10 +9,17 @@ from uuid import uuid4
 
 
 def employee_avatar_upload_to(instance, filename):
+    """
+    Get uploading file path for company logo.
+    """
     return f"hrx-avatars/{uuid4().hex}"
 
 
 class EmployeeManager(models.Manager):
+    """
+    Custom manager for Employee model.
+    """
+
     def create_with_user(self, user_data, **kwargs):
         user = CustomUser.objects.create_user(**user_data)
         return super().create(user=user, **kwargs)
@@ -76,6 +83,12 @@ class Employee(models.Model):
         upload_to=employee_avatar_upload_to,
         storage=MediaCloudinaryStorage(),
         blank=True,
+    )
+    job_roles = models.ManyToManyField(
+        "api.JobRole",
+        related_name="employees",
+        through="api.Employment",
+        verbose_name="Job Roles",
     )
 
     objects = EmployeeManager()

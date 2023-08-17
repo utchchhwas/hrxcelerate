@@ -1,19 +1,21 @@
 from django.db import models
-from . import Employee, JobRole
+from api.models import Employee, JobRole
 
 
 class Employment(models.Model):
     """
-    Model representing an employment of an employee in a company.
+    Model representing many-to-many relationship between employees and job roles.
     """
 
     employee = models.ForeignKey(
         Employee,
+        related_name="employments",
         on_delete=models.CASCADE,
         verbose_name="Employee",
     )
     job_role = models.ForeignKey(
         JobRole,
+        related_name="employments",
         on_delete=models.CASCADE,
         verbose_name="Job Role",
     )
@@ -47,7 +49,7 @@ class Employment(models.Model):
     )
     note = models.CharField(
         "Employment Note",
-        max_length=150,
+        max_length=500,
         blank=True,
     )
 
@@ -55,4 +57,4 @@ class Employment(models.Model):
         pass
 
     def __str__(self):
-        return f"{self.employee.user.get_full_name()} - {self.job_role.name}"
+        return f"{self.employee.user.email} - {self.job_role}"

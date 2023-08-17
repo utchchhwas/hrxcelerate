@@ -10,7 +10,7 @@ from .employee_serializer import CreateCompanyOwnerSerializer, EmployeeSerialize
 from .ApplicantSerializer import ApplicantSerializer
 
 # from .EmployeeSerializer import EmployeeSerializerOld
-from .EmploymentSerializer import EmploymentSerializer
+from .employment_serializers import EmploymentSerializer
 from .InterviewerSerializer import InterviewerSerializer
 from .InterviewResultSerializer import InterviewResultSerializer
 from .JobPostingSerializer import JobPostingSerializer
