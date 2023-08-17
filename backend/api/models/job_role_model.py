@@ -7,15 +7,15 @@ class JobRole(models.Model):
     Model representing a job role in some department.
     """
 
-    name = models.CharField(
-        "Job Role Name",
-        max_length=150,
-    )
     department = models.ForeignKey(
         Department,
         related_name="job_roles",
         on_delete=models.CASCADE,
         verbose_name="Department",
+    )
+    name = models.CharField(
+        "Job Role Name",
+        max_length=150,
     )
     description = models.TextField(
         "Job Role Description",

@@ -26,24 +26,24 @@ class CustomUserAdmin(UserAdmin):
 @admin.register(Company)
 class CompanyAdmin(ModelAdmin):
     list_display = ("name", "id")
-    ordering = ("id",)
+    ordering = ("name",)
 
 
 @admin.register(Department)
 class DepartmentModel(ModelAdmin):
     list_display = ("name", "company", "id")
-    ordering = ("id",)
+    ordering = ("name",)
+
+
+@admin.register(JobRole)
+class JobRole(ModelAdmin):
+    list_display = ("name", "department", "id")
+    ordering = ("name",)
 
 
 @admin.register(Employee)
 class EmployeeModel(ModelAdmin):
     pass
-
-
-#
-# @admin.register(JobRole)
-# class JobRole(ModelAdmin):
-#     pass
 
 
 # admin.site.register(Applicant)

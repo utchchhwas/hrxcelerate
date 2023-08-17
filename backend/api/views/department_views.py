@@ -8,7 +8,14 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 
 class DepartmentViewSet(viewsets.ModelViewSet):
-    """ """
+    """
+    Provides the following actions:
+        - Create Department
+        - Retrieve Department List
+        - Retrieve Department
+        - Update Department
+        - Destroy Department
+    """
 
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ["id", "name"]

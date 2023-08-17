@@ -1,4 +1,5 @@
 from rest_framework.serializers import ModelSerializer, ValidationError
+from rest_framework import serializers
 from api.models import JobRole
 from rest_flex_fields.serializers import FlexFieldsSerializerMixin
 from api.serializers import DepartmentSerializer
@@ -7,16 +8,18 @@ from api.models import Department
 
 class JobRoleSerializer(
     FlexFieldsSerializerMixin,
-    ModelSerializer,
+    serializers.ModelSerializer,
 ):
-    """ """
+    """
+    Serializer for JobRole model.
+    """
 
     class Meta:
         model = JobRole
         fields = [
             "id",
-            "name",
             "department",
+            "name",
             "description",
         ]
         expandable_fields = {
@@ -26,20 +29,8 @@ class JobRoleSerializer(
             )
         }
 
-    def create(self, validated_data):
-        user_company = self.context["request"].user.employee.company
-        department = validated_data["department"]
-
-        if department.company != user_company:
-            raise ValidationError("Invalid department field.")
-
-        return super().create(validated_data)
-
-    def update(self, instance, validated_data):
-        user_company = self.context["request"].user.employee.company
-        department = validated_data.get("department", instance.department)
-
-        if department.company != user_company:
-            raise ValidationError("Invalid department field.")
-
-        return super().update(instance, validated_data)
+    def validate_department(self, department):
+        employee = self.context["request"].user.employee
+        if department.company != employee.company:
+            raise serializers.ValidationError("Invalid department.")
+        return department

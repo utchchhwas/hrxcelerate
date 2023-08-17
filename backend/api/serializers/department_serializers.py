@@ -28,28 +28,7 @@ class DepartmentSerializer(
         """
         Check if the company is user's company.
         """
-        user_company = self.context["request"].user.employee.company
-        if company != user_company:
+        employee = self.context["request"].user.employee
+        if company != employee.company:
             raise serializers.ValidationError("Invalid company.")
         return company
-
-
-#     def create(self, validated_data):
-#         user_company = self.context["request"].user.employee.company
-#         company = validated_data["company"]
-#
-#         if company != user_company:
-#             raise serializers.ValidationError(
-#                 "You can only create departments in your company."
-#             )
-#
-#         return super().create(validated_data)
-#
-#     def update(self, instance, validated_data):
-#         user_company = self.context["request"].user.employee.company
-#         company = validated_data.get("company", instance.company)
-#
-#         if company != user_company:
-#             raise serializers.ValidationError("Invalid company field.")
-#
-#         return super().update(instance, validated_data)
