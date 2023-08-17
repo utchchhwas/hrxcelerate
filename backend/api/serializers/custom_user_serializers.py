@@ -6,7 +6,7 @@ from django.contrib.auth.password_validation import validate_password
 CustomUser = get_user_model()
 
 
-class CustomUserSerializer(
+class EmployeeUserSerializer(
     FlexFieldsSerializerMixin,
     serializers.ModelSerializer,
 ):
@@ -14,9 +14,16 @@ class CustomUserSerializer(
     Serializer class for CustomUser model.
     """
 
+    email = serializers.EmailField()
+
     class Meta:
         model = CustomUser
-        fields = ["id", "email"]
+        fields = [
+            "id",
+            "email",
+            "first_name",
+            "last_name",
+        ]
 
 
 class ChangePasswordSerializer(serializers.Serializer):

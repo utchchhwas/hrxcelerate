@@ -52,8 +52,6 @@ class CustomUser(AbstractUser):
     )
     # Remove unnecessary fields
     username = None
-    first_name = None
-    last_name = None
 
     # Set custom user manager
     objects = CustomUserManager()

@@ -1,6 +1,6 @@
 from rest_framework.viewsets import ModelViewSet
 from api.models import CustomUser
-from api.serializers import CustomUserSerializer
+from api.serializers import EmployeeUserSerializer
 from rest_framework.permissions import IsAuthenticated, SAFE_METHODS
 from api.permissions import IsAdminEmployee
 from rest_framework import views, viewsets, generics
@@ -14,7 +14,7 @@ class CustomUserViewSet(ModelViewSet):
     """ """
 
     permission_classes = [IsAuthenticated, IsAdminEmployee]
-    serializer_class = CustomUserSerializer
+    serializer_class = EmployeeUserSerializer
 
     def get_queryset(self):
         user_company = self.request.user.employee.company

@@ -1,11 +1,11 @@
 from rest_framework import serializers
 from api.models import Employee, Company, CustomUser
-from api.serializers import CustomUserSerializer, CompanySerializer
+from api.serializers import EmployeeUserSerializer, CompanySerializer
 from django.conf import settings
 
 
 class EmployeeSerializerOld(serializers.ModelSerializer):
-    user = CustomUserSerializer()
+    user = EmployeeUserSerializer()
     company = CompanySerializer()
 
     class Meta:

@@ -1,10 +1,10 @@
 from rest_framework import serializers
 from api.models import Employee, Company, CustomUser
-from api.serializers import CustomUserSerializer, CompanySerializer
 from django.conf import settings
 from rest_framework import validators
 from django.contrib.auth.password_validation import validate_password
 from rest_flex_fields.serializers import FlexFieldsSerializerMixin
+from api.serializers import *
 
 
 class CreateCompanyOwnerSerializer(serializers.ModelSerializer):
@@ -63,8 +63,15 @@ class CreateCompanyOwnerSerializer(serializers.ModelSerializer):
         return employee
 
 
-class EmployeeSerializer(serializers.ModelSerializer):
-    user = CustomUserSerializer()
+class EmployeeSerializer(
+    FlexFieldsSerializerMixin,
+    serializers.ModelSerializer,
+):
+    """
+    Serializer for Employee model.
+    """
+
+    user = EmployeeUserSerializer()
 
     class Meta:
         model = Employee
@@ -80,19 +87,71 @@ class EmployeeSerializer(serializers.ModelSerializer):
             "avatar",
         ]
 
+    def validate_user(self, value):
+        email = value["email"]
+        print(email, self.instance)
+
+        qs = CustomUser.objects.filter(email=email)
+        if self.instance:
+            qs = qs.exclude(pk=self.instance.user.id)
+
+        if qs.count():
+            raise validators.ValidationError("A user with this email already exists.")
+
+        return value
+
+    def validate_company(self, value):
+        employee = self.context["request"].user.employee
+        if value != employee.company:
+            raise validators.ValidationError("Invalid company field.")
+        return value
+
+    def validate_manager(self, value):
+        if not value:
+            return value
+
+        employee = self.context["request"].user.employee
+
+        if value.company != employee.company:
+            raise validators.ValidationError("Invalid manager field.")
+
+        return value
+
+    def validate_is_owner(self, value):
+        employee = self.context["request"].user.employee
+
+        if not employee.is_owner:
+            raise validators.ValidationError(
+                "Only admin employees can include is_owner field."
+            )
+
+        if employee == self.instance:
+            raise validators.ValidationError(
+                "An owner employee cannot include is_owner field for themselves."
+            )
+
+        return value
+
+    def validate_is_admin(self, value):
+        employee = self.context["request"].user.employee
+
+        if not employee.is_owner:
+            raise validators.ValidationError(
+                "Only admin employees can include is_admin field."
+            )
+
+        return value
+
     def create(self, validated_data):
         user_data = validated_data.pop("user")
-        user_serializer = CustomUserSerializer(data=user_data)
-        user_serializer.is_valid(raise_exception=True)
-        user = user_serializer.create(validated_data=user_data)
-
-        employee = Employee.objects.create(user=user, **validated_data)
+        employee = Employee.objects.create_with_user(
+            user_data=user_data, **validated_data
+        )
         return employee
 
     def update(self, instance, validated_data):
         user_data = validated_data.pop("user")
-        user_serializer = CustomUserSerializer(instance.user, data=user_data)
-        user_serializer.is_valid(raise_exception=True)
+        user_serializer = EmployeeUserSerializer(instance.user, data=user_data)
         user_serializer.update(instance.user, user_data)
 
         for attr, value in validated_data.items():
@@ -100,55 +159,3 @@ class EmployeeSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
-
-    #     def validate_company(self, company):
-    #         print("in validate company")
-    #         user_company = self.context["request"].user.employee.company
-    #         print(company, user_company)
-    #         if company != user_company:
-    #             raise validators.ValidationError("Invalid company field.")
-    #         return company
-    #
-    #     def validate_manager(self, manager):
-    #         print("in validate manager")
-    #         if not manager:
-    #             return manager
-    #         user_company = self.context["request"].user.employee.company
-    #         print(manager.company, user_company)
-    #         if manager.company != user_company:
-    #             raise validators.ValidationError("Invalid manager field.")
-    #         return manager
-    #
-    #     # def validate_email(self, value):
-    #     #     print("in validate email")
-    #     #     # Only validate if the email has changed
-    #     #     if self.instance.user.email != value:
-    #     #         if (
-    #     #             Employee.objects.exclude(id=self.instance.id)
-    #     #             .filter(user__email=value)
-    #     #             .exists()
-    #     #         ):
-    #     #             raise serializers.ValidationError("This email is already in use.")
-    #     #     return value
-
-
-#     def create(self, validated_data):
-#         print("in create")
-#         print(validated_data)
-#
-#         user_data = validated_data.pop("user")
-#         employee = Employee.objects.create_with_user(
-#             user_data=user_data, **validated_data
-#         )
-#         return employee
-#
-#     def update(self, employee, validated_data):
-#         print("in update")
-#         print(validated_data)
-#
-#         user = employee.user
-#         user_data = validated_data.pop("user")
-#
-#         print(user_data)
-#
-#         return super().update(employee, validated_data)

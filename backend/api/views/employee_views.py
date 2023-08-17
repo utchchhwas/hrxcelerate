@@ -3,9 +3,10 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from api.models import Employee
 from api.serializers import CreateCompanyOwnerSerializer
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, SAFE_METHODS
 from api.serializers import EmployeeSerializer
 from rest_framework.permissions import IsAuthenticated
+from api.permissions import IsEmployee, IsAdminEmployee
 
 
 class CreateCompanyOwnerView(generics.CreateAPIView):
@@ -18,11 +19,25 @@ class CreateCompanyOwnerView(generics.CreateAPIView):
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    """
+    Provides the following actions:
+        - Create Employee
+        - Retrieve Employee List
+        - Retrieve Employee
+        - Update Employee
+        - Destroy Employee
+    """
 
     serializer_class = EmployeeSerializer
-    queryset = Employee.objects.all()
 
-    # def get_queryset(self):
-    #     user_company = self.request.user.employee.company
-    #     return Employee.objects.filter(company=user_company)
+    def get_queryset(self):
+        user = self.request.user
+        if not hasattr(user, "employee"):
+            return Employee.objects.none()
+        company = user.employee.company
+        return Employee.objects.filter(company=company)
+
+    def get_permissions(self):
+        if self.request.method in SAFE_METHODS:
+            return [IsAuthenticated(), IsEmployee()]
+        return [IsAuthenticated(), IsAdminEmployee()]

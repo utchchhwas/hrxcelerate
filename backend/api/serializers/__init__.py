@@ -3,7 +3,7 @@
 # Payslip, TimeOff and Tracking models.
 
 from .company_serializer import CompanySerializer
-from .custom_user_serializers import CustomUserSerializer
+from .custom_user_serializers import EmployeeUserSerializer
 from .department_serializers import DepartmentSerializer
 from .employee_serializer import CreateCompanyOwnerSerializer, EmployeeSerializer
 
