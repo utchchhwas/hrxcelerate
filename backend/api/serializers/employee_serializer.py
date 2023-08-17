@@ -69,6 +69,38 @@ class CreateCompanyOwnerSerializer(serializers.ModelSerializer):
         return employee
 
 
+class ManageeEmployeeSerializer(
+    FlexFieldsSerializerMixin,
+    serializers.ModelSerializer,
+):
+    """
+    Serializer for managee employees.
+    """
+
+    user = EmployeeUserSerializer()
+    active_job_role = serializers.PrimaryKeyRelatedField(
+        read_only=True, label="Active Job Role"
+    )
+
+    class Meta:
+        model = Employee
+        fields = [
+            "user",
+            "company",
+            "manager",
+            "is_owner",
+            "is_admin",
+            "is_active",
+            "gender",
+            "date_of_birth",
+            "avatar",
+            "active_job_role",
+        ]
+        expandable_fields = {
+            "active_job_role": (JobRoleSerializer, {"expand": ["department"]}),
+        }
+
+
 class EmployeeSerializer(
     FlexFieldsSerializerMixin,
     serializers.ModelSerializer,
@@ -97,11 +129,20 @@ class EmployeeSerializer(
             "avatar",
             "active_job_role",
             "reset_password",
+            "managees",
         ]
         expandable_fields = {
             "company": CompanySerializer,
             "manager": ("api.EmployeeSerializer", {"expand": ["active_job_role"]}),
             "active_job_role": (JobRoleSerializer, {"expand": ["department"]}),
+            "managees": (
+                ManageeEmployeeSerializer,
+                {
+                    "read_only": True,
+                    "many": True,
+                    "expand": ["active_job_role"],
+                },
+            ),
         }
 
     def validate_user(self, value):
@@ -161,6 +202,13 @@ class EmployeeSerializer(
 
         return value
 
+    def validate_reset_password(self, value):
+        if not self.instance and value:
+            raise validators.ValidationError(
+                "reset_password field can only be used while updating."
+            )
+        return value
+
     def __reset_password(self, user):
         password = get_random_string(16)
         user.set_password(password)
@@ -175,6 +223,8 @@ class EmployeeSerializer(
         )
 
     def create(self, validated_data):
+        validated_data.pop("reset_password", None)
+
         user_data = validated_data.pop("user")
         employee = Employee.objects.create_with_user(
             user_data=user_data, **validated_data
@@ -190,7 +240,7 @@ class EmployeeSerializer(
             user_serializer = EmployeeUserSerializer(instance.user, data=user_data)
             user_serializer.update(instance.user, user_data)
 
-        reset_password = validated_data.pop("reset_password", False)
+        reset_password = validated_data.pop("reset_password", None)
         if reset_password:
             self.__reset_password(instance.user)
 
