@@ -81,6 +81,7 @@ class EmployeeSerializer(
     active_job_role = serializers.PrimaryKeyRelatedField(
         read_only=True, label="Active Job Role"
     )
+    reset_password = serializers.BooleanField(write_only=True, default=False)
 
     class Meta:
         model = Employee
@@ -95,6 +96,7 @@ class EmployeeSerializer(
             "date_of_birth",
             "avatar",
             "active_job_role",
+            "reset_password",
         ]
         expandable_fields = {
             "company": CompanySerializer,
@@ -103,14 +105,17 @@ class EmployeeSerializer(
         }
 
     def validate_user(self, value):
-        email = value["email"]
+        email = value.get("email", None)
 
-        qs = CustomUser.objects.filter(email=email)
-        if self.instance:
-            qs = qs.exclude(pk=self.instance.user.id)
+        if email:
+            qs = CustomUser.objects.filter(email=email)
+            if self.instance:
+                qs = qs.exclude(pk=self.instance.user.id)
 
-        if qs.count():
-            raise validators.ValidationError("A user with this email already exists.")
+            if qs.count():
+                raise validators.ValidationError(
+                    "A user with this email already exists."
+                )
 
         return value
 
@@ -156,30 +161,38 @@ class EmployeeSerializer(
 
         return value
 
+    def __reset_password(self, user):
+        password = get_random_string(16)
+        user.set_password(password)
+        user.save()
+
+        send_mail(
+            "Password Reset.",
+            f"New Password: {password}",
+            "noreply@hrxcelerate.com",
+            [user.email],
+            fail_silently=True,
+        )
+
     def create(self, validated_data):
         user_data = validated_data.pop("user")
         employee = Employee.objects.create_with_user(
             user_data=user_data, **validated_data
         )
 
-        password = get_random_string(16)
-        employee.user.set_password(password)
-        employee.user.save()
-
-        send_mail(
-            "Password Reset.",
-            f"New Password: {password}",
-            "noreply@hrxcelerate.com",
-            [employee.user.email],
-            fail_silently=False,
-        )
+        self.__reset_password(employee.user)
 
         return employee
 
     def update(self, instance, validated_data):
-        user_data = validated_data.pop("user")
-        user_serializer = EmployeeUserSerializer(instance.user, data=user_data)
-        user_serializer.update(instance.user, user_data)
+        user_data = validated_data.pop("user", None)
+        if user_data:
+            user_serializer = EmployeeUserSerializer(instance.user, data=user_data)
+            user_serializer.update(instance.user, user_data)
+
+        reset_password = validated_data.pop("reset_password", False)
+        if reset_password:
+            self.__reset_password(instance.user)
 
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
