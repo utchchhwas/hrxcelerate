@@ -15,7 +15,9 @@ from django.core.mail import send_mail
 
 
 class CreateCompanyOwnerSerializer(serializers.ModelSerializer):
-    """ """
+    """
+    Serializer for creating a company owner.
+    """
 
     email = serializers.EmailField(
         source="user.email",
@@ -35,10 +37,12 @@ class CreateCompanyOwnerSerializer(serializers.ModelSerializer):
     )
     first_name = serializers.CharField(
         source="user.first_name",
+        required=False,
         label="First Name",
     )
     last_name = serializers.CharField(
         source="user.last_name",
+        required=False,
         label="Last Name",
     )
     company_name = serializers.CharField(
@@ -67,6 +71,7 @@ class CreateCompanyOwnerSerializer(serializers.ModelSerializer):
         employee = Employee.objects.create_with_user(
             user_data=user_data, company=company, **validated_data
         )
+
         return employee
 
 

@@ -99,7 +99,7 @@ class Employee(models.Model):
     def active_job_role(self):
         active_employments = self.employments.filter(is_active=True)
         if active_employments.exists():
-            return active_employments.order_by("start_date").first().job_role
+            return active_employments.order_by("-start_date").first().job_role
         return None
 
     def __str__(self):

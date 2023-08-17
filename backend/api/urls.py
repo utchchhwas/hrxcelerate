@@ -40,6 +40,9 @@ urlpatterns = [
 
 router = DefaultRouter()
 
+router.register(
+    r"create-company-owner", CreateCompanyOwnerView, basename="create-company-owner"
+)
 router.register(r"companies", RetrieveUpdateDestroyCompanyViewSet, basename="company")
 router.register(r"departments", DepartmentViewSet, basename="department")
 router.register(r"job-roles", JobRoleViewSet, basename="job-roles")

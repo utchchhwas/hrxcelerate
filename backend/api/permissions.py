@@ -1,4 +1,4 @@
-from rest_framework.permissions import BasePermission, SAFE_METHODS
+from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
 
 
 class IsReadOnly(BasePermission):
@@ -42,7 +42,6 @@ class IsAdminEmployee(BasePermission):
     message = "User is not an admin employee."
 
     def has_permission(self, request, view):
-        print(f"val = {hasattr(request.user, 'employee')}")
         return hasattr(request.user, "employee") and request.user.employee.is_admin
 
 
@@ -55,3 +54,10 @@ class IsCompanyObject(BasePermission):
 
     def has_object_permission(self, request, view, obj):
         return request.user.employee.company == obj.get_company()
+
+
+class CompanyPermissionMixin:
+    def get_permissions(self):
+        if self.request.method in SAFE_METHODS:
+            return [IsAuthenticated(), IsEmployee()]
+        return [IsAuthenticated(), IsAdminEmployee()]

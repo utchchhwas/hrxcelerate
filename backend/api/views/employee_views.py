@@ -11,9 +11,9 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
 
-class CreateCompanyOwnerView(generics.CreateAPIView):
+class CreateCompanyOwnerView(mixins.CreateModelMixin, viewsets.GenericViewSet):
     """
-    Create a company owner.
+    View for creating a company owner along with the company.
     """
 
     permission_classes = [AllowAny]
@@ -60,7 +60,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
         "employments__job_role",
         "employments__job_role__department",
     ]
-    ordering = ["user"]
+    ordering = ["user__email"]
 
     serializer_class = EmployeeSerializer
 
