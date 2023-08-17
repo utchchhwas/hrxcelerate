@@ -24,28 +24,28 @@ from api.views import ChangePasswordView
 
 urlpatterns = [
     path("login/", TokenObtainPairView.as_view(), name="obtain-token-pair"),
-    path("refresh-token/", TokenRefreshView.as_view(), name="refresh-token"),
-    path(
-        r"create-company-owner/",
-        CreateCompanyOwnerView.as_view(),
-        name="create-company-owner",
-    ),
-    path(
-        "change-password/",
-        ChangePasswordView.as_view(),
-        name="change-password",
-    ),
+    # path("refresh-token/", TokenRefreshView.as_view(), name="refresh-token"),
+    # path(
+    #     r"create-company-owner/",
+    #     CreateCompanyOwnerView.as_view(),
+    #     name="create-company-owner",
+    # ),
+    # path(
+    #     "change-password/",
+    #     ChangePasswordView.as_view(),
+    #     name="change-password",
+    # ),
 ]
 
 
 router = DefaultRouter()
 
-router.register(r"users", CustomUserViewSet, basename="users")
-
-router.register(r"companies", CompanyRetrieveUpdateDestroyViewSet, basename="company")
-router.register(r"departments", DepartmentViewSet, basename="department")
-router.register(r"job-roles", JobRoleViewSet, basename="job-roles")
-router.register(r"employees", EmployeeViewSet, basename="employee")
+# router.register(r"users", CustomUserViewSet, basename="users")
+#
+# router.register(r"companies", CompanyRetrieveUpdateDestroyViewSet, basename="company")
+# router.register(r"departments", DepartmentViewSet, basename="department")
+# router.register(r"job-roles", JobRoleViewSet, basename="job-roles")
+# router.register(r"employees", EmployeeViewSet, basename="employee")
 
 # router.register(r"applicants", ApplicantViewSet, basename="applicants")
 # router.register(r"departments", DepartmentViewSet, basename="departments")
