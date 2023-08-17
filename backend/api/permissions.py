@@ -12,12 +12,12 @@ class IsReadOnly(BasePermission):
         return request.method in SAFE_METHODS
 
 
-class IsCompanyOwner(BasePermission):
+class IsOwnerEmployee(BasePermission):
     """
-    Check if the user is the owner of his company.
+    Check if the user is an owner Employee of the company.
     """
 
-    message = "User is not the owner."
+    message = "User is not an owner employee."
 
     def has_permission(self, request, view):
         return hasattr(request.user, "employee") and request.user.employee.is_owner
@@ -25,7 +25,7 @@ class IsCompanyOwner(BasePermission):
 
 class IsAdminEmployee(BasePermission):
     """
-    Check if the user is an admin employee of his company.
+    Check if the user is an admin employee of the company.
     """
 
     message = "User is not an admin employee."
@@ -40,7 +40,7 @@ class IsCompanyObject(BasePermission):
     Check if the object belongs to the user's company.
     """
 
-    message = "Object does not belong to user's company."
+    message = "Object does not belong to the company."
 
     def has_object_permission(self, request, view, obj):
         return request.user.employee.company == obj.get_company()

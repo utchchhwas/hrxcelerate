@@ -23,16 +23,17 @@ class CustomUserAdmin(UserAdmin):
     filter_horizontal = ()
 
 
-# @admin.register(Company)
-# class CompanyAdmin(ModelAdmin):
-#     list_display = ("name", "id")
-#     ordering = ("id",)
-#
-#
-# @admin.register(Employee)
-# class EmployeeModel(ModelAdmin):
-#     pass
-#
+@admin.register(Company)
+class CompanyAdmin(ModelAdmin):
+    list_display = ("name", "id")
+    ordering = ("id",)
+
+
+@admin.register(Employee)
+class EmployeeModel(ModelAdmin):
+    pass
+
+
 #
 # @admin.register(Department)
 # class DepartmentModel(ModelAdmin):

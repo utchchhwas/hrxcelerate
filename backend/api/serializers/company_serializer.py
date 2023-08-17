@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from api.models import Company
 from rest_flex_fields.serializers import FlexFieldsSerializerMixin
+from api.models import Company
 
 
 class CompanySerializer(

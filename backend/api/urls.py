@@ -17,7 +17,7 @@ from api.views import PayslipViewSet
 from api.views import TimeOffViewSet
 from api.views import TrackingViewSet
 from api.views import CustomUserViewSet
-from api.views import CompanyRetrieveUpdateDestroyViewSet
+from api.views import RetrieveUpdateDestroyCompanyViewSet
 from api.views import CreateCompanyOwnerView, EmployeeViewSet
 
 from api.views import ChangePasswordView
@@ -40,9 +40,10 @@ urlpatterns = [
 
 router = DefaultRouter()
 
+router.register(r"companies", RetrieveUpdateDestroyCompanyViewSet, basename="company")
+
 # router.register(r"users", CustomUserViewSet, basename="users")
 #
-# router.register(r"companies", CompanyRetrieveUpdateDestroyViewSet, basename="company")
 # router.register(r"departments", DepartmentViewSet, basename="department")
 # router.register(r"job-roles", JobRoleViewSet, basename="job-roles")
 # router.register(r"employees", EmployeeViewSet, basename="employee")
