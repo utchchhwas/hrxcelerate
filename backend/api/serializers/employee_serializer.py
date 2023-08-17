@@ -8,8 +8,9 @@ from api.serializers import (
     EmployeeUserSerializer,
     CompanySerializer,
     JobRoleSerializer,
-    EmploymentSerializer,
 )
+from django.utils.crypto import get_random_string
+from django.core.mail import send_mail
 
 
 class CreateCompanyOwnerSerializer(serializers.ModelSerializer):
@@ -97,13 +98,12 @@ class EmployeeSerializer(
         ]
         expandable_fields = {
             "company": CompanySerializer,
-            "manager": "api.EmployeeSerializer",
+            "manager": ("api.EmployeeSerializer", {"expand": ["active_job_role"]}),
             "active_job_role": (JobRoleSerializer, {"expand": ["department"]}),
         }
 
     def validate_user(self, value):
         email = value["email"]
-        print(email, self.instance)
 
         qs = CustomUser.objects.filter(email=email)
         if self.instance:
@@ -161,6 +161,19 @@ class EmployeeSerializer(
         employee = Employee.objects.create_with_user(
             user_data=user_data, **validated_data
         )
+
+        password = get_random_string(16)
+        employee.user.set_password(password)
+        employee.user.save()
+
+        send_mail(
+            "Password Reset.",
+            f"New Password: {password}",
+            "noreply@hrxcelerate.com",
+            [employee.user.email],
+            fail_silently=False,
+        )
+
         return employee
 
     def update(self, instance, validated_data):
