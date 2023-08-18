@@ -40,7 +40,7 @@ class PublicJobPostingSerializer(
     serializers.ModelSerializer,
 ):
     """
-    Serializer for JobPosting model.
+    Serializer for public job posting.
     """
 
     job_role_name = serializers.CharField(source="job_role.name", read_only=True)

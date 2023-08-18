@@ -1,6 +1,6 @@
 from .token_serializers import CustomTokenObtainPairSerializer
 from .custom_user_serializers import EmployeeUserSerializer
-from .company_serializer import CompanySerializer
+from .company_serializers import CompanySerializer
 from .department_serializers import DepartmentSerializer
 from .job_role_serializers import JobRoleSerializer
 from .employment_serializers import EmploymentSerializer
@@ -10,7 +10,7 @@ from .job_posting_serializers import JobPostingSerializer, PublicJobPostingSeria
 
 from .InterviewerSerializer import InterviewerSerializer
 from .InterviewResultSerializer import InterviewResultSerializer
-from .ApplicantSerializer import ApplicantSerializer
+from .applicant_serializers import PublicApplicantSerializer
 from .NotificationSerializer import NotificationSerializer
 from .PayslipSerializer import PayslipSerializer
 from .TimeOffSerializer import TimeOffSerializer

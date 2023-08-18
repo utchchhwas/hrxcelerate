@@ -7,7 +7,7 @@ from .employee_model import Employee
 from .job_posting_model import JobPosting
 
 from .Interviewer import Interviewer
-from .Applicant import Applicant
+from .applicant_model import Applicant
 from .InterviewResult import InterviewResult
 from .Payslip import Payslip
 from .Tracking import Tracking

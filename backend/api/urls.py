@@ -4,7 +4,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from api.views import ApplicantViewSet
+from api.views import PublicApplicantViewSet
 from api.views import DepartmentViewSet
 from api.views import EmploymentViewSet
 from api.views import InterviewerViewSet
@@ -46,11 +46,13 @@ router.register(r"job-postings", JobPostingViewSet, basename="job-postings")
 router.register(
     r"public-job-postings", PublicJobPostingViewSet, basename="public-job-postings"
 )
+router.register(
+    r"public-applicants", PublicApplicantViewSet, basename="public-applicants"
+)
 
 # router.register(r"users", CustomUserViewSet, basename="users")
 #
 
-# router.register(r"applicants", ApplicantViewSet, basename="applicants")
 # router.register(r"interviewers", InterviewerViewSet, basename="interviewers")
 # router.register(
 #     r"interview-results", InterviewResultViewSet, basename="interview-results"

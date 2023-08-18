@@ -62,7 +62,12 @@ class JobPostingAdmin(ModelAdmin):
     ordering = ("id",)
 
 
-# admin.site.register(Applicant)
+@admin.register(Applicant)
+class ApplicantAdmin(ModelAdmin):
+    list_display = ("email", "job_posting", "id")
+    ordering = ("email", "job_posting", "id")
+
+
 # admin.site.register(Interviewer)
 # admin.site.register(InterviewResult)
 # admin.site.register(JobPosting)
