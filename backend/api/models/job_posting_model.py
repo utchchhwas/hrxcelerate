@@ -1,5 +1,5 @@
 from django.db import models
-from api.models import JobRole
+from api.models import JobRole, Employee, Interview
 
 
 class JobPosting(models.Model):
@@ -25,6 +25,12 @@ class JobPosting(models.Model):
     is_active = models.BooleanField(
         "Active",
         default=True,
+    )
+    interviewers = models.ManyToManyField(
+        Employee,
+        related_name="job_postings",
+        through="api.Interview",
+        verbose_name="Interviewers",
     )
 
     class Meta:

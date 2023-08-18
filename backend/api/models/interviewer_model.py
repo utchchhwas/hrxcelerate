@@ -1,22 +1,26 @@
 from django.db import models
-from api.models import JobPosting, Employee
 
 
-class Interviewer(models.Model):
+class Interview(models.Model):
     """
-    Model representing an interviewer assigned to a job posting.
+    Interview ralationship between employee and job posting.
     """
 
     job_posting = models.ForeignKey(
-        JobPosting,
+        "api.JobPosting",
+        related_name="interviews",
         on_delete=models.CASCADE,
         verbose_name="Job Posting",
     )
     employee = models.ForeignKey(
-        Employee,
+        "api.Employee",
+        related_name="interviews",
         on_delete=models.CASCADE,
         verbose_name="Employee",
     )
 
     class Meta:
         pass
+
+    def __str__(self):
+        return f"{self.employee.email} - {self.job_posting}"

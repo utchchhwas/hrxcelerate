@@ -1,5 +1,5 @@
 from django.db import models
-from api.models import Applicant, Interviewer
+from api.models import Applicant, Interview
 
 
 class InterviewResult(models.Model):
@@ -13,7 +13,7 @@ class InterviewResult(models.Model):
         verbose_name="Applicant",
     )
     interviewer = models.ForeignKey(
-        Interviewer,
+        Interview,
         on_delete=models.CASCADE,
         verbose_name="Interviewer",
     )
