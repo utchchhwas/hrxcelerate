@@ -1,4 +1,4 @@
-from rest_framework.permissions import BasePermission, SAFE_METHODS
+from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
 
 
 class IsReadOnly(BasePermission):
@@ -12,12 +12,23 @@ class IsReadOnly(BasePermission):
         return request.method in SAFE_METHODS
 
 
-class IsCompanyOwner(BasePermission):
+class IsEmployee(BasePermission):
     """
-    Check if the user is the owner of his company.
+    Check if the user in an employee.
     """
 
-    message = "User is not the owner."
+    message = "User is not an employee."
+
+    def has_permission(self, request, view):
+        return hasattr(request.user, "employee")
+
+
+class IsOwnerEmployee(BasePermission):
+    """
+    Check if the user is an owner Employee of the company.
+    """
+
+    message = "User is not an owner employee."
 
     def has_permission(self, request, view):
         return hasattr(request.user, "employee") and request.user.employee.is_owner
@@ -25,13 +36,12 @@ class IsCompanyOwner(BasePermission):
 
 class IsAdminEmployee(BasePermission):
     """
-    Check if the user is an admin employee of his company.
+    Check if the user is an admin employee of the company.
     """
 
     message = "User is not an admin employee."
 
     def has_permission(self, request, view):
-        print(f"val = {hasattr(request.user, 'employee')}")
         return hasattr(request.user, "employee") and request.user.employee.is_admin
 
 
@@ -40,7 +50,14 @@ class IsCompanyObject(BasePermission):
     Check if the object belongs to the user's company.
     """
 
-    message = "Object does not belong to user's company."
+    message = "Object does not belong to the company."
 
     def has_object_permission(self, request, view, obj):
         return request.user.employee.company == obj.get_company()
+
+
+class CompanyPermissionMixin:
+    def get_permissions(self):
+        if self.request.method in SAFE_METHODS:
+            return [IsAuthenticated(), IsEmployee()]
+        return [IsAuthenticated(), IsAdminEmployee()]

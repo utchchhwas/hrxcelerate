@@ -1,14 +1,15 @@
 from .custom_user_model import CustomUser
 from .company_model import Company
-from .employee_model import Employee
 from .department_model import Department
 from .job_role_model import JobRole
-from .Employment import Employment
-from .JobPosting import JobPosting
-from .JobPostingSalary import JobPostingSalary
-from .Interviewer import Interviewer
-from .Applicant import Applicant
-from .InterviewResult import InterviewResult
+from .employment_model import Employment
+from .interviewer_model import Interviewer
+from .employee_model import Employee
+from .job_posting_model import JobPosting
+from .applicant_model import Applicant
+
+from .interview_result_mode import InterviewResult
+
 from .Payslip import Payslip
 from .Tracking import Tracking
 from .TimeOff import TimeOff

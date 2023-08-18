@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "cloudinary_storage",
     "cloudinary",
+    "djmoney",
     # My apps
     "api",
     "upload",
@@ -87,6 +88,7 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=3),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "TOKEN_OBTAIN_SERIALIZER": "api.serializers.CustomTokenObtainPairSerializer",
 }
 
 ROOT_URLCONF = "backend.urls"
@@ -186,10 +188,17 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Cloudinary credentials
+# Cloudinary storage credentials
 
 CLOUDINARY_STORAGE = {
     "CLOUD_NAME": os.environ["CLOUDINARY_CLOUD_NAME"],
     "API_KEY": os.environ["CLOUDINARY_API_KEY"],
     "API_SECRET": os.environ["CLOUDINARY_API_SECRET"],
 }
+
+# Email credentials
+
+EMAIL_HOST = os.environ["EMAIL_HOST"]
+EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
+EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
+EMAIL_PORT = os.environ["EMAIL_PORT"]

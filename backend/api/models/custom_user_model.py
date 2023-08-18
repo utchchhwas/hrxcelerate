@@ -50,10 +50,8 @@ class CustomUser(AbstractUser):
             "unique": "A user with this email already exists.",
         },
     )
-    # Remove username, first_name, and last_name
+    # Remove unnecessary fields
     username = None
-    first_name = None
-    last_name = None
 
     # Set custom user manager
     objects = CustomUserManager()

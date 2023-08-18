@@ -1,21 +1,18 @@
-# Serializer for Allicant, Company, CustomUser, Department, Employee, Employment,
-# Interviewer, InterviewResult, JobPosting, JobPostingSalary, JobRole, Notification,
-# Payslip, TimeOff and Tracking models.
-
-from .company_serializer import CompanySerializer
-from .custom_user_serializers import CustomUserSerializer
+from .token_serializers import CustomTokenObtainPairSerializer
+from .custom_user_serializers import EmployeeUserSerializer, ChangePasswordSerializer
+from .company_serializers import CompanySerializer
 from .department_serializers import DepartmentSerializer
-from .employee_serializer import CreateCompanyOwnerSerializer, EmployeeSerializer
-
-from .ApplicantSerializer import ApplicantSerializer
-
-# from .EmployeeSerializer import EmployeeSerializerOld
-from .EmploymentSerializer import EmploymentSerializer
-from .InterviewerSerializer import InterviewerSerializer
-from .InterviewResultSerializer import InterviewResultSerializer
-from .JobPostingSerializer import JobPostingSerializer
-from .JobPostingSalarySerializer import JobPostingSalarySerializer
 from .job_role_serializers import JobRoleSerializer
+from .employment_serializers import EmploymentSerializer
+from .employee_serializers import CreateCompanyOwnerSerializer, EmployeeSerializer
+from .interviewer_serializers import (
+    JobPostingInterviewerSerializer,
+    InterviewerSerializer,
+)
+from .job_posting_serializers import JobPostingSerializer, PublicJobPostingSerializer
+from .applicant_serializers import PublicApplicantSerializer, ApplicantSerializer
+
+from .interview_result_serializers import InterviewResultSerializer
 from .NotificationSerializer import NotificationSerializer
 from .PayslipSerializer import PayslipSerializer
 from .TimeOffSerializer import TimeOffSerializer

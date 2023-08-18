@@ -1,22 +1,25 @@
 from django.db import models
-from api.models import JobPosting, Employee
 
 
 class Interviewer(models.Model):
     """
-    Model representing an interviewer assigned to a job posting.
+    Interviewer ralationship between employee and job posting.
     """
 
     job_posting = models.ForeignKey(
-        JobPosting,
+        "api.JobPosting",
+        related_name="interviewers",
         on_delete=models.CASCADE,
         verbose_name="Job Posting",
     )
     employee = models.ForeignKey(
-        Employee,
+        "api.Employee",
         on_delete=models.CASCADE,
         verbose_name="Employee",
     )
 
     class Meta:
-        pass
+        unique_together = ("job_posting", "employee")
+
+    def __str__(self):
+        return f"{self.employee.user.email} - {self.job_posting}"

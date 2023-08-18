@@ -10,7 +10,6 @@ class Department(models.Model):
     company = models.ForeignKey(
         Company,
         related_name="departments",
-        
         on_delete=models.CASCADE,
         verbose_name="Company",
     )

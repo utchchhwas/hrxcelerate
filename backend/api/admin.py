@@ -1,18 +1,21 @@
+from api.models import *
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 from django.contrib.auth.admin import UserAdmin
-from api.models import *
+from django.contrib.auth.models import Group
+
+
+admin.site.unregister(Group)
 
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
     """
-    Custom User Admin.
+    Custom User Admin for Custom User.
     """
 
     fieldsets = (
         (None, {"fields": ("email", "password")}),
-        ("Personal info", {"fields": ("first_name", "last_name")}),
         ("Permissions", {"fields": ("is_active", "is_staff", "is_superuser")}),
     )
     add_fieldsets = (
@@ -27,31 +30,56 @@ class CustomUserAdmin(UserAdmin):
 @admin.register(Company)
 class CompanyAdmin(ModelAdmin):
     list_display = ("name", "id")
-    ordering = ("id",)
-
-
-@admin.register(Employee)
-class EmployeeModel(ModelAdmin):
-    pass
+    ordering = ("name",)
 
 
 @admin.register(Department)
-class DepartmentModel(ModelAdmin):
-    pass
+class DepartmentAdmin(ModelAdmin):
+    list_display = ("name", "company", "id")
+    ordering = ("name",)
 
 
 @admin.register(JobRole)
-class JobRole(ModelAdmin):
-    pass
+class JobRoleAdmin(ModelAdmin):
+    list_display = ("name", "department", "id")
+    ordering = ("name",)
 
 
-admin.site.register(Applicant)
-admin.site.register(Employment)
-admin.site.register(Interviewer)
-admin.site.register(InterviewResult)
-admin.site.register(JobPosting)
-admin.site.register(JobPostingSalary)
-admin.site.register(Notification)
-admin.site.register(Payslip)
-admin.site.register(TimeOff)
-admin.site.register(Tracking)
+@admin.register(Employee)
+class EmployeeAdmin(ModelAdmin):
+    list_display = ("user", "company")
+    ordering = ("user", "company")
+
+
+@admin.register(Employment)
+class EmploymentAdmin(ModelAdmin):
+    list_display = ("__str__", "employee", "job_role", "id")
+
+
+@admin.register(JobPosting)
+class JobPostingAdmin(ModelAdmin):
+    list_display = ("__str__", "job_role", "id")
+    ordering = ("id",)
+
+
+@admin.register(Applicant)
+class ApplicantAdmin(ModelAdmin):
+    list_display = ("email", "job_posting", "id")
+    ordering = ("email", "job_posting", "id")
+
+
+@admin.register(Interviewer)
+class InterviewerAdmin(ModelAdmin):
+    list_display = ("employee", "job_posting", "id")
+    ordering = ("employee", "job_posting", "id")
+
+
+@admin.register(InterviewResult)
+class InterviewResultAdmin(ModelAdmin):
+    list_display = ("applicant", "interviewer", "id")
+    ordering = ("applicant", "interviewer", "id")
+
+
+# admin.site.register(Payslip)
+# admin.site.register(TimeOff)
+# admin.site.register(Tracking)

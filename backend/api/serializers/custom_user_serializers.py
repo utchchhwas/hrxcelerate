@@ -1,11 +1,12 @@
 from django.contrib.auth import get_user_model
 from rest_flex_fields.serializers import FlexFieldsSerializerMixin
 from rest_framework import serializers
+from django.contrib.auth.password_validation import validate_password
 
 CustomUser = get_user_model()
 
 
-class CustomUserSerializer(
+class EmployeeUserSerializer(
     FlexFieldsSerializerMixin,
     serializers.ModelSerializer,
 ):
@@ -13,30 +14,40 @@ class CustomUserSerializer(
     Serializer class for CustomUser model.
     """
 
+    email = serializers.EmailField()
+
     class Meta:
         model = CustomUser
         fields = [
             "id",
             "email",
+            "first_name",
+            "last_name",
         ]
-        extra_kwargs = {
-            "password": {
-                "write_only": True,
-                "required": True,
-            },
-        }
 
-    def create(self, validated_data):
-        return CustomUser.objects.create_user(**validated_data)
 
-    def update(self, instance, validated_data):
-        password = validated_data.pop("password", None)
-        if password:
-            instance.set_password(password)
-            instance.save()
+class ChangePasswordSerializer(serializers.Serializer):
+    """
+    Serializer for changing user password.
+    """
 
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
-        instance.save()
+    old_password = serializers.CharField(
+        max_length=128,
+        required=True,
+        label="Old Password",
+    )
+    new_password = serializers.CharField(
+        max_length=128,
+        required=True,
+        label="New Password",
+    )
 
-        return instance
+    def validate_old_password(self, value):
+        user = self.context["request"].user
+        if not user.check_password(value):
+            raise serializers.ValidationError("Wrong password.")
+        return value
+
+    def validate_new_password(self, value):
+        validate_password(value)
+        return value

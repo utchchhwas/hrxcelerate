@@ -1,19 +1,21 @@
 from django.db import models
-from . import Employee, JobRole
+from djmoney.models.fields import MoneyField
 
 
 class Employment(models.Model):
     """
-    Model representing an employment of an employee in a company.
+    Model representing many-to-many relationship between employees and job roles.
     """
 
     employee = models.ForeignKey(
-        Employee,
+        "api.Employee",
+        related_name="employments",
         on_delete=models.CASCADE,
         verbose_name="Employee",
     )
     job_role = models.ForeignKey(
-        JobRole,
+        "api.JobRole",
+        related_name="employments",
         on_delete=models.CASCADE,
         verbose_name="Job Role",
     )
@@ -45,9 +47,29 @@ class Employment(models.Model):
         "Remote",
         default=False,
     )
+    salary = MoneyField(
+        "Salary",
+        max_digits=19,
+        decimal_places=4,
+        default_currency=None,
+        null=True,
+        blank=True,
+    )
+    salary_frequency = models.CharField(
+        "Salary Frequency",
+        choices=[
+            ("H", "Hourly"),
+            ("D", "Daily"),
+            ("W", "Weekly"),
+            ("B", "Bi-weekly"),
+            ("M", "Monthly"),
+        ],
+        max_length=1,
+        blank=True,
+    )
     note = models.CharField(
         "Employment Note",
-        max_length=150,
+        max_length=500,
         blank=True,
     )
 
@@ -55,4 +77,4 @@ class Employment(models.Model):
         pass
 
     def __str__(self):
-        return f"{self.employee.user.get_full_name()} - {self.job_role.name}"
+        return f"{self.employee.user.email} - {self.job_role}"

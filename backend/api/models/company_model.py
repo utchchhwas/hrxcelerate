@@ -4,6 +4,9 @@ from uuid import uuid4
 
 
 def company_logo_upload_to(instance, filename):
+    """
+    Get uploading file path for company logo.
+    """
     return f"hrx-logos/{uuid4().hex}"
 
 

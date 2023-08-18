@@ -1,28 +1,38 @@
-from rest_framework.viewsets import ModelViewSet
+from rest_framework import viewsets
 from api.models import Department
 from api.serializers import DepartmentSerializer
 from rest_framework.permissions import IsAuthenticated, SAFE_METHODS
-from api.permissions import IsAdminEmployee
+from api.permissions import IsEmployee, IsAdminEmployee
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
 
-class DepartmentViewSet(ModelViewSet):
-    """ """
+class DepartmentViewSet(viewsets.ModelViewSet):
+    """
+    Provides the following actions:
+        - Create Department
+        - Retrieve Department List
+        - Retrieve Department
+        - Update Department
+        - Destroy Department
+    """
 
-    filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ["id", "name"]
     search_fields = ["name"]
     ordering_fields = ["id", "name"]
     ordering = ["name"]
-    filterset_fields = ["id", "name"]
 
     serializer_class = DepartmentSerializer
 
     def get_queryset(self):
-        user_company = self.request.user.employee.company
-        return Department.objects.filter(company=user_company)
+        user = self.request.user
+        if not hasattr(user, "employee"):
+            return Department.objects.none()
+        company = user.employee.company
+        return Department.objects.filter(company=company)
 
     def get_permissions(self):
         if self.request.method in SAFE_METHODS:
-            return [IsAuthenticated()]
+            return [IsAuthenticated(), IsEmployee()]
         return [IsAuthenticated(), IsAdminEmployee()]
