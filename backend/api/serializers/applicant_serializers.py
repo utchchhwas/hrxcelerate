@@ -18,6 +18,7 @@ class PublicApplicantSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "resume",
+            "applied_at",
         ]
 
 
@@ -38,6 +39,7 @@ class ApplicantSerializer(
             "first_name",
             "last_name",
             "resume",
+            "applied_at",
             "status",
         ]
         extra_kwargs = {"job_posting": {"read_only": True}}

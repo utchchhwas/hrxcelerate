@@ -2,6 +2,7 @@ from django.db import models
 from api.models import JobPosting
 from uuid import uuid4
 from cloudinary_storage.storage import RawMediaCloudinaryStorage
+from django.utils import timezone
 
 
 def applicant_resume_upload_to(instance, filename):
@@ -40,6 +41,11 @@ class Applicant(models.Model):
         upload_to=applicant_resume_upload_to,
         storage=RawMediaCloudinaryStorage(),
         blank=True,
+    )
+    applied_at = models.DateTimeField(
+        "Applied At",
+        default=timezone.now,
+        editable=False,
     )
     status = models.CharField(
         "Status",
