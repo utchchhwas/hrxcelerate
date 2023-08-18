@@ -20,6 +20,7 @@ from api.views import RetrieveUpdateDestroyCompanyViewSet
 from api.views import CreateCompanyOwnerView, EmployeeViewSet
 from api.views import PublicJobPostingViewSet
 from api.views import ChangePasswordView
+from api.views import ApplicantViewSet
 
 urlpatterns = [
     path("obtain-token-pair/", TokenObtainPairView.as_view(), name="obtain-token-pair"),
@@ -46,6 +47,7 @@ router.register(r"job-postings", JobPostingViewSet, basename="job-postings")
 router.register(
     r"public-job-postings", PublicJobPostingViewSet, basename="public-job-postings"
 )
+router.register(r"applicants", ApplicantViewSet, basename="applicants")
 router.register(
     r"public-applicants", PublicApplicantViewSet, basename="public-applicants"
 )

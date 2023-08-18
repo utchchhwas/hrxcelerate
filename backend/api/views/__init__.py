@@ -2,7 +2,7 @@
 # Interviewer, InterviewResult, JobPosting, JobPostingSalary, JobRole, Notification,
 # Payslip, TimeOff and Tracking models.
 
-from .applicant_views import PublicApplicantViewSet
+from .applicant_views import PublicApplicantViewSet, ApplicantViewSet
 from .company_views import RetrieveUpdateDestroyCompanyViewSet
 from .custom_user_views import CustomUserViewSet
 from .department_views import DepartmentViewSet
