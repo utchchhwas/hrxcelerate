@@ -5,12 +5,11 @@ from api.permissions import CompanyPermissionMixin
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
+from api.permissions import IsAdminEmployee
 
 
-class JobPostingViewSet(
-    CompanyPermissionMixin,
-    viewsets.ModelViewSet,
-):
+class JobPostingViewSet(viewsets.ModelViewSet):
     """
     Provides the following actions:
         - Create Job Posting
@@ -19,6 +18,8 @@ class JobPostingViewSet(
         - Update Job Posting
         - Destroy Job Posting
     """
+
+    permission_classes = [IsAuthenticated, IsAdminEmployee]
 
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = [

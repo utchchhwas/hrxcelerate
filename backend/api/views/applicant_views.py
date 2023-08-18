@@ -5,6 +5,8 @@ from rest_framework.permissions import AllowAny
 from api.permissions import CompanyPermissionMixin
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.permissions import IsAuthenticated
+from api.permissions import IsAdminEmployee
 
 
 class PublicApplicantViewSet(
@@ -20,7 +22,6 @@ class PublicApplicantViewSet(
 
 
 class ApplicantViewSet(
-    CompanyPermissionMixin,
     mixins.ListModelMixin,
     mixins.RetrieveModelMixin,
     mixins.UpdateModelMixin,
@@ -30,6 +31,8 @@ class ApplicantViewSet(
     """
     ViewSet for Applicant.
     """
+
+    permission_classes = [IsAuthenticated, IsAdminEmployee]
 
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = [

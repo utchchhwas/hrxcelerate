@@ -1,5 +1,5 @@
 from django.db import models
-from api.models import JobRole, Employee, Interview
+from api.models import JobRole, Employee, Interviewer
 
 
 class JobPosting(models.Model):
@@ -26,10 +26,10 @@ class JobPosting(models.Model):
         "Active",
         default=True,
     )
-    interviewers = models.ManyToManyField(
-        Employee,
+    interviewer_employees = models.ManyToManyField(
+        "api.Employee",
         related_name="job_postings",
-        through="api.Interview",
+        through="api.Interviewer",
         verbose_name="Interviewers",
     )
 

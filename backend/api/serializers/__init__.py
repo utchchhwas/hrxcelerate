@@ -4,12 +4,12 @@ from .company_serializers import CompanySerializer
 from .department_serializers import DepartmentSerializer
 from .job_role_serializers import JobRoleSerializer
 from .employment_serializers import EmploymentSerializer
-from .employee_serializer import CreateCompanyOwnerSerializer, EmployeeSerializer
+from .employee_serializers import CreateCompanyOwnerSerializer, EmployeeSerializer
+from .interview_serializers import JobPostingInterviewerSerializer
 from .job_posting_serializers import JobPostingSerializer, PublicJobPostingSerializer
 from .applicant_serializers import PublicApplicantSerializer, ApplicantSerializer
 
 
-from .InterviewerSerializer import InterviewerSerializer
 from .InterviewResultSerializer import InterviewResultSerializer
 from .NotificationSerializer import NotificationSerializer
 from .PayslipSerializer import PayslipSerializer

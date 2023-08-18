@@ -9,7 +9,7 @@ from .department_views import DepartmentViewSet
 from .employee_views import CreateCompanyOwnerView, EmployeeViewSet
 
 from .employment_views import EmploymentViewSet
-from .InterviewerViewSet import InterviewerViewSet
+from .interviewer_views import InterviewerViewSet
 from .InterviewResultViewSet import InterviewResultViewSet
 from .job_role_views import JobRoleViewSet
 from .job_posting_views import JobPostingViewSet, PublicJobPostingViewSet

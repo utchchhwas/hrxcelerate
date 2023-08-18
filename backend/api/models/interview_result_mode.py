@@ -1,10 +1,10 @@
 from django.db import models
-from api.models import Applicant, Interview
+from api.models import Applicant, Interviewer
 
 
 class InterviewResult(models.Model):
     """
-    Model representing interview result of an applicant.
+    Interview result relationship between interviewer and applicant.
     """
 
     applicant = models.ForeignKey(
@@ -13,7 +13,7 @@ class InterviewResult(models.Model):
         verbose_name="Applicant",
     )
     interviewer = models.ForeignKey(
-        Interview,
+        Interviewer,
         on_delete=models.CASCADE,
         verbose_name="Interviewer",
     )

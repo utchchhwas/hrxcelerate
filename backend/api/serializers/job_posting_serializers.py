@@ -1,6 +1,11 @@
 from rest_framework import serializers
 from api.models import JobPosting
-from api.serializers import JobRoleSerializer, CompanySerializer
+from api.serializers import (
+    JobRoleSerializer,
+    CompanySerializer,
+    JobPostingInterviewerSerializer,
+    EmployeeSerializer,
+)
 from rest_flex_fields.serializers import FlexFieldsSerializerMixin
 
 
@@ -20,12 +25,17 @@ class JobPostingSerializer(
             "tags",
             "description",
             "is_active",
+            # "interviewers",
         ]
         expandable_fields = {
             "job_role": (
                 JobRoleSerializer,
                 {"expand": ["department"]},
-            )
+            ),
+            "interviewers": (
+                JobPostingInterviewerSerializer,
+                {"many": True, "expand": ["employee"]},
+            ),
         }
 
     def validate_job_role(self, value):
