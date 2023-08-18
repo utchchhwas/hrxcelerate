@@ -1,5 +1,5 @@
 from django.db import models
-from api.models import JobPosting
+from api.models import JobPosting, Interviewer
 from uuid import uuid4
 from cloudinary_storage.storage import RawMediaCloudinaryStorage
 from django.utils import timezone
@@ -62,6 +62,12 @@ class Applicant(models.Model):
         ],
         default="A",
         blank=True,
+    )
+    interviewers = models.ManyToManyField(
+        Interviewer,
+        related_name="applicants",
+        through="api.InterviewResult",
+        verbose_name="Interviewers",
     )
 
     class Meta:

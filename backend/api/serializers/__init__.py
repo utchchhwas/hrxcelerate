@@ -12,7 +12,7 @@ from .interviewer_serializers import (
 from .job_posting_serializers import JobPostingSerializer, PublicJobPostingSerializer
 from .applicant_serializers import PublicApplicantSerializer, ApplicantSerializer
 
-from .InterviewResultSerializer import InterviewResultSerializer
+from .interview_result_serializers import InterviewResultSerializer
 from .NotificationSerializer import NotificationSerializer
 from .PayslipSerializer import PayslipSerializer
 from .TimeOffSerializer import TimeOffSerializer

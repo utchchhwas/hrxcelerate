@@ -1,5 +1,4 @@
 from django.db import models
-from api.models import Applicant, Interviewer
 
 
 class InterviewResult(models.Model):
@@ -8,12 +7,14 @@ class InterviewResult(models.Model):
     """
 
     applicant = models.ForeignKey(
-        Applicant,
+        "api.Applicant",
+        related_name="interview_results",
         on_delete=models.CASCADE,
         verbose_name="Applicant",
     )
     interviewer = models.ForeignKey(
-        Interviewer,
+        "api.Interviewer",
+        related_name="interview_results",
         on_delete=models.CASCADE,
         verbose_name="Interviewer",
     )
@@ -28,4 +29,7 @@ class InterviewResult(models.Model):
     )
 
     class Meta:
-        pass
+        unique_together = ("applicant", "interviewer")
+
+    def __str__(self):
+        return f"{self.applicant | self.interviewer}"

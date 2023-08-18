@@ -74,10 +74,12 @@ class InterviewerAdmin(ModelAdmin):
     ordering = ("employee", "job_posting", "id")
 
 
-# admin.site.register(InterviewResult)
-# admin.site.register(JobPosting)
-# admin.site.register(JobPostingSalary)
-# admin.site.register(Notification)
+@admin.register(InterviewResult)
+class InterviewResultAdmin(ModelAdmin):
+    list_display = ("applicant", "interviewer", "id")
+    ordering = ("applicant", "interviewer", "id")
+
+
 # admin.site.register(Payslip)
 # admin.site.register(TimeOff)
 # admin.site.register(Tracking)

@@ -25,11 +25,15 @@ class InterviewerViewSet(
 
     permission_classes = [IsAuthenticated, IsAdminEmployee]
 
-    # filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    # filterset_fields = ["id", "department", "name"]
-    # search_fields = ["name", "department__name"]
-    # ordering_fields = ["id", "name"]
-    # ordering = ["name"]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = [
+        "id",
+        "job_posting",
+        "employee",
+    ]
+    search_fields = []
+    ordering_fields = []
+    ordering = []
 
     serializer_class = InterviewerSerializer
 
