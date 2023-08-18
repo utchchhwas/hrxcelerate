@@ -5,10 +5,12 @@ from .department_serializers import DepartmentSerializer
 from .job_role_serializers import JobRoleSerializer
 from .employment_serializers import EmploymentSerializer
 from .employee_serializers import CreateCompanyOwnerSerializer, EmployeeSerializer
-from .interview_serializers import JobPostingInterviewerSerializer
+from .interviewer_serializers import (
+    JobPostingInterviewerSerializer,
+    InterviewerSerializer,
+)
 from .job_posting_serializers import JobPostingSerializer, PublicJobPostingSerializer
 from .applicant_serializers import PublicApplicantSerializer, ApplicantSerializer
-
 
 from .InterviewResultSerializer import InterviewResultSerializer
 from .NotificationSerializer import NotificationSerializer

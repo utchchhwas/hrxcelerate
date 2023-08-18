@@ -25,7 +25,6 @@ class JobPostingSerializer(
             "tags",
             "description",
             "is_active",
-            # "interviewers",
         ]
         expandable_fields = {
             "job_role": (
