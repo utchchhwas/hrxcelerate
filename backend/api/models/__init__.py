@@ -5,8 +5,8 @@ from .job_role_model import JobRole
 from .employment_model import Employment
 from .employee_model import Employee
 
-from .JobPosting import JobPosting
-from .JobPostingSalary import JobPostingSalary
+from .job_posting_model import JobPosting
+from .job_posting_salary_model import JobPostingSalary
 from .Interviewer import Interviewer
 from .Applicant import Applicant
 from .InterviewResult import InterviewResult

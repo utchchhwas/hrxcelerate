@@ -2,6 +2,10 @@ from api.models import *
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import Group
+
+
+admin.site.unregister(Group)
 
 
 @admin.register(CustomUser)
@@ -43,12 +47,25 @@ class JobRoleAdmin(ModelAdmin):
 
 @admin.register(Employee)
 class EmployeeAdmin(ModelAdmin):
-    pass
+    list_display = ("user", "company")
+    ordering = ("user", "company")
 
 
 @admin.register(Employment)
 class EmploymentAdmin(ModelAdmin):
     list_display = ("__str__", "employee", "job_role", "id")
+
+
+@admin.register(JobPosting)
+class JobPostingAdmin(ModelAdmin):
+    list_display = ("__str__", "job_role", "id")
+    ordering = ("id",)
+
+
+@admin.register(JobPostingSalary)
+class JobPostingSalary(ModelAdmin):
+    list_display = ("__str__", "job_posting")
+    ordering = ("job_posting",)
 
 
 # admin.site.register(Applicant)

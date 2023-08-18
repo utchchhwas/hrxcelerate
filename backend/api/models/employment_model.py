@@ -48,7 +48,7 @@ class Employment(models.Model):
         default=False,
     )
     salary = MoneyField(
-        "salary",
+        "Salary",
         max_digits=19,
         decimal_places=4,
         default_currency=None,
