@@ -12,7 +12,7 @@ from .employment_views import EmploymentViewSet
 from .InterviewerViewSet import InterviewerViewSet
 from .InterviewResultViewSet import InterviewResultViewSet
 from .job_role_views import JobRoleViewSet
-from .job_posting_views import JobPostingViewSet
+from .job_posting_views import JobPostingViewSet, PublicJobPostingViewSet
 from .NotificationViewSet import NotificationViewSet
 from .PayslipViewSet import PayslipViewSet
 from .TimeOffViewSet import TimeOffViewSet

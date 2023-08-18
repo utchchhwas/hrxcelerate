@@ -18,7 +18,7 @@ from api.views import TrackingViewSet
 from api.views import CustomUserViewSet
 from api.views import RetrieveUpdateDestroyCompanyViewSet
 from api.views import CreateCompanyOwnerView, EmployeeViewSet
-
+from api.views import PublicJobPostingViewSet
 from api.views import ChangePasswordView
 
 urlpatterns = [
@@ -43,6 +43,9 @@ router.register(r"job-roles", JobRoleViewSet, basename="job-roles")
 router.register(r"employees", EmployeeViewSet, basename="employee")
 router.register(r"employments", EmploymentViewSet, basename="employments")
 router.register(r"job-postings", JobPostingViewSet, basename="job-postings")
+router.register(
+    r"public-job-postings", PublicJobPostingViewSet, basename="public-job-postings"
+)
 
 # router.register(r"users", CustomUserViewSet, basename="users")
 #
