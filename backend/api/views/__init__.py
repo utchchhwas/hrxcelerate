@@ -8,13 +8,11 @@ from .custom_user_views import CustomUserViewSet
 from .department_views import DepartmentViewSet
 from .employee_views import CreateCompanyOwnerView, EmployeeViewSet
 
-# from .EmployeeViewSet import EmployeeViewSet
 from .employment_views import EmploymentViewSet
 from .InterviewerViewSet import InterviewerViewSet
 from .InterviewResultViewSet import InterviewResultViewSet
 from .job_role_views import JobRoleViewSet
-from .JobPostingSalaryViewSet import JobPostingSalaryViewSet
-from .JobPostingViewSet import JobPostingViewSet
+from .job_posting_views import JobPostingViewSet
 from .NotificationViewSet import NotificationViewSet
 from .PayslipViewSet import PayslipViewSet
 from .TimeOffViewSet import TimeOffViewSet

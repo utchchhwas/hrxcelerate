@@ -10,7 +10,6 @@ from api.views import EmploymentViewSet
 from api.views import InterviewerViewSet
 from api.views import InterviewResultViewSet
 from api.views import JobPostingViewSet
-from api.views import JobPostingSalaryViewSet
 from api.views import JobRoleViewSet
 from api.views import NotificationViewSet
 from api.views import PayslipViewSet
@@ -43,17 +42,16 @@ router.register(r"departments", DepartmentViewSet, basename="department")
 router.register(r"job-roles", JobRoleViewSet, basename="job-roles")
 router.register(r"employees", EmployeeViewSet, basename="employee")
 router.register(r"employments", EmploymentViewSet, basename="employments")
+router.register(r"job-postings", JobPostingViewSet, basename="job-postings")
 
 # router.register(r"users", CustomUserViewSet, basename="users")
 #
 
 # router.register(r"applicants", ApplicantViewSet, basename="applicants")
-# router.register(r"departments", DepartmentViewSet, basename="departments")
 # router.register(r"interviewers", InterviewerViewSet, basename="interviewers")
 # router.register(
 #     r"interview-results", InterviewResultViewSet, basename="interview-results"
 # )
-# router.register(r"job-postings", JobPostingViewSet, basename="job-postings")
 # router.register(
 #     r"job-posting-salaries", JobPostingSalaryViewSet, basename="job-posting-salaries"
 # )

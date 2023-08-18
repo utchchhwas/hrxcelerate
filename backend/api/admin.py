@@ -62,12 +62,6 @@ class JobPostingAdmin(ModelAdmin):
     ordering = ("id",)
 
 
-@admin.register(JobPostingSalary)
-class JobPostingSalary(ModelAdmin):
-    list_display = ("__str__", "job_posting")
-    ordering = ("job_posting",)
-
-
 # admin.site.register(Applicant)
 # admin.site.register(Interviewer)
 # admin.site.register(InterviewResult)

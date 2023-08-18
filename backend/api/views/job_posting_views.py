@@ -4,5 +4,7 @@ from api.serializers import JobPostingSerializer
 
 
 class JobPostingViewSet(ModelViewSet):
+    """ """
+
     queryset = JobPosting.objects.all()
     serializer_class = JobPostingSerializer
