@@ -12,5 +12,5 @@ from .interview_result_mode import InterviewResult
 
 from .Payslip import Payslip
 from .Tracking import Tracking
-from .TimeOff import TimeOff
+from .time_off_model import TimeOff
 from .Notification import Notification
