@@ -8,7 +8,6 @@ function Employees() {
   return (
     <div>
         <Navbar />
-        <h1>Employees</h1>
         <EmployeeList />
     </div>
   );

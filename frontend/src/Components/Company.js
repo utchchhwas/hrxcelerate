@@ -49,20 +49,7 @@ function Company() {
 
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100">
-      <div className="text-center">
-        <h1 className="mt-4">Company</h1>
-        <div className="form-group row">
-          <label className="col-sm-4 col-form-label text-right">ID:</label>
-          <div className="col-sm-8">
-            <input
-              type="text"
-              className="form-control"
-              name="id"
-              value={companyData.id}
-              disabled
-            />
-          </div>
-        </div>
+      <div className="text-center" style={{ width: "70%" }}>
         <div className="form-group row">
           <label className="col-sm-4 col-form-label text-right">Name:</label>
           <div className="col-sm-8">
@@ -92,12 +79,12 @@ function Company() {
             Description:
           </label>
           <div className="col-sm-8">
-            <input
-              type="text"
+            <textarea
               className="form-control"
               name="description"
               value={companyData.description}
               onChange={handleChange}
+              rows="5" // vertical height
             />
           </div>
         </div>

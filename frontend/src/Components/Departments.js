@@ -9,7 +9,7 @@ function Department() {
   return (
     <div>
         <Navbar />
-        <h1>Hello World</h1>
+        <h1>Departments</h1>
         {/* Make Three vertical segment and put Department table in middle table */}
         <DepartmentTable />
     </div>
