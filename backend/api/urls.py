@@ -36,7 +36,7 @@ urlpatterns = [
         "create-company-owner/",
         CreateCompanyOwnerView.as_view(),
         name="create-company-owner",
-    )
+    ),
 ]
 
 
