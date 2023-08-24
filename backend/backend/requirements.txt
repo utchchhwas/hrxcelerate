@@ -10,7 +10,6 @@ django-cloudinary-storage==0.3.0
 django-filter==23.2
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
-drf-flex-fields==1.0.2
 gunicorn==21.2.0
 idna==3.4
 packaging==23.1
