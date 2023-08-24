@@ -11,9 +11,11 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
 
-class CreateCompanyOwnerView(mixins.CreateModelMixin, viewsets.GenericViewSet):
+class CreateCompanyOwnerView(
+    generics.CreateAPIView,
+):
     """
-    View for creating a company owner along with the company.
+    View for creating a company owner along with a new company.
     """
 
     permission_classes = [AllowAny]

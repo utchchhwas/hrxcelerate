@@ -16,11 +16,17 @@ from django.core.mail import send_mail
 
 class CreateCompanyOwnerSerializer(serializers.ModelSerializer):
     """
-    Serializer for creating a company owner.
+    Serializer for creating a company owner along with a new company.
     """
 
+    company_name = serializers.CharField(
+        source="company.name",
+        max_length=150,
+        label="Company Name",
+    )
     email = serializers.EmailField(
         source="user.email",
+        max_length=100,
         validators=[
             validators.UniqueValidator(
                 CustomUser.objects.all(),
@@ -29,35 +35,32 @@ class CreateCompanyOwnerSerializer(serializers.ModelSerializer):
         ],
         label="Email",
     )
-    password = serializers.CharField(
-        source="user.password",
-        validators=[validate_password],
-        write_only=True,
-        label="Password",
-    )
     first_name = serializers.CharField(
         source="user.first_name",
-        required=False,
+        max_length=150,
         label="First Name",
     )
     last_name = serializers.CharField(
         source="user.last_name",
-        required=False,
+        max_length=150,
         label="Last Name",
     )
-    company_name = serializers.CharField(
-        source="company.name",
-        label="Company Name",
+    password = serializers.CharField(
+        source="user.password",
+        max_length=128,
+        validators=[validate_password],
+        write_only=True,
+        label="Password",
     )
 
     class Meta:
         model = Employee
         fields = (
+            "company_name",
             "email",
-            "password",
             "first_name",
             "last_name",
-            "company_name",
+            "password",
         )
 
     def create(self, validated_data):
