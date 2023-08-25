@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Employee from "./Employee"; // Import the Employee component
+import Employee from "./Employee";
 import {
   Button,
   Container,
@@ -19,11 +19,17 @@ function EmployeeList() {
   useEffect(() => {
     console.log("Fetching employee data from API...");
 
+    const accessToken = localStorage.getItem("accessToken");
+
     axios
-      .get("http://127.0.0.1:8000/api/employees/")
+      .get("http://127.0.0.1:8000/api/employees/", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
       .then((response) => {
-        console.log("Employee data fetched:", response.data);
-        setEmployees(response.data);
+        console.log("Employee data fetched:", response.data.results);
+        setEmployees(response.data.results);
       })
       .catch((error) => {
         console.error("Error fetching employee data:", error);
@@ -32,7 +38,7 @@ function EmployeeList() {
 
   const handleSort = (property) => {
     if (orderBy === property) {
-      setOrder(order === "asc" ? "desc" : "asc"); // Toggle order if same column is clicked
+      setOrder(order === "asc" ? "desc" : "asc");
     } else {
       setOrderBy(property);
       setOrder("asc");
@@ -76,7 +82,7 @@ function EmployeeList() {
             <Employee
               name={`${employee.user.first_name} ${employee.user.last_name}`}
               email={employee.user.email}
-              managerName={employee.manager} // Pass the manager's name
+              managerName={employee.manager}
               isOwner={employee.is_owner}
               isAdmin={employee.is_admin}
               isActive={employee.is_active}
