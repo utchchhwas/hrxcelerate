@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import {
+  TextField,
+  TextareaAutosize,
+  Button,
+  Container,
+  Grid,
+} from "@mui/material";
 import Navbar from "./Navbar";
 
 function Company() {
@@ -13,16 +20,39 @@ function Company() {
   });
 
   useEffect(() => {
-    console.log("Fetching company data from API...");
+    console.log("Fetching company ID from /employees API...");
+
+    const accessToken = localStorage.getItem("accessToken"); // Get the access token from local storage
 
     axios
-      .get("http://127.0.0.1:8000/api/companies/1/") // Replace with the actual API endpoint
+      .get("http://127.0.0.1:8000/api/employees/", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`, // Include the access token in the headers
+        },
+      })
       .then((response) => {
-        console.log("Company data fetched:", response.data);
-        setCompanyData(response.data);
+        const companyId =
+          response.data.results[0] && response.data.results[0].company;
+        if (companyId) {
+          console.log("Fetching company data from API...");
+
+          axios
+            .get(`http://127.0.0.1:8000/api/companies/${companyId}/`, {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            })
+            .then((response) => {
+              console.log("Company data fetched:", response.data);
+              setCompanyData(response.data);
+            })
+            .catch((error) => {
+              console.error("Error fetching company data:", error);
+            });
+        }
       })
       .catch((error) => {
-        console.error("Error fetching company data:", error);
+        console.error("Error fetching company ID:", error);
       });
   }, []);
 
@@ -30,7 +60,10 @@ function Company() {
     console.log("Updating company data...");
 
     axios
-      .put("http://127.0.0.1:8000/api/companies/1/", companyData) // Replace with the actual API endpoint
+      .put(
+        `http://127.0.0.1:8000/api/companies/${companyData.id}/`,
+        companyData
+      ) // Replace with the actual API endpoint
       .then((response) => {
         console.log("Company data updated:", response.data);
       })
