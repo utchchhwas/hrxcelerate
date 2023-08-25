@@ -24,6 +24,16 @@ class CreateCompanyOwnerSerializer(serializers.ModelSerializer):
         max_length=150,
         label="Company Name",
     )
+    first_name = serializers.CharField(
+        source="user.first_name",
+        max_length=160,
+        label="First Name",
+    )
+    last_name = serializers.CharField(
+        source="user.last_name",
+        max_length=150,
+        label="Last Name",
+    )
     email = serializers.EmailField(
         source="user.email",
         max_length=100,
@@ -34,16 +44,6 @@ class CreateCompanyOwnerSerializer(serializers.ModelSerializer):
             )
         ],
         label="Email",
-    )
-    first_name = serializers.CharField(
-        source="user.first_name",
-        max_length=150,
-        label="First Name",
-    )
-    last_name = serializers.CharField(
-        source="user.last_name",
-        max_length=150,
-        label="Last Name",
     )
     password = serializers.CharField(
         source="user.password",
@@ -57,9 +57,9 @@ class CreateCompanyOwnerSerializer(serializers.ModelSerializer):
         model = Employee
         fields = (
             "company_name",
-            "email",
             "first_name",
             "last_name",
+            "email",
             "password",
         )
 
