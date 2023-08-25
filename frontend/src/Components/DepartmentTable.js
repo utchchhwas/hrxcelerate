@@ -81,13 +81,28 @@ function DepartmentTable() {
         .then(() => {
           console.log("Department deleted successfully.");
           setSelectedDepartment(null);
-          // Fetch updated data after deletion if needed
+
+          // Fetch updated data after deletion
+          axios
+            .get("http://127.0.0.1:8000/api/departments/", {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            })
+            .then((response) => {
+              console.log("Data fetched:", response.data.results);
+              setDepartments(response.data.results);
+            })
+            .catch((error) => {
+              console.error("Error fetching data:", error);
+            });
         })
         .catch((error) => {
           console.error("Error deleting department:", error);
         });
     }
   };
+
 
   return (
     <div>
