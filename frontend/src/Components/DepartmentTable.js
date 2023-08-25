@@ -14,7 +14,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
 
-function DepartmentTable({ sortOrder }) {
+function DepartmentTable() {
   const [departments, setDepartments] = useState([]);
   const [orderBy, setOrderBy] = useState("id");
   const [order, setOrder] = useState("asc");
@@ -23,11 +23,17 @@ function DepartmentTable({ sortOrder }) {
   useEffect(() => {
     console.log("Fetching data from API...");
 
+    const accessToken = localStorage.getItem("accessToken");
+
     axios
-      .get("http://127.0.0.1:8000/api/departments/")
+      .get("http://127.0.0.1:8000/api/departments/", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
       .then((response) => {
-        console.log("Data fetched:", response.data);
-        setDepartments(response.data);
+        console.log("Data fetched:", response.data.results);
+        setDepartments(response.data.results);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -92,15 +98,6 @@ function DepartmentTable({ sortOrder }) {
                   Department Name
                 </TableSortLabel>
               </TableCell>
-              <TableCell>
-                <TableSortLabel
-                  active={orderBy === "company"}
-                  direction={orderBy === "company" ? order : "asc"}
-                  onClick={() => handleSort("company")}
-                >
-                  Company
-                </TableSortLabel>
-              </TableCell>
               <TableCell>Description</TableCell>
             </TableRow>
           </TableHead>
@@ -109,7 +106,6 @@ function DepartmentTable({ sortOrder }) {
               <TableRow key={department.id}>
                 <TableCell>{department.id}</TableCell>
                 <TableCell>{department.name}</TableCell>
-                <TableCell>{department.company}</TableCell>
                 <TableCell>{department.description}</TableCell>
               </TableRow>
             ))}
