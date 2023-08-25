@@ -5,6 +5,7 @@ import {
   redirect,
   useActionData,
 } from 'react-router-dom';
+import axios from 'axios';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -14,10 +15,24 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
+const createCompanyOwner = async (data) => {
+  const response = await axios.post(
+    'http://127.0.0.1:8000/api/create-company-owner/',
+    { ...data }
+  );
+  return response;
+};
+
+const validateEmail = (email) => {
+  console.log(email);
+  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+  return emailRegex.test(email);
+};
+
 export const action = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
-
+  console.log(data);
   let errors = {};
   Object.keys(data).forEach((key) => {
     errors[key] = [];
@@ -28,15 +43,40 @@ export const action = async ({ request }) => {
       errors[key].push('This field cannot be empty.');
     }
   }
+  if (!validateEmail(data.email)) {
+    errors.email.push('Enter a valid email address.');
+  }
   if (data.password !== data.confirmPassword) {
     errors.confirmPassword.push("The passwords don't match.");
   }
 
-  if (Object.keys(errors).length) {
+  if (Object.values(errors).some((item) => item.length > 0)) {
     return errors;
   }
 
-  return null;
+  try {
+    const response = await createCompanyOwner({
+      company_name: data.companyName,
+      first_name: data.firstName,
+      last_name: data.lastName,
+      email: data.email,
+      password: data.password,
+    });
+    console.log(response);
+  } catch (error) {
+    if (error.response.status === 400) {
+      for (const [key, value] of Object.entries(error.response.data)) {
+        errors[key] = errors[key].concat(value);
+      }
+    } else {
+      throw error;
+    }
+  }
+
+  if (Object.values(errors).some((item) => item.length > 0)) {
+    return errors;
+  }
+
   return redirect('/login');
 };
 
