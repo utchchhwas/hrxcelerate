@@ -4,6 +4,7 @@ import Login from "./Components/Login";
 import Departments from "./Components/Departments";
 import Employee from "./Components/Employees";
 import BasicInfo from "./Components/BasicInfo";
+import AddDepartment from "./Components/AddDepartment";
 
 const App = () => {
   const [authenticated, setAuthenticated] = useState(false);
@@ -30,6 +31,7 @@ const App = () => {
             <Route path="/basicinfo" element={<BasicInfo />} />
             <Route path="/departments" element={<Departments />} />
             <Route path="/employees" element={<Employee />} />
+            <Route path="/department/add" element={<AddDepartment />} />
           </>
         ) : (
           <Route

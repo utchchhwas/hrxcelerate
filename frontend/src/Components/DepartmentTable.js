@@ -10,15 +10,18 @@ import {
   TableSortLabel,
   TextField,
   InputAdornment,
+  Button,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function DepartmentTable() {
   const [departments, setDepartments] = useState([]);
   const [orderBy, setOrderBy] = useState("id");
   const [order, setOrder] = useState("asc");
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState(null);
 
   useEffect(() => {
     console.log("Fetching data from API...");
@@ -58,8 +61,54 @@ function DepartmentTable() {
     }
   });
 
+  const handleRowClick = (department) => {
+    setSelectedDepartment(department);
+  };
+
+  const handleDelete = () => {
+    if (selectedDepartment) {
+      const accessToken = localStorage.getItem("accessToken");
+
+      axios
+        .delete(
+          `http://127.0.0.1:8000/api/departments/${selectedDepartment.id}/`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        )
+        .then(() => {
+          console.log("Department deleted successfully.");
+          setSelectedDepartment(null);
+          // Fetch updated data after deletion if needed
+        })
+        .catch((error) => {
+          console.error("Error deleting department:", error);
+        });
+    }
+  };
+
   return (
     <div>
+      <Button
+        component={Link}
+        to="/department/add"
+        variant="contained"
+        color="primary"
+        sx={{ float: "right", marginBottom: 2 }}
+      >
+        Add Department
+      </Button>
+      <Button
+        variant="contained"
+        color="secondary"
+        sx={{ float: "right", marginBottom: 2, marginLeft: 2 }}
+        onClick={handleDelete}
+        disabled={!selectedDepartment}
+      >
+        Delete Department
+      </Button>
       <TextField
         label="Search"
         variant="outlined"
@@ -103,7 +152,14 @@ function DepartmentTable() {
           </TableHead>
           <TableBody>
             {sortedDepartments.map((department) => (
-              <TableRow key={department.id}>
+              <TableRow
+                key={department.id}
+                onClick={() => handleRowClick(department)}
+                selected={
+                  selectedDepartment && selectedDepartment.id === department.id
+                }
+                hover
+              >
                 <TableCell>{department.id}</TableCell>
                 <TableCell>{department.name}</TableCell>
                 <TableCell>{department.description}</TableCell>
