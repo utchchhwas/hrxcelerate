@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   TextField,
@@ -12,6 +13,7 @@ function DepartmentInputs() {
   const [companyID, setCompanyID] = useState(null);
   const [departmentName, setDepartmentName] = useState("");
   const [departmentDescription, setDepartmentDescription] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("Fetching company ID from /employees API...");
@@ -60,12 +62,13 @@ function DepartmentInputs() {
         // Reset form fields
         setDepartmentName("");
         setDepartmentDescription("");
+        // Redirect to /departments page
+        navigate("/departments");
       })
       .catch((error) => {
         console.error("Error creating department:", error);
       });
   };
-
 
   return (
     <Container>
