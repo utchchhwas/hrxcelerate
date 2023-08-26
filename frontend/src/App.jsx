@@ -8,6 +8,7 @@ import {
 import CreateCompanyOwner, {
   createCompanyOwnerAction,
 } from './pages/CreateCompanyOwner';
+import Login, { loginAction } from './pages/Login';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,7 +19,7 @@ const router = createBrowserRouter(
         element={<CreateCompanyOwner />}
         action={createCompanyOwnerAction}
       />
-      <Route path='/login' element={<h1>Login Page</h1>} />
+      <Route path='/login' element={<Login />} action={loginAction} />
     </>
   )
 );

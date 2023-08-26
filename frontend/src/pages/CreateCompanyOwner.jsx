@@ -8,13 +8,13 @@ import {
 import axios from 'axios';
 import { HttpStatusCode } from 'axios';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { validateEmail } from '../utils';
 
 const createCompanyOwner = async (data) => {
   const response = await axios.post(
@@ -22,11 +22,6 @@ const createCompanyOwner = async (data) => {
     { ...data }
   );
   return response;
-};
-
-const validateEmail = (email) => {
-  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-  return emailRegex.test(email);
 };
 
 export const createCompanyOwnerAction = async ({ request }) => {

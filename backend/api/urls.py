@@ -25,8 +25,8 @@ from api.views import InterviewerViewSet
 
 
 urlpatterns = [
-    # path("obtain-token-pair/", TokenObtainPairView.as_view(), name="obtain-token-pair"),
-    # path("refresh-token/", TokenRefreshView.as_view(), name="refresh-token"),
+    path("obtain-token-pair/", TokenObtainPairView.as_view(), name="obtain-token-pair"),
+    path("refresh-token/", TokenRefreshView.as_view(), name="refresh-token"),
     # path(
     #     "change-password/",
     #     ChangePasswordView.as_view(),
