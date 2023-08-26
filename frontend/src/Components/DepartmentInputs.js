@@ -71,40 +71,41 @@ function DepartmentInputs() {
   };
 
   return (
-    <Container>
-      <Grid
-        container
-        justifyContent="center"
-        alignItems="center"
-        minHeight="100vh"
-      >
-        <Grid item xs={12} sm={8} md={6} lg={4}>
-          <div className="text-center">
-            <TextField
-              label="Department Name"
-              fullWidth
-              value={departmentName}
-              onChange={(e) => setDepartmentName(e.target.value)}
-              sx={{ marginBottom: 2 }}
-            />
-            <TextareaAutosize
-              placeholder="Department Description"
-              minRows={5}
-              value={departmentDescription}
-              onChange={(e) => setDepartmentDescription(e.target.value)}
-              sx={{ width: "100%", marginBottom: 2 }}
-            />
-            <Button
-              variant="contained"
-              onClick={handleCreateDepartment}
-              sx={{ marginBottom: 2 }}
-            >
-              Create Department
-            </Button>
+    <>
+      <div className="container d-flex justify-content-center align-items-center vh-100">
+        <div className="text-center" style={{ width: "70%" }}>
+          <div className="form-group row">
+            <label className="col-sm-4 col-form-label text-right">Name:</label>
+            <div className="col-sm-8">
+              <input
+                type="text"
+                className="form-control"
+                name="Department Name"
+                value={departmentName}
+                onChange={(e) => setDepartmentName(e.target.value)}
+              />
+            </div>
           </div>
-        </Grid>
-      </Grid>
-    </Container>
+          <div className="form-group row">
+            <label className="col-sm-4 col-form-label text-right">
+              Description:
+            </label>
+            <div className="col-sm-8">
+              <textarea
+                className="form-control"
+                name="description"
+                value={departmentDescription}
+                onChange={(e) => setDepartmentName(e.target.value)}
+                rows="5" // vertical height
+              />
+            </div>
+          </div>
+          <button className="btn btn-primary" onClick={handleCreateDepartment}>
+            Create
+          </button>
+        </div>
+      </div>
+    </>
   );
 }
 
