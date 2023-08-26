@@ -6,6 +6,7 @@ import {
   useActionData,
 } from 'react-router-dom';
 import axios from 'axios';
+import { HttpStatusCode } from 'axios';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -24,68 +25,69 @@ const createCompanyOwner = async (data) => {
 };
 
 const validateEmail = (email) => {
-  console.log(email);
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
   return emailRegex.test(email);
 };
 
-export const action = async ({ request }) => {
+export const createCompanyOwnerAction = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
-  console.log(data);
-  let errors = {};
+
+  let formErrors = {};
   Object.keys(data).forEach((key) => {
-    errors[key] = [];
+    formErrors[key] = [];
   });
 
   for (const [key, value] of Object.entries(data)) {
     if (value === '') {
-      errors[key].push('This field cannot be empty.');
+      formErrors[key].push('This field cannot be empty.');
     }
   }
-  if (!validateEmail(data.email)) {
-    errors.email.push('Enter a valid email address.');
+  if (data.email !== '' && !validateEmail(data.email)) {
+    formErrors.email.push('Enter a valid email address.');
   }
   if (data.password !== data.confirmPassword) {
-    errors.confirmPassword.push("The passwords don't match.");
+    formErrors.confirmPassword.push("The passwords don't match.");
   }
 
-  if (Object.values(errors).some((item) => item.length > 0)) {
-    return errors;
+  if (Object.values(formErrors).some((item) => item.length > 0)) {
+    return { formErrors };
   }
 
   try {
     const response = await createCompanyOwner({
-      company_name: data.companyName,
-      first_name: data.firstName,
-      last_name: data.lastName,
+      companyName: data.companyName,
+      firstName: data.firstName,
+      lastName: data.lastName,
       email: data.email,
       password: data.password,
     });
-    console.log(response);
   } catch (error) {
-    if (error.response.status === 400) {
+    if (error.response.status === HttpStatusCode.BadRequest) {
       for (const [key, value] of Object.entries(error.response.data)) {
-        errors[key] = errors[key].concat(value);
+        formErrors[key] = formErrors[key].concat(value);
       }
     } else {
       throw error;
     }
   }
 
-  if (Object.values(errors).some((item) => item.length > 0)) {
-    return errors;
+  if (Object.values(formErrors).some((item) => item.length > 0)) {
+    return { formErrors };
   }
 
-  return redirect('/login');
+  let passParams = new URLSearchParams();
+  passParams.set('from', new URL(request.url).pathname);
+  return redirect('/login?' + passParams.toString());
 };
 
 const SignUp = () => {
-  const errors = useActionData();
+  const actionData = useActionData();
+
+  const formErrors = actionData?.formErrors || {};
 
   return (
-    <Container component='main' maxWidth='xs'>
-      <CssBaseline />
+    <Container component='main' maxWidth='sm'>
       <Box
         sx={{
           marginTop: 8,
@@ -104,7 +106,7 @@ const SignUp = () => {
           }}
         />
         <Typography component='h1' variant='h5'>
-          Create Account
+          Create Company Owner Account
         </Typography>
         <Box component={RouterForm} method='post' noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
@@ -117,8 +119,10 @@ const SignUp = () => {
                 required
                 fullWidth
                 autoFocus
-                error={errors?.companyName && errors.companyName.length !== 0}
-                helperText={errors?.companyName.map((item, index) => (
+                error={
+                  formErrors?.companyName && formErrors.companyName.length !== 0
+                }
+                helperText={formErrors?.companyName?.map((item, index) => (
                   <Fragment key={index}>
                     {item} <br />
                   </Fragment>
@@ -133,8 +137,10 @@ const SignUp = () => {
                 label='First Name'
                 required
                 fullWidth
-                error={errors?.firstName && errors.firstName.length !== 0}
-                helperText={errors?.firstName.map((item, index) => (
+                error={
+                  formErrors?.firstName && formErrors.firstName.length !== 0
+                }
+                helperText={formErrors?.firstName?.map((item, index) => (
                   <Fragment key={index}>
                     {item} <br />
                   </Fragment>
@@ -149,8 +155,8 @@ const SignUp = () => {
                 label='Last Name'
                 required
                 fullWidth
-                error={errors?.lastName && errors.lastName.length !== 0}
-                helperText={errors?.lastName.map((item, index) => (
+                error={formErrors?.lastName && formErrors.lastName.length !== 0}
+                helperText={formErrors?.lastName?.map((item, index) => (
                   <Fragment key={index}>
                     {item} <br />
                   </Fragment>
@@ -166,8 +172,8 @@ const SignUp = () => {
                 label='Email Address'
                 required
                 fullWidth
-                error={errors?.email && errors.email.length !== 0}
-                helperText={errors?.email.map((item, index) => (
+                error={formErrors?.email && formErrors.email.length !== 0}
+                helperText={formErrors?.email?.map((item, index) => (
                   <Fragment key={index}>
                     {item} <br />
                   </Fragment>
@@ -183,8 +189,8 @@ const SignUp = () => {
                 label='Password'
                 required
                 fullWidth
-                error={errors?.password && errors.password.length !== 0}
-                helperText={errors?.password.map((item, index) => (
+                error={formErrors?.password && formErrors.password.length !== 0}
+                helperText={formErrors?.password?.map((item, index) => (
                   <Fragment key={index}>
                     {item} <br />
                   </Fragment>
@@ -201,9 +207,10 @@ const SignUp = () => {
                 required
                 fullWidth
                 error={
-                  errors?.confirmPassword && errors.confirmPassword.length !== 0
+                  formErrors?.confirmPassword &&
+                  formErrors.confirmPassword.length !== 0
                 }
-                helperText={errors?.confirmPassword.map((item, index) => (
+                helperText={formErrors?.confirmPassword?.map((item, index) => (
                   <Fragment key={index}>
                     {item} <br />
                   </Fragment>
