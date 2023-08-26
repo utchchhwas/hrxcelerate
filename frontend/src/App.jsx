@@ -1,17 +1,16 @@
 import {
-  Outlet,
   Route,
   RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
 } from 'react-router-dom';
-import { AuthProvider } from 'react-auth-kit';
+
+import RootPage from './pages/RootPage';
 import CreateCompanyOwner, {
   createCompanyOwnerAction,
 } from './pages/CreateCompanyOwner';
-import Login, { loginAction } from './pages/Login';
-import RootPage from './pages/RootPage';
-import Portal from './pages/Portal';
+import Login, { loginAction, loginLoader } from './pages/Login';
+import Portal, { portalLoader } from './pages/Portal';
 import CompanyInfo from './pages/CompanyInfo';
 
 const router = createBrowserRouter(
@@ -23,8 +22,13 @@ const router = createBrowserRouter(
         element={<CreateCompanyOwner />}
         action={createCompanyOwnerAction}
       />
-      <Route path='/login' element={<Login />} action={loginAction} />
-      <Route path='/portal' element={<Portal />}>
+      <Route
+        path='/login'
+        element={<Login />}
+        loader={loginLoader}
+        action={loginAction}
+      />
+      <Route path='/portal' element={<Portal />} loader={portalLoader}>
         <Route path='company-info' element={<CompanyInfo />}></Route>
       </Route>
     </>
@@ -32,11 +36,7 @@ const router = createBrowserRouter(
 );
 
 const App = () => {
-  return (
-    <AuthProvider authName={'_auth'} authType={'cookie'}>
-      <RouterProvider router={router} />
-    </AuthProvider>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App;

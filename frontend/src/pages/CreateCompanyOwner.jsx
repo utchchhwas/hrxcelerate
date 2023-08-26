@@ -5,24 +5,19 @@ import {
   redirect,
   useActionData,
 } from 'react-router-dom';
-import axios from 'axios';
-import { HttpStatusCode } from 'axios';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { validateEmail } from '../utils';
 
-const createCompanyOwner = async (data) => {
-  const response = await axios.post(
-    'http://127.0.0.1:8000/api/create-company-owner/',
-    { ...data }
-  );
-  return response;
-};
+import { HttpStatusCode } from 'axios';
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { validateEmail } from '../utils';
+import apiCreateCompanyOwner from '../api/apiCreateCompanyOwner';
 
 export const createCompanyOwnerAction = async ({ request }) => {
   const formData = await request.formData();
@@ -50,10 +45,10 @@ export const createCompanyOwnerAction = async ({ request }) => {
   }
 
   try {
-    const response = await createCompanyOwner({
-      companyName: data.companyName,
-      firstName: data.firstName,
-      lastName: data.lastName,
+    const response = await apiCreateCompanyOwner({
+      company_name: data.companyName,
+      first_name: data.firstName,
+      last_name: data.lastName,
       email: data.email,
       password: data.password,
     });
@@ -82,10 +77,10 @@ export const createCompanyOwnerAction = async ({ request }) => {
 const SignUp = () => {
   const actionData = useActionData();
 
-  const formErrors = actionData?.formErrors || {};
+  const formErrors = actionData?.formErrors;
 
   return (
-    <Container component='main' maxWidth='sm'>
+    <Container component='main' maxWidth='xs'>
       <Box
         sx={{
           marginTop: 8,
@@ -108,7 +103,6 @@ const SignUp = () => {
         </Typography>
         <Box component={RouterForm} method='post' noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
-            {/* Company Name */}
             <Grid item xs={12}>
               <TextField
                 id='companyName'
@@ -127,7 +121,6 @@ const SignUp = () => {
                 ))}
               />
             </Grid>
-            {/* First Name */}
             <Grid item xs={12} sm={6}>
               <TextField
                 id='firstName'
@@ -145,7 +138,6 @@ const SignUp = () => {
                 ))}
               />
             </Grid>
-            {/* Last Name */}
             <Grid item xs={12} sm={6}>
               <TextField
                 id='lastName'
@@ -161,7 +153,6 @@ const SignUp = () => {
                 ))}
               />
             </Grid>
-            {/* Email */}
             <Grid item xs={12}>
               <TextField
                 id='email'
@@ -178,7 +169,6 @@ const SignUp = () => {
                 ))}
               />
             </Grid>
-            {/* Password */}
             <Grid item xs={12}>
               <TextField
                 id='password'
@@ -195,7 +185,6 @@ const SignUp = () => {
                 ))}
               />
             </Grid>
-            {/* Confirm Password */}
             <Grid item xs={12}>
               <TextField
                 id='confirmPassword'

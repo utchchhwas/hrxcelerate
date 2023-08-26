@@ -6,32 +6,33 @@ import {
   useActionData,
   useLocation,
 } from 'react-router-dom';
-import axios from 'axios';
 import { HttpStatusCode } from 'axios';
-import { useSignIn } from 'react-auth-kit';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Alert from '@mui/material/Alert';
-import { validateEmail, tokenRemainingTime } from '../utils';
+import {
+  Alert,
+  Box,
+  Button,
+  Container,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+} from '@mui/material';
+import authProvider from '../authProvider';
+import { validateEmail } from '../utils';
+import apiObtainTokenPair from '../api/apiObtainTokenPair';
 
-const obtainTokenPair = async (data) => {
-  const response = await axios.post(
-    'http://127.0.0.1:8000/api/obtain-token-pair/',
-    {
-      ...data,
-    }
-  );
-  return response;
+export const loginLoader = async () => {
+  if (authProvider.isAuthenticated()) {
+    let passParams = new URLSearchParams();
+    passParams.set('message', 'You are already logged in.');
+    return redirect('/portal?' + passParams.toString());
+  }
+  return null;
 };
 
 export const loginAction = async ({ request }) => {
-  const signIn = useSignIn();
-
+  const url = new URL(request.url);
+  const searchParams = url.searchParams;
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
 
@@ -54,27 +55,23 @@ export const loginAction = async ({ request }) => {
   }
 
   try {
-    const response = await obtainTokenPair({
+    const response = await apiObtainTokenPair({
       email: data.email,
       password: data.password,
     });
-    console.log('response:', response);
-
-    const accessToken = response.data.access;
-    console.log('accessToken:', accessToken);
-    console.log('remainingTime:', tokenRemainingTime(accessToken));
+    authProvider.signIn(response.data);
   } catch (error) {
-    console.log(error);
     if (error.response.status === HttpStatusCode.Unauthorized) {
       return {
-        error: 'Invalid email/password.',
+        actionError: 'Invalid email/password.',
       };
     } else {
       throw error;
     }
   }
 
-  return null;
+  const redirectTo = searchParams.get('from');
+  return redirect(redirectTo || '/portal');
 };
 
 const Login = () => {
@@ -82,10 +79,11 @@ const Login = () => {
   const actionData = useActionData();
 
   const searchParams = new URLSearchParams(location.search);
-  const success = searchParams.get('success');
+  const successMessage = searchParams.get('success');
+  const errorMessage = searchParams.get('error');
 
   const formErrors = actionData?.formErrors || {};
-  const error = actionData?.error || null;
+  const actionError = actionData?.actionError || null;
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -109,19 +107,29 @@ const Login = () => {
         <Typography component='h1' variant='h5'>
           Employee Login
         </Typography>
-        <Box component={RouterForm} method='post' noValidate sx={{ mt: 3 }}>
+        <Box
+          component={RouterForm}
+          replace
+          method='post'
+          noValidate
+          sx={{ mt: 3 }}
+        >
           <Grid container spacing={2}>
-            {success && (
+            {successMessage && (
               <Grid item xs={12}>
-                <Alert severity='success'>{success}</Alert>
+                <Alert severity='success'>{successMessage}</Alert>
               </Grid>
             )}
-            {error && (
+            {errorMessage && (
               <Grid item xs={12}>
-                <Alert severity='error'>{error}</Alert>
+                <Alert severity='error'>{errorMessage}</Alert>
               </Grid>
             )}
-            {/* Email */}
+            {actionError && (
+              <Grid item xs={12}>
+                <Alert severity='error'>{actionError}</Alert>
+              </Grid>
+            )}
             <Grid item xs={12}>
               <TextField
                 id='email'
@@ -130,9 +138,10 @@ const Login = () => {
                 label='Email Address'
                 required
                 fullWidth
+                autoFocus
                 error={
                   (formErrors?.email && formErrors.email.length !== 0) ||
-                  error !== null
+                  actionError !== null
                 }
                 helperText={formErrors?.email?.map((item, index) => (
                   <Fragment key={index}>
@@ -141,7 +150,6 @@ const Login = () => {
                 ))}
               />
             </Grid>
-            {/* Password */}
             <Grid item xs={12}>
               <TextField
                 id='password'
@@ -152,7 +160,7 @@ const Login = () => {
                 fullWidth
                 error={
                   (formErrors?.password && formErrors.password.length !== 0) ||
-                  error !== null
+                  actionError !== null
                 }
                 helperText={formErrors?.password?.map((item, index) => (
                   <Fragment key={index}>
