@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 import axios from 'axios';
 import { HttpStatusCode } from 'axios';
+import { useSignIn } from 'react-auth-kit';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
@@ -16,20 +17,23 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
-import { validateEmail } from '../utils';
+import { validateEmail, tokenRemainingTime } from '../utils';
 
-const login = async (data) => {
+const obtainTokenPair = async (data) => {
   const response = await axios.post(
-    'http://127.0.0.1:8000/api/create-company-owner/',
-    { ...data }
+    'http://127.0.0.1:8000/api/obtain-token-pair/',
+    {
+      ...data,
+    }
   );
   return response;
 };
 
 export const loginAction = async ({ request }) => {
+  const signIn = useSignIn();
+
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
-  console.log(data);
 
   let formErrors = {};
   Object.keys(data).forEach((key) => {
@@ -49,6 +53,27 @@ export const loginAction = async ({ request }) => {
     return { formErrors };
   }
 
+  try {
+    const response = await obtainTokenPair({
+      email: data.email,
+      password: data.password,
+    });
+    console.log('response:', response);
+
+    const accessToken = response.data.access;
+    console.log('accessToken:', accessToken);
+    console.log('remainingTime:', tokenRemainingTime(accessToken));
+  } catch (error) {
+    console.log(error);
+    if (error.response.status === HttpStatusCode.Unauthorized) {
+      return {
+        error: 'Invalid email/password.',
+      };
+    } else {
+      throw error;
+    }
+  }
+
   return null;
 };
 
@@ -57,12 +82,10 @@ const Login = () => {
   const actionData = useActionData();
 
   const searchParams = new URLSearchParams(location.search);
-  const from = searchParams.get('from') || '/';
+  const success = searchParams.get('success');
 
   const formErrors = actionData?.formErrors || {};
-
-  console.log('searchParams:', searchParams);
-  console.log('from:', from);
+  const error = actionData?.error || null;
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -88,11 +111,14 @@ const Login = () => {
         </Typography>
         <Box component={RouterForm} method='post' noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
-            {from === '/create-company-owner' && (
+            {success && (
               <Grid item xs={12}>
-                <Alert severity='success'>
-                  Account created successfully. You can login now.
-                </Alert>
+                <Alert severity='success'>{success}</Alert>
+              </Grid>
+            )}
+            {error && (
+              <Grid item xs={12}>
+                <Alert severity='error'>{error}</Alert>
               </Grid>
             )}
             {/* Email */}
@@ -104,7 +130,10 @@ const Login = () => {
                 label='Email Address'
                 required
                 fullWidth
-                error={formErrors?.email && formErrors.email.length !== 0}
+                error={
+                  (formErrors?.email && formErrors.email.length !== 0) ||
+                  error !== null
+                }
                 helperText={formErrors?.email?.map((item, index) => (
                   <Fragment key={index}>
                     {item} <br />
@@ -121,7 +150,10 @@ const Login = () => {
                 label='Password'
                 required
                 fullWidth
-                error={formErrors?.password && formErrors.password.length !== 0}
+                error={
+                  (formErrors?.password && formErrors.password.length !== 0) ||
+                  error !== null
+                }
                 helperText={formErrors?.password?.map((item, index) => (
                   <Fragment key={index}>
                     {item} <br />

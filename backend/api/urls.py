@@ -48,7 +48,7 @@ router = DefaultRouter()
 # router.register(r"companies", RetrieveUpdateDestroyCompanyViewSet, basename="company")
 # router.register(r"departments", DepartmentViewSet, basename="department")
 # router.register(r"job-roles", JobRoleViewSet, basename="job-roles")
-# router.register(r"employees", EmployeeViewSet, basename="employee")
+router.register(r"employees", EmployeeViewSet, basename="employee")
 # router.register(r"employments", EmploymentViewSet, basename="employments")
 # router.register(r"job-postings", JobPostingViewSet, basename="job-postings")
 # router.register(

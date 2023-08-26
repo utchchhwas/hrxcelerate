@@ -72,7 +72,10 @@ export const createCompanyOwnerAction = async ({ request }) => {
   }
 
   let passParams = new URLSearchParams();
-  passParams.set('from', new URL(request.url).pathname);
+  passParams.set(
+    'success',
+    'Accounted created successfully. You can login now.'
+  );
   return redirect('/login?' + passParams.toString());
 };
 
