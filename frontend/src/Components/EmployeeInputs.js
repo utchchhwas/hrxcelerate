@@ -56,11 +56,32 @@ function EmployeeInputs() {
 
   const handleInputChange = (e) => {
     const { name, value, type } = e.target;
-    setUserData((prevData) => ({
-      ...prevData,
-      [name]: type === "checkbox" ? e.target.checked : value,
-    }));
+
+    // If the input is for user-related fields, update the user object
+    if (name === "email" || name === "first_name" || name === "last_name") {
+      setUserData((prevData) => ({
+        ...prevData,
+        user: {
+          ...prevData.user,
+          [name]: value,
+        },
+      }));
+    } else {
+      setUserData((prevData) => ({
+        ...prevData,
+        [name]: type === "checkbox" ? e.target.checked : value,
+      }));
+    }
+
+    if (name === "manager") {
+      // Update the manager field with the selected manager's email
+      setUserData((prevData) => ({
+        ...prevData,
+        manager: value,
+      }));
+    }
   };
+
 
   const handleAvatarChange = (e) => {
     setUserData((prevData) => ({
@@ -74,49 +95,37 @@ function EmployeeInputs() {
 
     const accessToken = localStorage.getItem("accessToken");
 
-    const formData = new FormData();
-    formData.append("user[email]", userData.user.email);
-    formData.append("user[first_name]", userData.user.first_name);
-    formData.append("user[last_name]", userData.user.last_name);
-    formData.append("company", userData.company);
-    formData.append("manager", userData.manager);
-    formData.append("is_owner", userData.is_owner);
-    formData.append("is_admin", userData.is_admin);
-    formData.append("is_active", userData.is_active);
-    formData.append("gender", userData.gender);
-    formData.append("date_of_birth", userData.date_of_birth);
-    formData.append("avatar", userData.avatar);
+    const postData = {
+      user: {
+        email: userData.user.email,
+        first_name: userData.user.first_name,
+        last_name: userData.user.last_name,
+      },
+      company: userData.company,
+      manager: userData.manager,
+      is_owner: userData.is_owner,
+      is_admin: userData.is_admin,
+      is_active: userData.is_active,
+      gender: userData.gender,
+    //   date_of_birth: userData.date_of_birth,
+    };
 
     axios
-      .post("http://127.0.0.1:8000/api/employees/", formData, {
+      .post("http://127.0.0.1:8000/api/employees/", postData, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "multipart/form-data",
         },
       })
       .then((response) => {
         console.log("Employee created:", response.data);
-        setUserData({
-          user: {
-            email: "",
-            first_name: "",
-            last_name: "",
-          },
-          company: null,
-          manager: null,
-          is_owner: false,
-          is_admin: false,
-          is_active: false,
-          gender: "",
-          date_of_birth: "",
-          avatar: null,
-        });
+        // Redirect to the employee list page
         navigate("/employees");
       })
       .catch((error) => {
         console.error("Error creating employee:", error);
       });
   };
+
 
   const navigate = useNavigate();
 
@@ -158,13 +167,13 @@ function EmployeeInputs() {
           <Form.Control
             as="select"
             name="manager"
-            value={userData.manager || ""}
+            value={userData.manager} // Should be the manager's email
             onChange={handleInputChange}
           >
             <option value="">Select Manager</option>
             {managers.map((manager) => (
-              <option key={manager.id} value={manager.id}>
-                {manager.user.email} {/* Display manager's email */}
+              <option key={manager.id} value={manager.user.email}>
+                {manager.user.email}
               </option>
             ))}
           </Form.Control>
