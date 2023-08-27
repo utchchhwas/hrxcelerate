@@ -7,6 +7,7 @@ import BasicInfo from "./Components/BasicInfo";
 import AddDepartment from "./Components/AddDepartment";
 import JobRoles from "./Components/JobRoles";
 import AddJobRole from "./Components/AddJobRole";
+import AddEmployee from "./Components/AddEmployee";
 
 const App = () => {
   const [authenticated, setAuthenticated] = useState(false);
@@ -31,11 +32,12 @@ const App = () => {
         {authenticated ? (
           <>
             <Route path="/home" element={<BasicInfo />} />
-            <Route path="/departments" element={<Departments />} />
             <Route path="/employees" element={<Employee />} />
+            <Route path="/employee/add" element={<AddEmployee />} />
+            <Route path="/departments" element={<Departments />} />
             <Route path="/department/add" element={<AddDepartment />} />
             <Route path="/jobroles" element={<JobRoles />} />
-            <Route path="/jobroles/add" element={<AddJobRole />} />
+            <Route path="/jobrole/add" element={<AddJobRole />} />
           </>
         ) : (
           <Route
