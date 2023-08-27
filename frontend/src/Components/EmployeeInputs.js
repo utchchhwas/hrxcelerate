@@ -75,7 +75,6 @@ function EmployeeInputs() {
 
   return (
     <div className="container">
-      <h2>Add Employee</h2>
       <Form className="employee-form">
         <Form.Group controlId="email">
           <Form.Label>Email</Form.Label>

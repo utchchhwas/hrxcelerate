@@ -9,6 +9,7 @@ import {
   ListItemText,
   ListItemSecondaryAction,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import "./EmployeeListStyle.css";
 
 function EmployeeList() {
@@ -74,6 +75,20 @@ function EmployeeList() {
           onClick={() => handleSort("user.first_name")}
         >
           Sort by Name
+        </Button>
+        <Button
+          component={Link}
+          to="/employee/add"
+          variant="contained"
+          color="primary"
+          sx={{
+            float: "right",
+            marginBottom: 2,
+            marginLeft: 2,
+            marginRight: 2,
+          }}
+        >
+          Add
         </Button>
       </div>
       <List>
