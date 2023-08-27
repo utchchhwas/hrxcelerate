@@ -95,7 +95,7 @@ function DepartmentInputs() {
                 className="form-control"
                 name="description"
                 value={departmentDescription}
-                onChange={(e) => setDepartmentName(e.target.value)}
+                onChange={(e) => setDepartmentDescription(e.target.value)}
                 rows="5" // vertical height
               />
             </div>
