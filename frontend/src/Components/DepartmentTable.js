@@ -111,18 +111,18 @@ function DepartmentTable() {
         to="/department/add"
         variant="contained"
         color="primary"
-        sx={{ float: "right", marginBottom: 2 }}
+        sx={{ float: "right", marginBottom: 2 , marginLeft: 2, marginRight: 5}}
       >
-        Add Department
+        Add
       </Button>
       <Button
         variant="contained"
         color="secondary"
-        sx={{ float: "right", marginBottom: 2, marginLeft: 2 }}
+        sx={{ float: "right", marginBottom: 2, marginLeft: 2}}
         onClick={handleDelete}
         disabled={!selectedDepartment}
       >
-        Delete Department
+        Delete
       </Button>
       <TextField
         label="Search"
