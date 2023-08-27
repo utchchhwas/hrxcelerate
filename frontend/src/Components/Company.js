@@ -59,11 +59,18 @@ function Company() {
   const handleUpdate = () => {
     console.log("Updating company data...");
 
+    const accessToken = localStorage.getItem("accessToken"); // Get the access token from local storage
+
     axios
       .put(
         `http://127.0.0.1:8000/api/companies/${companyData.id}/`,
-        companyData
-      ) // Replace with the actual API endpoint
+        companyData,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
       .then((response) => {
         console.log("Company data updated:", response.data);
       })
