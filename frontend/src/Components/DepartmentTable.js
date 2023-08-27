@@ -15,6 +15,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import "./DepartmentTableStyle.css";
 
 function DepartmentTable() {
   const [departments, setDepartments] = useState([]);
@@ -138,10 +139,10 @@ function DepartmentTable() {
           ),
           placeholder: "Department name",
         }}
-        sx={{ marginBottom: 2 }}
+        sx={{ float: "right", marginBottom: 2 }}
       />
-      <TableContainer component={Paper}>
-        <Table>
+      <TableContainer>
+        <Table className="departments-table">
           <TableHead>
             <TableRow>
               <TableCell>
