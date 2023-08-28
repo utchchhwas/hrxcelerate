@@ -80,7 +80,7 @@ function JobRoleList() {
         </Button>
         <Button
           component={Link}
-          to="/jobroles/add"
+          to="/jobrole/add"
           variant="contained"
           sx={{ float: "right", marginBottom: 2 , marginLeft: 2, marginRight: 5}}
         >
