@@ -8,6 +8,7 @@ import "./JobPostingStyle.css";
 function JobPostingList() {
   const [jobPostings, setJobPostings] = useState([]);
   const [selectedJobId, setSelectedJobId] = useState(null);
+  const [jobRoles, setJobRoles] = useState([]);
 
   useEffect(() => {
     console.log("Fetching job postings from API...");
@@ -26,6 +27,20 @@ function JobPostingList() {
       })
       .catch((error) => {
         console.error("Error fetching job postings:", error);
+      });
+
+    axios
+      .get("http://127.0.0.1:8000/api/job-roles/", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((response) => {
+        console.log("Job roles fetched:", response.data.results);
+        setJobRoles(response.data.results);
+      })
+      .catch((error) => {
+        console.error("Error fetching job roles:", error);
       });
   }, []);
 
@@ -103,7 +118,15 @@ function JobPostingList() {
               }`}
             >
               <JobPosting
-                jobRole={jobPosting.job_role}
+                jobRole={
+                  jobRoles.find(function(role) {
+                    return role.id === jobPosting.job_role;
+                  }) !== undefined
+                    ? jobRoles.find(function(role) {
+                        return role.id === jobPosting.job_role;
+                      }).name
+                    : "Unknown Role"
+                }
                 tags={jobPosting.tags}
                 description={jobPosting.description}
                 isActive={jobPosting.is_active}
