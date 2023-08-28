@@ -24,17 +24,19 @@
 .left-column {
   flex-grow: 1;
   display: flex;
-  flex-direction: column; /* Display contents in a column layout */
-  justify-content: flex-start; /* Align items to the top of the column */
+  flex-direction: column;
+  justify-content: flex-start;
   padding-right: 16px;
 }
 
 .right-column {
   flex-shrink: 0;
   display: flex;
-  flex-direction: column; /* Display contents in a column layout */
-  align-items: flex-end;
-  justify-content: flex-start; /* Align items to the top of the column */
+  flex-direction: column;
+  justify-content: flex-start;
+  /* Adjust the right-column's width with respect to employee-box */
+  width: calc(30% - 10px); /* 30% of .employee-box width minus padding */
+  padding-left: 16px; /* Add padding for spacing */
 }
 
 

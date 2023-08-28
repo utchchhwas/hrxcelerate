@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  ListItemText,
-  Typography,
-  ListItemSecondaryAction,
-} from "@mui/material";
+import { Typography } from "@mui/material";
 
 function Employee(props) {
   const { name, email, managerName, isOwner, isAdmin, isActive } = props;
