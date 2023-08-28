@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Button, Container, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Container, List, ListItem } from "@mui/material";
 import { Link } from "react-router-dom";
-import "./JobRoleListStyle.css";
+import JobPosting from "./JobPosting"; // Import the JobPosting component
+import "./JobPostingStyle.css";
 
 function JobPostingList() {
   const [jobPostings, setJobPostings] = useState([]);
-  const [selectedJobPostingId, setSelectedJobPostingId] = useState(null);
+  const [selectedJobId, setSelectedJobId] = useState(null);
 
   useEffect(() => {
     console.log("Fetching job postings from API...");
@@ -29,23 +30,20 @@ function JobPostingList() {
   }, []);
 
   const handleDelete = () => {
-    if (selectedJobPostingId !== null) {
+    if (selectedJobId !== null) {
       console.log("Deleting selected job posting...");
 
       const accessToken = localStorage.getItem("accessToken");
 
       axios
-        .delete(
-          `http://127.0.0.1:8000/api/job-postings/${selectedJobPostingId}/`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        )
+        .delete(`http://127.0.0.1:8000/api/job-postings/${selectedJobId}/`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
         .then((response) => {
           console.log("Job posting deleted:", response.data);
-          setSelectedJobPostingId(null); // Clear the selection after deletion
+          setSelectedJobId(null); // Clear the selection after deletion
 
           // Fetch updated job postings and refresh the list
           axios
@@ -75,7 +73,7 @@ function JobPostingList() {
         <Button
           variant="contained"
           onClick={handleDelete}
-          disabled={selectedJobPostingId === null}
+          disabled={selectedJobId === null}
           sx={{ float: "right", marginBottom: 2, marginLeft: 2 }}
         >
           Delete
@@ -99,12 +97,17 @@ function JobPostingList() {
           {jobPostings.map((jobPosting) => (
             <ListItem
               key={jobPosting.id}
-              onClick={() => setSelectedJobPostingId(jobPosting.id)}
+              onClick={() => setSelectedJobId(jobPosting.id)}
               className={`job-list-item ${
-                jobPosting.id === selectedJobPostingId ? "selected" : ""
+                jobPosting.id === selectedJobId ? "selected" : ""
               }`}
             >
-              <ListItemText primary={`Job Posting ID: ${jobPosting.id}`} />
+              <JobPosting
+                jobRole={jobPosting.job_role}
+                tags={jobPosting.tags}
+                description={jobPosting.description}
+                isActive={jobPosting.is_active}
+              />
             </ListItem>
           ))}
         </List>
