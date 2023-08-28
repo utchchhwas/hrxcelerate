@@ -41,7 +41,7 @@ const Navbar = () => {
             color="inherit"
             onClick={handleMenuClick} // Open the menu on button click
           >
-            Job
+            Jobs
           </Button>
           <Menu
             anchorEl={anchorEl}
