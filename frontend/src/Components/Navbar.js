@@ -1,14 +1,29 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, Stack, Button } from "@mui/material";
-import { Link } from "react-router-dom"; // Import the Link component for navigation
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Stack,
+  Button,
+  Menu,
+  MenuItem,
+} from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <AppBar position="static">
       <Toolbar>
-        {/* <IconButton> 
-            <CatchingPokemonIcon />
-        </IconButton> */}
         <Typography sx={{ flexGrow: 1 }}>
           <h2> HRXcelerate </h2>
         </Typography>
@@ -20,11 +35,34 @@ const Navbar = () => {
             Departments
           </Button>
           <Button color="inherit" component={Link} to="/employees">
-            Employee
+            Employees
           </Button>
-          <Button color="inherit" component={Link} to="/jobroles">
-            JobRoles
+          <Button
+            color="inherit"
+            onClick={handleMenuClick} // Open the menu on button click
+          >
+            Job
           </Button>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+          >
+            <MenuItem
+              component={Link}
+              to="/jobroles"
+              onClick={handleMenuClose} // Close the menu on sub-menu click
+            >
+              Job Role
+            </MenuItem>
+            <MenuItem
+              component={Link}
+              to="/jobpostings"
+              onClick={handleMenuClose} // Close the menu on sub-menu click
+            >
+              Job Posting
+            </MenuItem>
+          </Menu>
         </Stack>
       </Toolbar>
     </AppBar>
