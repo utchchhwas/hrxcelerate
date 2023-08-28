@@ -9,6 +9,7 @@ import BasicInfo from "./Components/BasicInfo";
 import JobRoles from "./Components/JobRoles";
 import AddJobRole from "./Components/AddJobRole";
 import JobPostings from "./Components/JobPostings";
+import Applicants from "./Components/Applicants";
 
 
 const App = () => {
@@ -41,6 +42,7 @@ const App = () => {
             <Route path="/jobroles" element={<JobRoles />} />
             <Route path="/jobrole/add" element={<AddJobRole />} />
             <Route path="/jobpostings" element={<JobPostings />} />
+            <Route path="/applicants" element={<Applicants />} />
           </>
         ) : (
           <Route
