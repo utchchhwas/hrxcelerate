@@ -62,6 +62,13 @@ const Navbar = () => {
             >
               Job Posting
             </MenuItem>
+            <MenuItem
+              component={Link}
+              to="/applicants"
+              onClick={handleMenuClose} // Close the menu on sub-menu click
+            >
+              Applicants
+            </MenuItem>
           </Menu>
         </Stack>
       </Toolbar>
