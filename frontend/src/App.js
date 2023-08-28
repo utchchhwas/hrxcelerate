@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Login from "./Components/Login";
 import Departments from "./Components/Departments";
-import Employee from "./Components/Employees";
-import BasicInfo from "./Components/BasicInfo";
 import AddDepartment from "./Components/AddDepartment";
+import Employee from "./Components/Employees";
+import AddEmployee from "./Components/AddEmployee";
+import BasicInfo from "./Components/BasicInfo";
 import JobRoles from "./Components/JobRoles";
 import AddJobRole from "./Components/AddJobRole";
-import AddEmployee from "./Components/AddEmployee";
+import JobPostings from "./Components/JobPostings";
+
 
 const App = () => {
   const [authenticated, setAuthenticated] = useState(false);
@@ -38,6 +40,7 @@ const App = () => {
             <Route path="/department/add" element={<AddDepartment />} />
             <Route path="/jobroles" element={<JobRoles />} />
             <Route path="/jobrole/add" element={<AddJobRole />} />
+            <Route path="/jobpostings" element={<JobPostings />} />
           </>
         ) : (
           <Route
