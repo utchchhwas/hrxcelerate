@@ -171,3 +171,4 @@ backend/staticfiles/
 backend/mediafiles/
 
 node_modules/
+backend/db.sqlite3.backup
