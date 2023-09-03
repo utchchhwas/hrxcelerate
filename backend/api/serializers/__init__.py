@@ -15,5 +15,5 @@ from .applicant_serializers import PublicApplicantSerializer, ApplicantSerialize
 from .interview_result_serializers import InterviewResultSerializer
 from .NotificationSerializer import NotificationSerializer
 from .PayslipSerializer import PayslipSerializer
-from .TimeOffSerializer import TimeOffSerializer
-from .TrackingSerializer import TrackingSerializer
+from .time_off_serializer import TimeOffSerializer
+from .tracking_serializers import TrackingSerializer

@@ -10,13 +10,13 @@ from .employee_views import CreateCompanyOwnerView, EmployeeViewSet
 
 from .employment_views import EmploymentViewSet
 from .interviewer_views import InterviewerViewSet
-from .InterviewResultViewSet import InterviewResultViewSet
+from .interview_result_views import InterviewResultViewSet
 from .job_role_views import JobRoleViewSet
 from .job_posting_views import JobPostingViewSet, PublicJobPostingViewSet
 from .NotificationViewSet import NotificationViewSet
 from .PayslipViewSet import PayslipViewSet
-from .TimeOffViewSet import TimeOffViewSet
-from .TrackingViewSet import TrackingViewSet
+from .time_off_views import TimeOffViewSet
+from .tracking_views import TrackingViewSet
 
 
 from .custom_user_views import ChangePasswordView
