@@ -83,3 +83,8 @@ class InterviewResultAdmin(ModelAdmin):
 # admin.site.register(Payslip)
 # admin.site.register(TimeOff)
 # admin.site.register(Tracking)
+
+@admin.register(Project)
+class ProjectAdmin(ModelAdmin):
+    list_display = ("name", "company", "id")
+    ordering = ("name",)

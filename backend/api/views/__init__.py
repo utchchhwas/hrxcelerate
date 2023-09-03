@@ -20,3 +20,5 @@ from .TrackingViewSet import TrackingViewSet
 
 
 from .custom_user_views import ChangePasswordView
+
+from .project_views import ProjectViewSet

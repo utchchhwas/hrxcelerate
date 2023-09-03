@@ -22,6 +22,7 @@ from api.views import PublicJobPostingViewSet
 from api.views import ChangePasswordView
 from api.views import ApplicantViewSet
 from api.views import InterviewerViewSet
+from api.views import ProjectViewSet
 
 
 urlpatterns = [
@@ -54,6 +55,7 @@ router.register(
     r"public-applicants", PublicApplicantViewSet, basename="public-applicants"
 )
 router.register(r"interviewers", InterviewerViewSet, basename="interviewers")
+router.register(r"projects", ProjectViewSet, basename="projects")
 
 # router.register(r"users", CustomUserViewSet, basename="users")
 #

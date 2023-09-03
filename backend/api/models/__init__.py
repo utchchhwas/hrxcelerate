@@ -14,3 +14,5 @@ from .Payslip import Payslip
 from .Tracking import Tracking
 from .TimeOff import TimeOff
 from .Notification import Notification
+
+from .project_model import Project

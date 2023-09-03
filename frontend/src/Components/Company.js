@@ -17,6 +17,7 @@ function Company() {
     description: "",
     website: "",
     address: "",
+    logo: null,
   });
 
   useEffect(() => {
@@ -68,6 +69,7 @@ function Company() {
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "multipart/form-data",
           },
         }
       )
@@ -84,6 +86,14 @@ function Company() {
     setCompanyData((prevData) => ({
       ...prevData,
       [name]: value,
+    }));
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setCompanyData((prevData) => ({
+      ...prevData,
+      logo: file,
     }));
   };
 
@@ -152,6 +162,20 @@ function Company() {
             />
           </div>
         </div>
+        <form encType="multipart/form-data">
+          <div className="form-group row">
+            <label className="col-sm-4 col-form-label text-right">Logo:</label>
+            <div className="col-sm-8">
+              <input
+                type="file"
+                className="form-control"
+                name="logo"
+                value={companyData.logo || ""}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+        </form>
         <button className="btn btn-primary" onClick={handleUpdate}>
           Update
         </button>

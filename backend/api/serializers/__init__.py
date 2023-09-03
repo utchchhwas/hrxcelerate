@@ -17,3 +17,5 @@ from .NotificationSerializer import NotificationSerializer
 from .PayslipSerializer import PayslipSerializer
 from .TimeOffSerializer import TimeOffSerializer
 from .TrackingSerializer import TrackingSerializer
+
+from .project_serializers import ProjectSerializer
