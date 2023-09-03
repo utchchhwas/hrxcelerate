@@ -8,7 +8,7 @@ from .employee_model import Employee
 from .job_posting_model import JobPosting
 from .applicant_model import Applicant
 
-from .interview_result_mode import InterviewResult
+from .interview_result_model import InterviewResult
 
 from .Payslip import Payslip
 from .Tracking import Tracking

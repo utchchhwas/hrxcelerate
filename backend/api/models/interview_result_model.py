@@ -21,6 +21,7 @@ class InterviewResult(models.Model):
     score = models.FloatField(
         "Interview Score",
         blank=True,
+        null=True,
     )
     note = models.TextField(
         "Interview Note",
@@ -32,4 +33,4 @@ class InterviewResult(models.Model):
         unique_together = ("applicant", "interviewer")
 
     def __str__(self):
-        return f"{self.applicant | self.interviewer}"
+        return f"{self.applicant} - {self.interviewer}"

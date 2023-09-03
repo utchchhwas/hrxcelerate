@@ -54,13 +54,13 @@ router.register(
     r"public-applicants", PublicApplicantViewSet, basename="public-applicants"
 )
 router.register(r"interviewers", InterviewerViewSet, basename="interviewers")
+router.register(
+    r"interview-results", InterviewResultViewSet, basename="interview-results"
+)
 
 # router.register(r"users", CustomUserViewSet, basename="users")
 #
 
-# router.register(
-#     r"interview-results", InterviewResultViewSet, basename="interview-results"
-# )
 # router.register(
 #     r"job-posting-salaries", JobPostingSalaryViewSet, basename="job-posting-salaries"
 # )
@@ -68,6 +68,5 @@ router.register(r"interviewers", InterviewerViewSet, basename="interviewers")
 # router.register(r"payslips", PayslipViewSet, basename="payslips")
 # router.register(r"time-offs", TimeOffViewSet, basename="time-offs")
 # router.register(r"trackings", TrackingViewSet, basename="trackings")
-
 
 urlpatterns += router.urls
