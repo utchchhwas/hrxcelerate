@@ -9,6 +9,7 @@ h2 {
   flex-wrap: wrap; /* Allow cards to wrap to the next row */
   gap: 20px; /* Gap between cards */
   margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .card {

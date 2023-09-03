@@ -38,8 +38,8 @@ function Login() {
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
 
-      // Navigate to the /departments page
-      navigate("/departments");
+      // Navigate to the /home page
+      navigate("/home");
     } catch (error) {
       console.error("Login failed:", error);
     }
