@@ -86,6 +86,7 @@ class TimeOffAdmin(ModelAdmin):
     ordering = ("employee", "id")
 
 
-# admin.site.register(Payslip)
-# admin.site.register(TimeOff)
-# admin.site.register(Tracking)
+@admin.register(Tracking)
+class TrackingAdmin(ModelAdmin):
+    list_display = ("employee", "id")
+    ordering = ("employee", "id")

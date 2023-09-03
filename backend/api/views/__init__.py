@@ -16,7 +16,7 @@ from .job_posting_views import JobPostingViewSet, PublicJobPostingViewSet
 from .NotificationViewSet import NotificationViewSet
 from .PayslipViewSet import PayslipViewSet
 from .time_off_views import TimeOffViewSet
-from .TrackingViewSet import TrackingViewSet
+from .tracking_views import TrackingViewSet
 
 
 from .custom_user_views import ChangePasswordView

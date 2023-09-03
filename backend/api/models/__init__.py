@@ -11,6 +11,6 @@ from .applicant_model import Applicant
 from .interview_result_model import InterviewResult
 
 from .Payslip import Payslip
-from .Tracking import Tracking
+from .tracking_model import Tracking
 from .time_off_model import TimeOff
 from .Notification import Notification

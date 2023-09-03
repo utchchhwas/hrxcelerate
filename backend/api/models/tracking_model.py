@@ -9,6 +9,7 @@ class Tracking(models.Model):
 
     employee = models.ForeignKey(
         Employee,
+        related_name="trackings",
         on_delete=models.CASCADE,
         verbose_name="Employee",
     )
@@ -30,3 +31,6 @@ class Tracking(models.Model):
 
     class Meta:
         pass
+
+    def __str__(self):
+        return f"{self.employee} - {self.id}"
