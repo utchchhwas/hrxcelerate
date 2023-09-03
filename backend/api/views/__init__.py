@@ -15,7 +15,7 @@ from .job_role_views import JobRoleViewSet
 from .job_posting_views import JobPostingViewSet, PublicJobPostingViewSet
 from .NotificationViewSet import NotificationViewSet
 from .PayslipViewSet import PayslipViewSet
-from .TimeOffViewSet import TimeOffViewSet
+from .time_off_views import TimeOffViewSet
 from .TrackingViewSet import TrackingViewSet
 
 

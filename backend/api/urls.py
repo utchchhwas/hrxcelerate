@@ -57,6 +57,7 @@ router.register(r"interviewers", InterviewerViewSet, basename="interviewers")
 router.register(
     r"interview-results", InterviewResultViewSet, basename="interview-results"
 )
+router.register(r"time-offs", TimeOffViewSet, basename="time-offs")
 
 # router.register(r"users", CustomUserViewSet, basename="users")
 #
@@ -66,7 +67,6 @@ router.register(
 # )
 # router.register(r"notifications", NotificationViewSet, basename="notifications")
 # router.register(r"payslips", PayslipViewSet, basename="payslips")
-# router.register(r"time-offs", TimeOffViewSet, basename="time-offs")
 # router.register(r"trackings", TrackingViewSet, basename="trackings")
 
 urlpatterns += router.urls

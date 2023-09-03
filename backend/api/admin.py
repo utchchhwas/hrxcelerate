@@ -80,6 +80,12 @@ class InterviewResultAdmin(ModelAdmin):
     ordering = ("applicant", "interviewer", "id")
 
 
+@admin.register(TimeOff)
+class TimeOffAdmin(ModelAdmin):
+    list_display = ("employee", "id")
+    ordering = ("employee", "id")
+
+
 # admin.site.register(Payslip)
 # admin.site.register(TimeOff)
 # admin.site.register(Tracking)

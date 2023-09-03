@@ -5,5 +5,10 @@ from api.models import TimeOff
 class TimeOffSerializer(serializers.ModelSerializer):
     class Meta:
         model = TimeOff
-        fields = "__all__"
-        
+        fields = [
+            "id",
+            "employee",
+            "start_time",
+            "end_time",
+            "status",
+        ]

@@ -31,7 +31,11 @@ class TimeOff(models.Model):
             ("A", "Accepted"),
             ("R", "Rejected"),
         ],
+        default="P",
     )
 
     class Meta:
-        pass
+        verbose_name_plural = "Time-Offs"
+
+    def __str__(self):
+        return f"{self.employee} - {self.id}"
