@@ -17,7 +17,10 @@ function EmployeeInputs() {
     is_owner: false,
     is_admin: false,
     is_active: false,
+    contract: "",
     gender: "",
+    contarct_start_date_str: "",
+    contract_end_date_str: "",
     date_of_birth: "",
     avatar: null,
   });
@@ -102,12 +105,15 @@ function EmployeeInputs() {
         last_name: userData.user.last_name,
       },
       company: userData.company,
-      manager: userData.manager,
-      is_owner: userData.is_owner,
-      is_admin: userData.is_admin,
-      is_active: userData.is_active,
+      // manager: userData.manager,
+      // is_owner: userData.is_owner,
+      // is_admin: userData.is_admin,
+      // is_active: userData.is_active,
+      contract: userData.contract,
       gender: userData.gender,
-    //   date_of_birth: userData.date_of_birth,
+      // date_of_birth: userData.date_of_birth,
+      contract_start_date_str: userData.contract_start_date_str,
+      contract_end_date_str: userData.contract_end_date_str,
     };
 
     axios
@@ -219,6 +225,39 @@ function EmployeeInputs() {
             <option value="O">Other</option>
           </Form.Control>
         </Form.Group>
+
+        <Form.Group controlId="contract">
+          <Form.Label>Contract Type</Form.Label>
+          <Form.Control
+            as="select"
+            name="contract"
+            value={userData.contract}
+            onChange={handleInputChange}
+          >
+            <option value="">Select Contract Type</option>
+            <option value="P">Permanent</option>
+            <option value="C">Contract</option>
+          </Form.Control>
+        </Form.Group>
+        <Form.Group controlId="contract_start_date_str">
+          <Form.Label>Contract Start Date</Form.Label>
+          <Form.Control
+            type="text"
+            name="contract_start_date_str"
+            value={userData.contract_start_date_str}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+        <Form.Group controlId="contract_end_date_str">
+          <Form.Label>Contract End Date</Form.Label>
+          <Form.Control
+            type="text"
+            name="contract_end_date_str"
+            value={userData.contract_end_date_str}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+        
         <Form.Group controlId="date_of_birth">
           <Form.Label>Date of Birth</Form.Label>
           <Form.Control

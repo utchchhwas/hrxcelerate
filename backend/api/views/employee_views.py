@@ -43,6 +43,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
         "employments__is_active",
         "employments__employment_type",
         "employments__is_remote",
+        "contract",
     ]
     search_fields = [
         "user__email",

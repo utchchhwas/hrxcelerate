@@ -62,6 +62,44 @@ class Employee(models.Model):
         "Active",
         default=True,
     )
+    
+    contract = models.CharField(
+        "Contract",
+        max_length=1,
+        choices=[
+            ("P", "Permanent"),
+            ("C", "Contractual"),
+        ],
+        default="P",
+        blank=True,
+    )
+
+    contract_start_date = models.DateField(
+        "Contract Start Date",
+        null=True,
+        blank=True,
+    )
+
+    contract_end_date = models.DateField(
+        "Contract End Date",
+        null=True,
+        blank=True,
+    )
+
+    contract_start_date_str = models.CharField(
+        "Contract Start Date String",
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+
+    contract_end_date_str = models.CharField(
+        "Contract End Date String",
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+
     gender = models.CharField(
         "Gender",
         max_length=1,

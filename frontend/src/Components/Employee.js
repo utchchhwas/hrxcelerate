@@ -2,7 +2,7 @@ import React from "react";
 import { Typography } from "@mui/material";
 
 function Employee(props) {
-  const { name, email, managerName, isOwner, isAdmin, isActive } = props;
+  const { name, email, managerName, isOwner, isAdmin, isActive, contractType , contractStartTime, contractEndTime} = props;
 
   return (
     <div className="employee-box">
@@ -21,6 +21,15 @@ function Employee(props) {
         </Typography>
         <Typography variant="body2">
           {isActive ? "Active" : "Inactive"}
+        </Typography>
+        <Typography variant="body2">
+          {contractType}
+        </Typography>
+        <Typography variant="body2">
+          {contractStartTime}
+        </Typography>
+        <Typography variant="body2">
+          {contractEndTime}
         </Typography>
       </div>
     </div>

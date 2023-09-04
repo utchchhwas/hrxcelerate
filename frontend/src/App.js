@@ -11,6 +11,8 @@ import AddJobRole from "./Components/AddJobRole";
 import JobPostings from "./Components/JobPostings";
 import Applicants from "./Components/Applicants";
 import ProjectTable from "./Components/ProjectTable";
+import EmployeeFilteredWithContarct from "./Components/EmployeeFilteredWithContcart";
+import ContractedEmployee from "./Components/ContractedEmployee";
 
 
 const App = () => {
@@ -45,6 +47,8 @@ const App = () => {
             <Route path="/jobpostings" element={<JobPostings />} />
             <Route path="/applicants" element={<Applicants />} />
             <Route path="/projects" element={<ProjectTable />} />
+            <Route path="/employee/permanent" element={<EmployeeFilteredWithContarct />} />
+            <Route path="/employee/contract" element={<ContractedEmployee />} />
           </>
         ) : (
           <Route
