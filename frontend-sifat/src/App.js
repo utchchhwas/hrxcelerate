@@ -1,23 +1,29 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
-import Login from "./Components/Login";
-import Departments from "./Components/Departments";
-import AddDepartment from "./Components/AddDepartment";
-import Employee from "./Components/Employees";
-import AddEmployee from "./Components/AddEmployee";
-import BasicInfo from "./Components/BasicInfo";
-import JobRoles from "./Components/JobRoles";
-import AddJobRole from "./Components/AddJobRole";
-import JobPostings from "./Components/JobPostings";
-import Applicants from "./Components/Applicants";
-
+import React, { useState, useEffect } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from 'react-router-dom';
+import Login from './Components/Login';
+import Departments from './Components/Departments';
+import AddDepartment from './Components/AddDepartment';
+import Employee from './Components/Employees';
+import AddEmployee from './Components/AddEmployee';
+import BasicInfo from './Components/BasicInfo';
+import JobRoles from './Components/JobRoles';
+import AddJobRole from './Components/AddJobRole';
+import JobPostings from './Components/JobPostings';
+import Applicants from './Components/Applicants';
+import PermanentEmployees from './Components/PermanentEmployees';
+import ContractEmployees from './Components/ContractEmployees';
 
 const App = () => {
   const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
     // Check if the user is authenticated (e.g., access token exists)
-    const accessToken = localStorage.getItem("accessToken");
+    const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
       setAuthenticated(true);
     } else {
@@ -29,24 +35,29 @@ const App = () => {
     <Router>
       <Routes>
         <Route
-          path="/"
+          path='/'
           element={<Login setAuthenticated={setAuthenticated} />}
         />
         {authenticated ? (
           <>
-            <Route path="/home" element={<BasicInfo />} />
-            <Route path="/employees" element={<Employee />} />
-            <Route path="/employee/add" element={<AddEmployee />} />
-            <Route path="/departments" element={<Departments />} />
-            <Route path="/department/add" element={<AddDepartment />} />
-            <Route path="/jobroles" element={<JobRoles />} />
-            <Route path="/jobrole/add" element={<AddJobRole />} />
-            <Route path="/jobpostings" element={<JobPostings />} />
-            <Route path="/applicants" element={<Applicants />} />
+            <Route path='/home' element={<BasicInfo />} />
+            <Route path='/employees' element={<Employee />} />
+            <Route
+              path='/permanent-employees'
+              element={<PermanentEmployees />}
+            />
+            <Route path='/contract-employees' element={<ContractEmployees />} />
+            <Route path='/employee/add' element={<AddEmployee />} />
+            <Route path='/departments' element={<Departments />} />
+            <Route path='/department/add' element={<AddDepartment />} />
+            <Route path='/jobroles' element={<JobRoles />} />
+            <Route path='/jobrole/add' element={<AddJobRole />} />
+            <Route path='/jobpostings' element={<JobPostings />} />
+            <Route path='/applicants' element={<Applicants />} />
           </>
         ) : (
           <Route
-            path="/"
+            path='/'
             element={<Login setAuthenticated={setAuthenticated} />}
           />
         )}

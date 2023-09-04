@@ -23,14 +23,13 @@ function EmployeeList() {
     const accessToken = localStorage.getItem('accessToken');
 
     axios
-      .get('http://127.0.0.1:8000/api/employees/', {
+      .get('http://127.0.0.1:8000/api/permanent-employees/', {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       })
       .then((response) => {
         console.log('Employee data fetched:', response.data.results);
-        console.log(response.data.results[0]);
         setEmployees(response.data.results);
       })
       .catch((error) => {
