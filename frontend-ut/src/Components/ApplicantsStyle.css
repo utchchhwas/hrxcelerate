@@ -1,0 +1,30 @@
+/* applicantsListStyle.css */
+
+h2 {
+  margin-top: 50px; /* Add margin below the header */
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow cards to wrap to the next row */
+  gap: 20px; /* Gap between cards */
+  margin-top: 30px;
+}
+
+.card {
+  width: calc(50% - 10px); /* Cards take 50% width minus half the gap */
+  margin-bottom: 20px; /* Add margin below each card */
+}
+
+/* Optional: Adjust card styles according to your design */
+.card-header {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+.card-title {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+.card-text {
+  margin-bottom: 5px;
+}
