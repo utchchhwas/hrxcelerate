@@ -100,7 +100,7 @@ function EmployeeInputs() {
     }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log('Submitting employee data...', userData);
     console.log(userData, isPermanent);
 
@@ -125,20 +125,36 @@ function EmployeeInputs() {
       contract_end_date: userData.contract_end_date,
     };
 
-    axios
-      .post('http://127.0.0.1:8000/api/employees/', postData, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      .then((response) => {
-        console.log('Employee created:', response.data);
-        // Redirect to the employee list page
-        navigate('/employees');
-      })
-      .catch((error) => {
-        console.error('Error creating employee:', error);
-      });
+    // axios
+    //   .post('http://127.0.0.1:8000/api/employees/', postData, {
+    //     headers: {
+    //       Authorization: `Bearer ${accessToken}`,
+    //     },
+    //   })
+    //   .then((response) => {
+    //     console.log('Employee created:', response.data);
+    //     // Redirect to the employee list page
+    //     navigate('/employees');
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error creating employee:', error);
+    //   });
+
+    try {
+      const response = await axios.post(
+        'http://127.0.0.1:8000/api/employees/',
+        postData,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      console.log('Employee created:', response.data);
+      navigate('/employees');
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const navigate = useNavigate();
