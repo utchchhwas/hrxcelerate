@@ -42,6 +42,7 @@ class Company(models.Model):
         upload_to=company_logo_upload_to,
         storage=MediaCloudinaryStorage(),
         blank=True,
+        null=True,
     )
 
     class Meta:
