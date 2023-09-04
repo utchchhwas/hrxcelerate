@@ -89,6 +89,20 @@ class Employee(models.Model):
         through=Employment,
         verbose_name="Job Roles",
     )
+    is_permanent = models.BooleanField(
+        "Permanent",
+        default=True,
+    )
+    contract_start_date = models.DateField(
+        "Start Date",
+        null=True,
+        blank=True,
+    )
+    contract_end_date = models.DateField(
+        "End Date",
+        null=True,
+        blank=True,
+    )
 
     objects = EmployeeManager()
 

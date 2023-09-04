@@ -139,6 +139,9 @@ class EmployeeSerializer(
             "managees",
             "employments",
             "reset_password",
+            "is_permanent",
+            "contract_start_date",
+            "contract_end_date",
         ]
         expandable_fields = {
             "company": CompanySerializer,
