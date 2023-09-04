@@ -13,6 +13,17 @@ import Login, { loginAction, loginLoader } from './pages/Login';
 import Portal, { portalLoader } from './pages/Portal';
 import CompanyInfo from './pages/CompanyInfo';
 
+import Navbar from './Components/Navbar';
+import Departments from './Components/Departments';
+import AddDepartment from './Components/AddDepartment';
+import Employee from './Components/Employees';
+import AddEmployee from './Components/AddEmployee';
+import BasicInfo from './Components/BasicInfo';
+import JobRoles from './Components/JobRoles';
+import AddJobRole from './Components/AddJobRole';
+import JobPostings from './Components/JobPostings';
+import Applicants from './Components/Applicants';
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -28,8 +39,8 @@ const router = createBrowserRouter(
         loader={loginLoader}
         action={loginAction}
       />
-      <Route path='/portal' element={<Portal />} loader={portalLoader}>
-        <Route path='company-info' element={<CompanyInfo />}></Route>
+      <Route path='/portal' element={<Navbar />} loader={portalLoader}>
+        <Route path='home' element={<BasicInfo />} />
       </Route>
     </>
   )

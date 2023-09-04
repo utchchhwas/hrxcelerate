@@ -1,15 +1,14 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 
-import Navbar from "./Navbar";
-import Company from "./Company";
+import Navbar from './Navbar';
+import Company from './Company';
 
 function BasicInfo() {
   return (
     <div>
-        <Navbar />
-        <h1>Basic Informations</h1>
-        <Company />
+      <h1>Basic Informations</h1>
+      <Company />
     </div>
   );
 }

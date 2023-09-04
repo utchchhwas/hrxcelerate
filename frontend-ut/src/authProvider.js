@@ -8,9 +8,7 @@ const authProvider = {
 
   isAuthenticated() {
     const accessToken = localStorage.getItem('accessToken');
-    console.log('accessToken:', accessToken);
     if (accessToken) {
-      console.log(accessToken);
       const accessTokenData = jwtDecode(accessToken);
       const tokenExpireTime = accessTokenData.exp * 1000;
       const currentTime = Date.now();
