@@ -1,48 +1,51 @@
-import React, { useState, useEffect } from "react";
-import { Button, Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import "./EmployeeInputsStyle.css";
+import React, { useState, useEffect } from 'react';
+import { Button, Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import './EmployeeInputsStyle.css';
 
 function EmployeeInputs() {
   const [managers, setManagers] = useState([]);
   const [userData, setUserData] = useState({
     user: {
-      email: "",
-      first_name: "",
-      last_name: "",
+      email: '',
+      first_name: '',
+      last_name: '',
     },
     company: null,
     manager: null,
     is_owner: false,
     is_admin: false,
     is_active: false,
-    gender: "",
-    date_of_birth: "",
+    gender: '',
+    date_of_birth: null,
     avatar: null,
+    contract_start_date: null,
+    contract_end_date: null,
   });
+  const [isPermanent, setIsPermanent] = useState(true);
 
   useEffect(() => {
-    console.log("Fetching manager data...");
+    console.log('Fetching manager data...');
 
-    const accessToken = localStorage.getItem("accessToken");
+    const accessToken = localStorage.getItem('accessToken');
 
     axios
-      .get("http://127.0.0.1:8000/api/employees/", {
+      .get('http://127.0.0.1:8000/api/employees/', {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       })
       .then((response) => {
         const fetchedManagers = response.data.results;
-        console.log("Managers fetched:", fetchedManagers);
+        console.log('Managers fetched:', fetchedManagers);
         setManagers(fetchedManagers);
         // Fetch the company ID from the logged-in employee's data
         var companyId = response.data.results[0]
           ? response.data.results[0].company
           : null;
         if (companyId) {
-          console.log("Company ID fetched:", companyId);
+          console.log('Company ID fetched:', companyId);
           setUserData((prevData) => ({
             ...prevData,
             company: companyId,
@@ -50,15 +53,23 @@ function EmployeeInputs() {
         }
       })
       .catch((error) => {
-        console.error("Error fetching managers:", error);
+        console.error('Error fetching managers:', error);
       });
   }, []);
+
+  const handleIsPermanentChange = (e) => {
+    console.log(e.target);
+    const { name, checked } = e.target;
+    // console.log('name', name);
+    // console.log('checked', e.target.checked);
+    setIsPermanent(checked);
+  };
 
   const handleInputChange = (e) => {
     const { name, value, type } = e.target;
 
     // If the input is for user-related fields, update the user object
-    if (name === "email" || name === "first_name" || name === "last_name") {
+    if (name === 'email' || name === 'first_name' || name === 'last_name') {
       setUserData((prevData) => ({
         ...prevData,
         user: {
@@ -69,11 +80,11 @@ function EmployeeInputs() {
     } else {
       setUserData((prevData) => ({
         ...prevData,
-        [name]: type === "checkbox" ? e.target.checked : value,
+        [name]: type === 'checkbox' ? e.target.checked : value,
       }));
     }
 
-    if (name === "manager") {
+    if (name === 'manager') {
       // Update the manager field with the selected manager's email
       setUserData((prevData) => ({
         ...prevData,
@@ -81,7 +92,6 @@ function EmployeeInputs() {
       }));
     }
   };
-
 
   const handleAvatarChange = (e) => {
     setUserData((prevData) => ({
@@ -91,10 +101,12 @@ function EmployeeInputs() {
   };
 
   const handleSubmit = () => {
-    console.log("Submitting employee data...", userData);
+    console.log('Submitting employee data...', userData);
+    console.log(userData, isPermanent);
 
-    const accessToken = localStorage.getItem("accessToken");
+    const accessToken = localStorage.getItem('accessToken');
 
+    console.log('dob: ', userData.date_of_birth);
     const postData = {
       user: {
         email: userData.user.email,
@@ -107,70 +119,72 @@ function EmployeeInputs() {
       is_admin: userData.is_admin,
       is_active: userData.is_active,
       gender: userData.gender,
-    //   date_of_birth: userData.date_of_birth,
+      date_of_birth: userData.date_of_birth,
+      is_permanent: isPermanent,
+      contract_start_date: userData.contract_start_date,
+      contract_end_date: userData.contract_end_date,
     };
 
     axios
-      .post("http://127.0.0.1:8000/api/employees/", postData, {
+      .post('http://127.0.0.1:8000/api/employees/', postData, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       })
       .then((response) => {
-        console.log("Employee created:", response.data);
+        console.log('Employee created:', response.data);
         // Redirect to the employee list page
-        navigate("/employees");
+        navigate('/employees');
       })
       .catch((error) => {
-        console.error("Error creating employee:", error);
+        console.error('Error creating employee:', error);
       });
   };
-
 
   const navigate = useNavigate();
 
   return (
-    <div className="container">
-      <Form className="employee-form">
-        <Form.Group controlId="email">
+    <div className='container'>
+      <Form className='employee-form'>
+        <Form.Group controlId='email'>
           <Form.Label>Email</Form.Label>
           <Form.Control
-            type="email"
-            name="email"
+            type='email'
+            name='email'
             value={userData.email}
             onChange={handleInputChange}
             required
           />
         </Form.Group>
-        <Form.Group controlId="first_name">
+        <Form.Group controlId='first_name'>
           <Form.Label>First Name</Form.Label>
           <Form.Control
-            type="text"
-            name="first_name"
+            type='text'
+            name='first_name'
             value={userData.first_name}
             onChange={handleInputChange}
             required
           />
         </Form.Group>
-        <Form.Group controlId="last_name">
+        <Form.Group controlId='last_name'>
           <Form.Label>Last Name</Form.Label>
           <Form.Control
-            type="text"
-            name="last_name"
+            type='text'
+            name='last_name'
             value={userData.last_name}
             onChange={handleInputChange}
             required
           />
         </Form.Group>
-        <Form.Group controlId="manager">
+        <Form.Group controlId='manager'>
           <Form.Label>Manager</Form.Label>
           <Form.Control
-            as="select"
-            name="manager"
+            as='select'
+            name='manager'
             value={userData.manager} // Should be the manager's email
             onChange={handleInputChange}
           >
-            <option value="">Select Manager</option>
+            <option value=''>Select Manager</option>
             {managers.map((manager) => (
               <option key={manager.id} value={manager.user.email}>
                 {manager.user.email}
@@ -178,66 +192,98 @@ function EmployeeInputs() {
             ))}
           </Form.Control>
         </Form.Group>
-        <Form.Group controlId="is_owner">
+        <Form.Group controlId='is_owner'>
           <Form.Check
-            type="checkbox"
-            name="is_owner"
-            label="Owner"
+            type='checkbox'
+            name='is_owner'
+            label='Owner'
             checked={userData.is_owner}
             onChange={handleInputChange}
           />
         </Form.Group>
-        <Form.Group controlId="is_admin">
+        <Form.Group controlId='is_admin'>
           <Form.Check
-            type="checkbox"
-            name="is_admin"
-            label="Admin"
+            type='checkbox'
+            name='is_admin'
+            label='Admin'
             checked={userData.is_admin}
             onChange={handleInputChange}
           />
         </Form.Group>
-        <Form.Group controlId="is_active">
+        <Form.Group controlId='is_active'>
           <Form.Check
-            type="checkbox"
-            name="is_active"
-            label="Active"
+            type='checkbox'
+            name='is_active'
+            label='Active'
             checked={userData.is_active}
             onChange={handleInputChange}
           />
         </Form.Group>
-        <Form.Group controlId="gender">
+        <Form.Group controlId='gender'>
           <Form.Label>Gender</Form.Label>
           <Form.Control
-            as="select"
-            name="gender"
+            as='select'
+            name='gender'
             value={userData.gender}
             onChange={handleInputChange}
           >
-            <option value="">Select Gender</option>
-            <option value="M">Male</option>
-            <option value="F">Female</option>
-            <option value="O">Other</option>
+            <option value=''>Select Gender</option>
+            <option value='M'>Male</option>
+            <option value='F'>Female</option>
+            <option value='O'>Other</option>
           </Form.Control>
         </Form.Group>
-        <Form.Group controlId="date_of_birth">
+        <Form.Group controlId='date_of_birth'>
           <Form.Label>Date of Birth</Form.Label>
           <Form.Control
-            type="date"
-            name="date_of_birth"
+            type='date'
+            name='date_of_birth'
             value={userData.date_of_birth}
             onChange={handleInputChange}
           />
         </Form.Group>
-        <Form.Group controlId="avatar">
+        {/* <Form.Group controlId='avatar'>
           <Form.Label>Avatar</Form.Label>
           <Form.Control
-            type="file"
-            name="avatar"
-            accept="image/*"
+            type='file'
+            name='avatar'
+            accept='image/*'
             onChange={handleAvatarChange}
           />
+        </Form.Group> */}
+        <Form.Group controlId='isPermanent'>
+          <Form.Check // prettier-ignore
+            type='checkbox'
+            id='isPermanent'
+            label='Permanent'
+            name='isPermanent'
+            checked={isPermanent}
+            onChange={handleIsPermanentChange}
+          />
         </Form.Group>
-        <Button variant="primary" onClick={handleSubmit}>
+        {!isPermanent && (
+          <>
+            <Form.Group controlId='contract_start_date'>
+              <Form.Label>Contract Start Date</Form.Label>
+              <Form.Control
+                type='date'
+                name='contract_start_date'
+                value={userData.contract_start_date}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group controlId='contract_end_date'>
+              <Form.Label>Contract End Date</Form.Label>
+              <Form.Control
+                type='date'
+                name='contract_end_date'
+                value={userData.contract_end_date}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+          </>
+        )}
+        <Button variant='primary' onClick={handleSubmit}>
           Submit
         </Button>
       </Form>
