@@ -17,7 +17,12 @@ from api.views import TimeOffViewSet
 from api.views import TrackingViewSet
 from api.views import CustomUserViewSet
 from api.views import RetrieveUpdateDestroyCompanyViewSet
-from api.views import CreateCompanyOwnerView, EmployeeViewSet
+from api.views import (
+    CreateCompanyOwnerView,
+    EmployeeViewSet,
+    PermanentEmployeeViewSet,
+    ContractEmployeeViewSet,
+)
 from api.views import PublicJobPostingViewSet
 from api.views import ChangePasswordView
 from api.views import ApplicantViewSet
@@ -43,7 +48,13 @@ router.register(
 router.register(r"companies", RetrieveUpdateDestroyCompanyViewSet, basename="company")
 router.register(r"departments", DepartmentViewSet, basename="department")
 router.register(r"job-roles", JobRoleViewSet, basename="job-roles")
-router.register(r"employees", EmployeeViewSet, basename="employee")
+router.register(r"employees", EmployeeViewSet, basename="employees")
+router.register(
+    r"permanent-employees", PermanentEmployeeViewSet, basename="permanent-employees"
+)
+router.register(
+    r"contract-employees", ContractEmployeeViewSet, basename="contract-employees"
+)
 router.register(r"employments", EmploymentViewSet, basename="employments")
 router.register(r"job-postings", JobPostingViewSet, basename="job-postings")
 router.register(

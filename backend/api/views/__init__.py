@@ -17,6 +17,7 @@ from .NotificationViewSet import NotificationViewSet
 from .PayslipViewSet import PayslipViewSet
 from .time_off_views import TimeOffViewSet
 from .tracking_views import TrackingViewSet
+from .employee_views import PermanentEmployeeViewSet, ContractEmployeeViewSet
 
 
 from .custom_user_views import ChangePasswordView
