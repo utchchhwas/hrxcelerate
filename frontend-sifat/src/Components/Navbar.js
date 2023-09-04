@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   AppBar,
   Toolbar,
@@ -7,8 +7,8 @@ import {
   Button,
   Menu,
   MenuItem,
-} from "@mui/material";
-import { Link } from "react-router-dom";
+} from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -22,23 +22,23 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position='static'>
       <Toolbar>
         <Typography sx={{ flexGrow: 1 }}>
           <h2> HRXcelerate </h2>
         </Typography>
-        <Stack direction="row" spacing={2}>
-          <Button color="inherit" component={Link} to="/home">
+        <Stack direction='row' spacing={2}>
+          <Button color='inherit' component={Link} to='/home'>
             Home
           </Button>
-          <Button color="inherit" component={Link} to="/departments">
+          <Button color='inherit' component={Link} to='/departments'>
             Departments
           </Button>
-          <Button color="inherit" component={Link} to="/employees">
+          <Button color='inherit' component={Link} to='/employees'>
             Employees
           </Button>
           <Button
-            color="inherit"
+            color='inherit'
             onClick={handleMenuClick} // Open the menu on button click
           >
             Job
@@ -50,21 +50,21 @@ const Navbar = () => {
           >
             <MenuItem
               component={Link}
-              to="/jobroles"
+              to='/jobroles'
               onClick={handleMenuClose} // Close the menu on sub-menu click
             >
               Job Role
             </MenuItem>
             <MenuItem
               component={Link}
-              to="/jobpostings"
+              to='/jobpostings'
               onClick={handleMenuClose} // Close the menu on sub-menu click
             >
               Job Posting
             </MenuItem>
             <MenuItem
               component={Link}
-              to="/applicants"
+              to='/applicants'
               onClick={handleMenuClose} // Close the menu on sub-menu click
             >
               Applicants

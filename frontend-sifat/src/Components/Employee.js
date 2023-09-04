@@ -10,7 +10,11 @@ function Employee(props) {
     isAdmin,
     isActive,
     isPermanent,
+    contractStartDate,
+    contractEndDate,
   } = props;
+
+  console.log(props);
 
   return (
     <div className='employee-box'>
@@ -33,6 +37,14 @@ function Employee(props) {
         <Typography variant='body2'>
           {isPermanent ? 'Permanent' : 'Contractual'}
         </Typography>
+        {contractStartDate && (
+          <Typography variant='body2'>
+            Start Date: {contractStartDate}
+          </Typography>
+        )}
+        {contractEndDate && (
+          <Typography variant='body2'>End Date: {contractEndDate}</Typography>
+        )}
       </div>
     </div>
   );

@@ -102,6 +102,8 @@ function EmployeeList() {
               isAdmin={employee.is_admin}
               isActive={employee.is_active}
               isPermanent={employee.is_permanent}
+              contractStartDate={employee.contract_start_date}
+              contractEndDate={employee.contract_end_date}
             />
           </ListItem>
         ))}
