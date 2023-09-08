@@ -15,7 +15,7 @@ class CustomUserAdmin(UserAdmin):
     """
 
     fieldsets = (
-        (None, {"fields": ("email", "password")}),
+        (None, {"fields": ("email", "password", "first_name", "last_name")}),
         ("Permissions", {"fields": ("is_active", "is_staff", "is_superuser")}),
     )
     add_fieldsets = (
@@ -80,6 +80,13 @@ class InterviewResultAdmin(ModelAdmin):
     ordering = ("applicant", "interviewer", "id")
 
 
-# admin.site.register(Payslip)
-# admin.site.register(TimeOff)
-# admin.site.register(Tracking)
+@admin.register(TimeOff)
+class TimeOffAdmin(ModelAdmin):
+    list_display = ("employee", "id")
+    ordering = ("employee", "id")
+
+
+@admin.register(Tracking)
+class TrackingAdmin(ModelAdmin):
+    list_display = ("employee", "id")
+    ordering = ("employee", "id")

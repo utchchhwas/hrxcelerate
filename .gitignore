@@ -171,3 +171,5 @@ backend/staticfiles/
 backend/mediafiles/
 
 node_modules/
+backend/*sqlite3*
+

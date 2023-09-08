@@ -4,11 +4,12 @@ from api.models import Employee
 
 class TimeOff(models.Model):
     """
-    Model representing time-off history of an employee.
+    Model representing time-off entry of an employee.
     """
 
     employee = models.ForeignKey(
         Employee,
+        related_name="time_offs",
         on_delete=models.CASCADE,
         verbose_name="Employee",
     )
@@ -30,7 +31,11 @@ class TimeOff(models.Model):
             ("A", "Accepted"),
             ("R", "Rejected"),
         ],
+        default="P",
     )
 
     class Meta:
-        pass
+        verbose_name_plural = "Time-Offs"
+
+    def __str__(self):
+        return f"{self.employee} - {self.id}"
