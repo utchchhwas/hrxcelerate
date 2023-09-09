@@ -1,0 +1,10 @@
+.departments-table {
+  width: 70%;
+  max-width: 1000px; /* Limit the maximum width */
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 8px auto;
+  align-self: center;
+}
