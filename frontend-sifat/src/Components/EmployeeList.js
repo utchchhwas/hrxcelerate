@@ -50,8 +50,14 @@ function EmployeeList() {
   const handleEditClick = () => {
     if (selectedEmployeeId !== null) {
       // Redirect to the edit page with the selected employee's ID
+      console.log("Redirecting to edit page for employee ID", selectedEmployeeId);
       window.location.href = `/employee/${selectedEmployeeId}`;
     }
+  };
+
+  const handleEmployeeSelect = (employeeId) => {
+    console.log("Selected employee ID:", employeeId);
+    setSelectedEmployeeId(employeeId);
   };
 
   const sortedEmployees = [...employees].sort((a, b) => {
@@ -116,18 +122,20 @@ function EmployeeList() {
         {sortedEmployees.map((employee) => (
           <ListItem
             key={employee.id}
-            onClick={() => setSelectedEmployeeId(employee.id)}
+            onClick={() => handleEmployeeSelect(employee.user.id)}
             className={`employee-list-item ${
               employee.id === selectedEmployeeId ? "selected" : ""
             }`}
           >
             <Employee
+              id={employee.id}
               name={`${employee.user.first_name} ${employee.user.last_name}`}
               email={employee.user.email}
               managerName={employee.manager}
               isOwner={employee.is_owner}
               isAdmin={employee.is_admin}
               isActive={employee.is_active}
+              // onClick={() => handleEmployeeSelect(employee.id)}
             />
           </ListItem>
         ))}

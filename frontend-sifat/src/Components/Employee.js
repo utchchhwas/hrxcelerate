@@ -13,11 +13,10 @@ function Employee(props) {
     isOwner,
     isAdmin,
     isActive,
-    onClick,
   } = props;
 
   return (
-    <div className="employee-box" onClick={onClick}>
+    <div className="employee-box">
       <div className="left-column">
         <Typography variant="h6">{name}</Typography>
         <Typography variant="subtitle1" color="textSecondary">
