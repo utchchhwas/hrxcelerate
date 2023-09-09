@@ -18,7 +18,7 @@ function EmployeeInputs() {
     is_admin: false,
     is_active: false,
     gender: "",
-    date_of_birth: "",
+    date_of_birth: null,
     avatar: null,
   });
 
