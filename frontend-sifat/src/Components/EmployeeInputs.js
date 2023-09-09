@@ -90,7 +90,7 @@ function EmployeeInputs() {
     }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log("Submitting employee data...", userData);
 
     const accessToken = localStorage.getItem("accessToken");
@@ -107,7 +107,7 @@ function EmployeeInputs() {
       is_admin: userData.is_admin,
       is_active: userData.is_active,
       gender: userData.gender,
-    //   date_of_birth: userData.date_of_birth,
+      date_of_birth: userData.date_of_birth,
     };
 
     axios
