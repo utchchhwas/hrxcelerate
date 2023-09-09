@@ -1,11 +1,23 @@
 import React from "react";
-import { Typography } from "@mui/material";
+import {
+  ListItemText,
+  Typography,
+  ListItemSecondaryAction,
+} from "@mui/material";
 
 function Employee(props) {
-  const { name, email, managerName, isOwner, isAdmin, isActive } = props;
+  const {
+    name,
+    email,
+    managerName,
+    isOwner,
+    isAdmin,
+    isActive,
+    onClick,
+  } = props;
 
   return (
-    <div className="employee-box">
+    <div className="employee-box" onClick={onClick}>
       <div className="left-column">
         <Typography variant="h6">{name}</Typography>
         <Typography variant="subtitle1" color="textSecondary">
