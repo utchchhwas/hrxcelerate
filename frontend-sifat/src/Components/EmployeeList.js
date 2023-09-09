@@ -14,6 +14,7 @@ import "./EmployeeListStyle.css";
 
 function EmployeeList() {
   const [employees, setEmployees] = useState([]);
+  const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
   const [orderBy, setOrderBy] = useState("id");
   const [order, setOrder] = useState("asc");
 
@@ -43,6 +44,13 @@ function EmployeeList() {
     } else {
       setOrderBy(property);
       setOrder("asc");
+    }
+  };
+
+  const handleEditClick = () => {
+    if (selectedEmployeeId !== null) {
+      // Redirect to the edit page with the selected employee's ID
+      window.location.href = `/employee/${selectedEmployeeId}`;
     }
   };
 
@@ -90,10 +98,29 @@ function EmployeeList() {
         >
           Add
         </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          disabled={selectedEmployeeId === null}
+          onClick={handleEditClick}
+          sx={{
+            float: "right",
+            marginBottom: 2,
+            marginLeft: 2,
+          }}
+        >
+          Edit
+        </Button>
       </div>
       <List>
         {sortedEmployees.map((employee) => (
-          <ListItem key={employee.id}>
+          <ListItem
+            key={employee.id}
+            onClick={() => setSelectedEmployeeId(employee.id)}
+            className={`employee-list-item ${
+              employee.id === selectedEmployeeId ? "selected" : ""
+            }`}
+          >
             <Employee
               name={`${employee.user.first_name} ${employee.user.last_name}`}
               email={employee.user.email}
