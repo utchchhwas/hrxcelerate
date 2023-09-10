@@ -6,7 +6,8 @@ import "./EmployeeInputsStyle.css";
 
 function EmployeeEditInputs() {
   const { employeeId } = useParams();
-  console.log("Employee ID:", employeeId);
+  const navigate = useNavigate();
+
   const [employeeData, setEmployeeData] = useState({
     user: {
       email: "",
@@ -14,23 +15,24 @@ function EmployeeEditInputs() {
       last_name: "",
     },
     company: null,
-    manager: null,
+    manager: "", // Use an empty string initially
     is_owner: false,
     is_admin: false,
     is_active: false,
-    gender: "",
+    gender: "", // Use an empty string initially
     date_of_birth: null,
     avatar: null,
   });
 
-  const navigate = useNavigate();
+  const [managers, setManagers] = useState([]); // State to store the list of managers
+  const [currentManager, setCurrentManager] = useState({}); // State to store the current manager's data
 
   useEffect(() => {
     console.log("Fetching employee data for edit...");
-    console.log("Employee ID:", employeeId);
 
     const accessToken = localStorage.getItem("accessToken");
 
+    // Fetch employee data
     axios
       .get(`http://127.0.0.1:8000/api/employees/${employeeId}/`, {
         headers: {
@@ -47,11 +49,11 @@ function EmployeeEditInputs() {
             last_name: employee.user.last_name,
           },
           company: employee.company,
-          manager: employee.manager,
+          manager: employee.manager, // Set manager as manager's id
           is_owner: employee.is_owner,
           is_admin: employee.is_admin,
           is_active: employee.is_active,
-          gender: employee.gender,
+          gender: employee.gender || "", // Set gender as an empty string if it's null
           date_of_birth: employee.date_of_birth,
           avatar: employee.avatar,
         });
@@ -59,14 +61,29 @@ function EmployeeEditInputs() {
       .catch((error) => {
         console.error("Error fetching employee data for edit:", error);
       });
-  }, [employeeId]);
 
-  const handleManagerChange = (e) => {
-    setEmployeeData((prevData) => ({
-      ...prevData,
-      manager: e.target.value,
-    }));
-  };
+    // Fetch the list of managers
+    axios
+      .get("http://127.0.0.1:8000/api/employees/", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((response) => {
+        const fetchedManagers = response.data.results;
+        console.log("Managers fetched:", fetchedManagers);
+        setManagers(fetchedManagers);
+      })
+      .catch((error) => {
+        console.error("Error fetching managers:", error);
+      });
+
+    }, []);
+
+    
+        
+
+
 
   const handleIsActiveChange = (e) => {
     setEmployeeData((prevData) => ({
@@ -75,11 +92,27 @@ function EmployeeEditInputs() {
     }));
   };
 
+  const handleGenderChange = (e) => {
+    setEmployeeData((prevData) => ({
+      ...prevData,
+      gender: e.target.value,
+    }));
+  };
+
+  const handleManagerChange = (e) => {
+    setEmployeeData((prevData) => ({
+      ...prevData,
+      manager: e.target.value,
+    }));
+  };
+
+
   const handleSubmit = async () => {
     console.log("Updating employee data...", employeeData);
 
     const accessToken = localStorage.getItem("accessToken");
 
+    // Create the payload for the PUT request
     const putData = {
       user: {
         email: employeeData.user.email,
@@ -138,6 +171,7 @@ function EmployeeEditInputs() {
             type="text"
             name="last_name"
             value={employeeData.user.last_name}
+            disabled
           />
         </Form.Group>
         <Form.Group controlId="manager">
@@ -145,11 +179,15 @@ function EmployeeEditInputs() {
           <Form.Control
             as="select"
             name="manager"
-            value={employeeData.manager}
+            value={employeeData.manager} // Should be the manager's email
             onChange={handleManagerChange}
           >
             <option value="">Select Manager</option>
-            {/* Render manager options here */}
+            {managers.map((manager) => (
+              <option key={manager.id} value={manager.user.id}>
+                {manager.user.email}
+              </option>
+            ))}
           </Form.Control>
         </Form.Group>
         <Form.Group controlId="is_owner">
@@ -185,6 +223,7 @@ function EmployeeEditInputs() {
             as="select"
             name="gender"
             value={employeeData.gender}
+            onChange={handleGenderChange}
           >
             <option value="">Select Gender</option>
             <option value="M">Male</option>
