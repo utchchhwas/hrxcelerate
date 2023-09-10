@@ -7,19 +7,17 @@ import {
   Button,
   Box,
   Card,
-  CardContent,
   Container,
-  Grid,
   Chip,
   Avatar,
-  Pagination, // Import Pagination component
+  Pagination,
 } from '@mui/material';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const ITEMS_PER_PAGE = 5;
 
-const SearchPage = () => {
+const JobSearch = () => {
   const [searchText, setSearchText] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -146,11 +144,15 @@ const SearchPage = () => {
               </Typography>
             </Box>
             <Box sx={{ display: 'flex', p: 2 }}>
-              <Link to={`/job-apply/${result.id}`}>
-                <Button variant='contained' color='primary'>
-                  Apply
-                </Button>
-              </Link>
+              <Button
+                component={Link}
+                to={`/job-apply/${result.id}`}
+                variant='contained'
+                color='primary'
+                sx={{ height: 40, width: 80 }}
+              >
+                Apply
+              </Button>
             </Box>
           </Card>
         ))}
@@ -174,4 +176,4 @@ const SearchPage = () => {
   );
 };
 
-export default SearchPage;
+export default JobSearch;
