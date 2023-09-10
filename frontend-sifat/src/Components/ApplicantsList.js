@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Container, Card, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "./ApplicantsStyle.css";
 
 function ApplicantsList() {
   const [applicants, setApplicants] = useState([]);
+  const [selectedApplicant, setSelectedApplicant] = useState(null);
 
   useEffect(() => {
     console.log("Fetching applicants from API...");
@@ -26,12 +28,34 @@ function ApplicantsList() {
       });
   }, []);
 
+  const handleSelectApplicant = (applicant) => {
+    setSelectedApplicant(applicant);
+  };
+
   return (
     <Container>
       <h2>Applicants List</h2>
+      <div className={`mb-3 ${!selectedApplicant ? "button-disabled" : ""}`}>
+        <Button
+          as={Link}
+          to={selectedApplicant ? `/applicants/${selectedApplicant.id}` : "#"}
+          variant="primary"
+          disabled={!selectedApplicant}
+        >
+          Edit
+        </Button>
+      </div>
       <div className="card-container">
         {applicants.map((applicant) => (
-          <Card key={applicant.id} className="mb-3">
+          <Card
+            key={applicant.id}
+            className={`mb-3 ${
+              selectedApplicant && selectedApplicant.id === applicant.id
+                ? "selected-card"
+                : ""
+            }`}
+            onClick={() => handleSelectApplicant(applicant)}
+          >
             <Card.Header>Applicant ID: {applicant.id}</Card.Header>
             <Card.Body>
               <Card.Title>
