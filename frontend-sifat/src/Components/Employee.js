@@ -1,8 +1,20 @@
 import React from "react";
-import { Typography } from "@mui/material";
+import {
+  ListItemText,
+  Typography,
+  ListItemSecondaryAction,
+} from "@mui/material";
+import "./EmployeeListStyle.css";
 
 function Employee(props) {
-  const { name, email, managerName, isOwner, isAdmin, isActive } = props;
+  const {
+    name,
+    email,
+    managerName,
+    isOwner,
+    isAdmin,
+    isActive,
+  } = props;
 
   return (
     <div className="employee-box">

@@ -72,8 +72,10 @@ function DepartmentInputs() {
 
   return (
     <>
-      <div className="container d-flex justify-content-center align-items-center vh-100">
-        <div className="text-center" style={{ width: "70%" }}>
+      <div className="container d-flex"
+        style={{ marginTop: "5rem" }}
+      >
+        <div className="text-center" style={{ width: "85%" }}>
           <div className="form-group row">
             <label className="col-sm-4 col-form-label text-right">Name:</label>
             <div className="col-sm-8">

@@ -14,6 +14,7 @@ import "./EmployeeListStyle.css";
 
 function EmployeeList() {
   const [employees, setEmployees] = useState([]);
+  const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
   const [orderBy, setOrderBy] = useState("id");
   const [order, setOrder] = useState("asc");
 
@@ -44,6 +45,19 @@ function EmployeeList() {
       setOrderBy(property);
       setOrder("asc");
     }
+  };
+
+  const handleEditClick = () => {
+    if (selectedEmployeeId !== null) {
+      // Redirect to the edit page with the selected employee's ID
+      console.log("Redirecting to edit page for employee ID", selectedEmployeeId);
+      window.location.href = `/employee/${selectedEmployeeId}`;
+    }
+  };
+
+  const handleEmployeeSelect = (employeeId) => {
+    console.log("Selected employee ID:", employeeId);
+    setSelectedEmployeeId(employeeId);
   };
 
   const sortedEmployees = [...employees].sort((a, b) => {
@@ -90,17 +104,38 @@ function EmployeeList() {
         >
           Add
         </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          disabled={selectedEmployeeId === null}
+          onClick={handleEditClick}
+          sx={{
+            float: "right",
+            marginBottom: 2,
+            marginLeft: 2,
+          }}
+        >
+          Edit
+        </Button>
       </div>
       <List>
         {sortedEmployees.map((employee) => (
-          <ListItem key={employee.id}>
+          <ListItem
+            key={employee.id}
+            onClick={() => handleEmployeeSelect(employee.user.id)}
+            className={`employee-list-item ${
+              employee.id === selectedEmployeeId ? "selected" : ""
+            }`}
+          >
             <Employee
+              id={employee.id}
               name={`${employee.user.first_name} ${employee.user.last_name}`}
               email={employee.user.email}
               managerName={employee.manager}
               isOwner={employee.is_owner}
               isAdmin={employee.is_admin}
               isActive={employee.is_active}
+              // onClick={() => handleEmployeeSelect(employee.id)}
             />
           </ListItem>
         ))}

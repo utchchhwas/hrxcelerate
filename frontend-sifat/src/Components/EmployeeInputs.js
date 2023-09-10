@@ -18,7 +18,7 @@ function EmployeeInputs() {
     is_admin: false,
     is_active: false,
     gender: "",
-    date_of_birth: "",
+    date_of_birth: null,
     avatar: null,
   });
 
@@ -82,7 +82,6 @@ function EmployeeInputs() {
     }
   };
 
-
   const handleAvatarChange = (e) => {
     setUserData((prevData) => ({
       ...prevData,
@@ -90,7 +89,7 @@ function EmployeeInputs() {
     }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log("Submitting employee data...", userData);
 
     const accessToken = localStorage.getItem("accessToken");
@@ -107,7 +106,7 @@ function EmployeeInputs() {
       is_admin: userData.is_admin,
       is_active: userData.is_active,
       gender: userData.gender,
-    //   date_of_birth: userData.date_of_birth,
+      date_of_birth: userData.date_of_birth,
     };
 
     axios
@@ -125,7 +124,6 @@ function EmployeeInputs() {
         console.error("Error creating employee:", error);
       });
   };
-
 
   const navigate = useNavigate();
 
@@ -172,7 +170,7 @@ function EmployeeInputs() {
           >
             <option value="">Select Manager</option>
             {managers.map((manager) => (
-              <option key={manager.id} value={manager.user.email}>
+              <option key={manager.id} value={manager.user.id}>
                 {manager.user.email}
               </option>
             ))}
@@ -237,7 +235,11 @@ function EmployeeInputs() {
             onChange={handleAvatarChange}
           />
         </Form.Group>
-        <Button variant="primary" onClick={handleSubmit}>
+        <Button
+          variant="primary"
+          onClick={handleSubmit}
+          className="submit-button"
+        >
           Submit
         </Button>
       </Form>

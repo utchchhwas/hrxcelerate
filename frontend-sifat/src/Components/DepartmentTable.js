@@ -15,6 +15,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./DepartmentTableStyle.css";
 
 function DepartmentTable() {
@@ -23,6 +24,7 @@ function DepartmentTable() {
   const [order, setOrder] = useState("asc");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("Fetching data from API...");
@@ -43,6 +45,13 @@ function DepartmentTable() {
         console.error("Error fetching data:", error);
       });
   }, []);
+
+  const handleEdit = () => {
+    if (selectedDepartment) {
+      // Navigate to the department edit page for the selected department
+      navigate(`/departments/${selectedDepartment.id}`);
+    }
+  };
 
   const handleSort = (property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -112,14 +121,23 @@ function DepartmentTable() {
         to="/department/add"
         variant="contained"
         color="primary"
-        sx={{ float: "right", marginBottom: 2 , marginLeft: 2, marginRight: 5}}
+        sx={{ float: "right", marginBottom: 2, marginLeft: 2, marginRight: 5 }}
       >
         Add
       </Button>
       <Button
         variant="contained"
-        color="secondary"
+        color="primary"
         sx={{ float: "right", marginBottom: 2, marginLeft: 2}}
+        onClick={handleEdit}
+        disabled={!selectedDepartment}
+      >
+        Edit
+      </Button>
+      <Button
+        variant="contained"
+        color="secondary"
+        sx={{ float: "right", marginBottom: 2, marginLeft: 2 }}
         onClick={handleDelete}
         disabled={!selectedDepartment}
       >
