@@ -25,11 +25,13 @@ import JobPostings from './Components/JobPostings';
 import Applicants from './Components/Applicants';
 
 import Home from './pages/Home';
+import JobSearch from './pages/JobSearch';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path='/' element={<Home />} />
+      <Route path='/job-search' element={<JobSearch />} />
       <Route
         path='/create-company-owner'
         element={<CreateCompanyOwner />}
