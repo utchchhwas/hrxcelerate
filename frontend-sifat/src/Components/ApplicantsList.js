@@ -35,7 +35,7 @@ function ApplicantsList() {
   return (
     <Container>
       <h2>Applicants List</h2>
-      <div className={`mb-3 ${!selectedApplicant ? "button-disabled" : ""}`}>
+      <div className="d-flex justify-content-end mb-2">
         <Button
           as={Link}
           to={selectedApplicant ? `/applicants/${selectedApplicant.id}` : "#"}
