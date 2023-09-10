@@ -39,7 +39,7 @@ function ApplicantsList() {
         <Button
           as={Link}
           to={selectedApplicant ? `/applicants/${selectedApplicant.id}` : "#"}
-          variant="primary"
+          variant={selectedApplicant ? "primary" : "secondary"}
           disabled={!selectedApplicant}
         >
           Edit
@@ -51,8 +51,6 @@ function ApplicantsList() {
             key={applicant.id}
             className={`mb-3 ${
               selectedApplicant && selectedApplicant.id === applicant.id
-                ? "selected-card"
-                : ""
             }`}
             onClick={() => handleSelectApplicant(applicant)}
           >
