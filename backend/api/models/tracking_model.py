@@ -23,10 +23,9 @@ class Tracking(models.Model):
         null=True,
         blank=True,
     )
-    note = models.TextField(
-        "Tracking Note",
-        max_length=1000,
-        blank=True,
+    is_active = models.BooleanField(
+        "Active",
+        default=True,
     )
 
     class Meta:
