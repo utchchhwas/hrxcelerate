@@ -12,6 +12,7 @@ import JobPostings from "./Components/JobPostings";
 import Applicants from "./Components/Applicants";
 import EditEmployee from "./Components/EditEmployee";
 import EditDepartment from "./Components/EditDepartment";
+import EditApplicant from "./Components/EditApplicant";
 
 
 const App = () => {
@@ -46,8 +47,8 @@ const App = () => {
             <Route path="/jobpostings" element={<JobPostings />} />
             <Route path="/applicants" element={<Applicants />} />
             <Route path="/employee/:employeeId" element={<EditEmployee />} />
-            <Route path="/departments/:departmentID" element={<EditDepartment />}
-            />
+            <Route path="/departments/:departmentID" element={<EditDepartment />}/>
+            <Route path="/applicants/:id" element={<EditApplicant />} />
           </>
         ) : (
           <Route
