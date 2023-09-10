@@ -42,7 +42,6 @@ function ApplicantsList() {
               <Card.Text>
                 Applied At: {new Date(applicant.applied_at).toLocaleString()}
               </Card.Text>
-              {/* <Button variant="primary">View Details</Button> */}
             </Card.Body>
           </Card>
         ))}
