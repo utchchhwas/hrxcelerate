@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams} from "react-router-dom";
 import { Container, Form, Button } from "react-bootstrap";
 
 function EditApplicantInputs() {
@@ -14,9 +14,17 @@ function EditApplicantInputs() {
   });
 
   useEffect(() => {
+    console.log("Fetching applicant data for edit...");
+
+    const accessToken = localStorage.getItem("accessToken");
+
     // Fetch applicant data by ID
     axios
-      .get(`http://127.0.0.1:8000/api/applicants/${id}/`)
+      .get(`http://127.0.0.1:8000/api/applicants/${id}/`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
       .then((response) => {
         const { email, first_name, last_name, resume, status } = response.data;
         setApplicantData({
@@ -44,24 +52,27 @@ function EditApplicantInputs() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const accessToken = localStorage.getItem("accessToken");
+
     // Create a FormData object to handle file input
     const formData = new FormData();
     formData.append("email", applicantData.email);
     formData.append("first_name", applicantData.first_name);
     formData.append("last_name", applicantData.last_name);
-    formData.append("resume", applicantData.resume);
+    // formData.append("resume", applicantData.resume);
     formData.append("status", applicantData.status);
 
     // Send PUT request to update applicant data
     axios
       .put(`http://127.0.0.1:8000/api/applicants/${id}/`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data", // Set content type for file upload
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "multipart/form-data",
         },
       })
       .then((response) => {
         console.log("Applicant data updated:", response.data);
-        // Redirect or perform any other actions after updating
+        // Redirect
       })
       .catch((error) => {
         console.error("Error updating applicant data:", error);
@@ -78,6 +89,7 @@ function EditApplicantInputs() {
             name="email"
             value={applicantData.email}
             onChange={handleInputChange}
+            disabled
           />
         </Form.Group>
         <Form.Group controlId="first_name">
@@ -87,6 +99,7 @@ function EditApplicantInputs() {
             name="first_name"
             value={applicantData.first_name}
             onChange={handleInputChange}
+            disabled
           />
         </Form.Group>
         <Form.Group controlId="last_name">
@@ -96,6 +109,7 @@ function EditApplicantInputs() {
             name="last_name"
             value={applicantData.last_name}
             onChange={handleInputChange}
+            disabled
           />
         </Form.Group>
         <Form.Group controlId="resume">
@@ -105,6 +119,7 @@ function EditApplicantInputs() {
             name="resume"
             accept=".pdf"
             onChange={handleInputChange}
+            disabled
           />
         </Form.Group>
         <Form.Group controlId="status">
