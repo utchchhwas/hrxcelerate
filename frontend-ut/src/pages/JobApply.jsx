@@ -200,6 +200,7 @@ const JobApplyPage = () => {
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
+                    required
                     label='First Name'
                     name='first_name'
                     onChange={handleInputChange}
@@ -211,6 +212,7 @@ const JobApplyPage = () => {
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
+                    required
                     label='Last Name'
                     name='last_name'
                     onChange={handleInputChange}
