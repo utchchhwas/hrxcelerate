@@ -172,7 +172,7 @@ function EmployeeInputs() {
           >
             <option value="">Select Manager</option>
             {managers.map((manager) => (
-              <option key={manager.id} value={manager.user.email}>
+              <option key={manager.id} value={manager.user.id}>
                 {manager.user.email}
               </option>
             ))}
