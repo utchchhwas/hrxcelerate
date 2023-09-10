@@ -9,7 +9,7 @@ import {
   ListItemText,
   ListItemSecondaryAction,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./EmployeeListStyle.css";
 
 function EmployeeList() {
@@ -17,6 +17,7 @@ function EmployeeList() {
   const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
   const [orderBy, setOrderBy] = useState("id");
   const [order, setOrder] = useState("asc");
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("Fetching employee data from API...");
@@ -50,8 +51,22 @@ function EmployeeList() {
   const handleEditClick = () => {
     if (selectedEmployeeId !== null) {
       // Redirect to the edit page with the selected employee's ID
-      console.log("Redirecting to edit page for employee ID", selectedEmployeeId);
-      window.location.href = `/employee/${selectedEmployeeId}`;
+      console.log(
+        "Redirecting to edit page for employee ID",
+        selectedEmployeeId
+      );
+      navigate(`/employee/${selectedEmployeeId}`);
+    }
+  };
+
+  const handleEmploymentClick = () => {
+    if (selectedEmployeeId !== null) {
+      // Redirect to the employment page with the selected employee's ID
+      console.log(
+        "Redirecting to employment page for employee ID",
+        selectedEmployeeId
+      );
+      navigate(`/employee/employment/${selectedEmployeeId}`);
     }
   };
 
@@ -82,13 +97,13 @@ function EmployeeList() {
           Sort by ID
         </Button>
         <Button variant="contained" onClick={() => handleSort("user.email")}>
-          Sort by Email
+          Email
         </Button>
         <Button
           variant="contained"
           onClick={() => handleSort("user.first_name")}
         >
-          Sort by Name
+          Name
         </Button>
         <Button
           component={Link}
@@ -116,6 +131,18 @@ function EmployeeList() {
           }}
         >
           Edit
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          disabled={selectedEmployeeId === null}
+          onClick={handleEmploymentClick}
+          sx={{
+            float: "right",
+            marginBottom: 2,
+          }}
+        >
+          Employment
         </Button>
       </div>
       <List>

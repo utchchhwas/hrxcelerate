@@ -8,10 +8,11 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
 
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -19,6 +20,14 @@ const Navbar = () => {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    // Clear the access token from localStorage
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+
+    navigate("/");
   };
 
   return (
@@ -70,6 +79,9 @@ const Navbar = () => {
               Applicants
             </MenuItem>
           </Menu>
+          <Button color="inherit" onClick={handleLogout}>
+            Logout
+          </Button>
         </Stack>
       </Toolbar>
     </AppBar>
