@@ -82,7 +82,6 @@ function EmployeeInputs() {
     }
   };
 
-
   const handleAvatarChange = (e) => {
     setUserData((prevData) => ({
       ...prevData,
@@ -125,7 +124,6 @@ function EmployeeInputs() {
         console.error("Error creating employee:", error);
       });
   };
-
 
   const navigate = useNavigate();
 
@@ -237,7 +235,11 @@ function EmployeeInputs() {
             onChange={handleAvatarChange}
           />
         </Form.Group>
-        <Button variant="primary" onClick={handleSubmit}>
+        <Button
+          variant="primary"
+          onClick={handleSubmit}
+          className="submit-button"
+        >
           Submit
         </Button>
       </Form>

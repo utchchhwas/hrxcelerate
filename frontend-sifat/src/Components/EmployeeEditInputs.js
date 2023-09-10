@@ -231,7 +231,11 @@ function EmployeeEditInputs() {
             <option value="O">Other</option>
           </Form.Control>
         </Form.Group>
-        <Button variant="primary" onClick={handleSubmit}>
+        <Button
+            className="submit-button"
+            variant="primary"
+            onClick={handleSubmit}
+        >
           Update
         </Button>
       </Form>
