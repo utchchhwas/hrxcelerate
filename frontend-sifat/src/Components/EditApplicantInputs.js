@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams} from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Container, Form, Button } from "react-bootstrap";
 
 function EditApplicantInputs() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [applicantData, setApplicantData] = useState({
     email: "",
     first_name: "",
@@ -66,13 +67,14 @@ function EditApplicantInputs() {
     axios
       .put(`http://127.0.0.1:8000/api/applicants/${id}/`, formData, {
         headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "multipart/form-data",
         },
       })
       .then((response) => {
         console.log("Applicant data updated:", response.data);
         // Redirect
+        navigate(`/applicants`);
       })
       .catch((error) => {
         console.error("Error updating applicant data:", error);
