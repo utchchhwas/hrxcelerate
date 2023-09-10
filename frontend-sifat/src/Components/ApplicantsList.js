@@ -51,6 +51,8 @@ function ApplicantsList() {
             key={applicant.id}
             className={`mb-3 ${
               selectedApplicant && selectedApplicant.id === applicant.id
+                ? "bg-light border"
+                : "bg-white"
             }`}
             onClick={() => handleSelectApplicant(applicant)}
           >
