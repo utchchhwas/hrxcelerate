@@ -6,6 +6,7 @@ import "./EmployeeInputsStyle.css";
 
 function EmployeeEditInputs() {
   const { employeeId } = useParams();
+  console.log("Employee ID:", employeeId);
   const [employeeData, setEmployeeData] = useState({
     user: {
       email: "",
@@ -26,6 +27,7 @@ function EmployeeEditInputs() {
 
   useEffect(() => {
     console.log("Fetching employee data for edit...");
+    console.log("Employee ID:", employeeId);
 
     const accessToken = localStorage.getItem("accessToken");
 
