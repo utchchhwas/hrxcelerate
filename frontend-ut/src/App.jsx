@@ -24,10 +24,16 @@ import AddJobRole from './Components/AddJobRole';
 import JobPostings from './Components/JobPostings';
 import Applicants from './Components/Applicants';
 
+import Home from './pages/Home';
+import JobSearch from './pages/JobSearch';
+import JobApply from './pages/JobApply';
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path='/' element={<RootPage />} />
+      <Route path='/' element={<Home />} />
+      <Route path='/job-search' element={<JobSearch />} />
+      <Route path='/job-apply/:id' element={<JobApply />} />
       <Route
         path='/create-company-owner'
         element={<CreateCompanyOwner />}
@@ -39,6 +45,7 @@ const router = createBrowserRouter(
         loader={loginLoader}
         action={loginAction}
       />
+      <Route path='/job-postings' element={<h1>Job Postings</h1>} />
       <Route path='/portal' element={<Navbar />} loader={portalLoader}>
         <Route path='home' element={<BasicInfo />} />
       </Route>
