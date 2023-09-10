@@ -13,6 +13,10 @@
   transition: background-color 0.3s ease-in-out;
 }
 
+.employee-box.selected {
+  background-color: #f5f5f5;
+}
+
 .employee-box:hover {
   background-color: #f5f5f5;
 }

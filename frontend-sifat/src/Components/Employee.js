@@ -4,6 +4,7 @@ import {
   Typography,
   ListItemSecondaryAction,
 } from "@mui/material";
+import "./EmployeeListStyle.css";
 
 function Employee(props) {
   const {

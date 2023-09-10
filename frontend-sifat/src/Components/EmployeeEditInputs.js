@@ -15,7 +15,7 @@ function EmployeeEditInputs() {
       last_name: "",
     },
     company: null,
-    manager: "", // Use an empty string initially
+    manager: null,
     is_owner: false,
     is_admin: false,
     is_active: false,
