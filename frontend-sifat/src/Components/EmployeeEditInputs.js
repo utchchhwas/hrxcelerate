@@ -138,7 +138,6 @@ function EmployeeEditInputs() {
             type="text"
             name="last_name"
             value={employeeData.user.last_name}
-            disabled
           />
         </Form.Group>
         <Form.Group controlId="manager">
@@ -186,7 +185,6 @@ function EmployeeEditInputs() {
             as="select"
             name="gender"
             value={employeeData.gender}
-            disabled
           >
             <option value="">Select Gender</option>
             <option value="M">Male</option>
