@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import Login from "./Components/Login";
 import Departments from "./Components/Departments";
 import AddDepartment from "./Components/AddDepartment";
@@ -13,7 +18,7 @@ import Applicants from "./Components/Applicants";
 import EditEmployee from "./Components/EditEmployee";
 import EditDepartment from "./Components/EditDepartment";
 import EditApplicant from "./Components/EditApplicant";
-
+import Employments from "./Components/Employments";
 
 const App = () => {
   const [authenticated, setAuthenticated] = useState(false);
@@ -47,8 +52,9 @@ const App = () => {
             <Route path="/jobpostings" element={<JobPostings />} />
             <Route path="/applicants" element={<Applicants />} />
             <Route path="/employee/:employeeId" element={<EditEmployee />} />
-            <Route path="/departments/:departmentID" element={<EditDepartment />}/>
+            <Route path="/departments/:departmentID" element={<EditDepartment />} />
             <Route path="/applicants/:id" element={<EditApplicant />} />
+            <Route path="/employee/employment/:employeeId" element={<Employments />} />
           </>
         ) : (
           <Route
