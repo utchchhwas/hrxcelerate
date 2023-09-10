@@ -8,7 +8,7 @@ function EditApplicant() {
   return (
     <div>
       <Navbar />
-      <h1>Edit Applicant</h1>
+      <h1>Review Application</h1>
       <EditApplicantInputs />
     </div>
   );
