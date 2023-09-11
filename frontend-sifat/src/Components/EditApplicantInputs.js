@@ -74,7 +74,7 @@ function EditApplicantInputs() {
   };
 
   return (
-    <Container>
+    <Container >
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="email">
           <Form.Label>Email</Form.Label>
@@ -137,7 +137,7 @@ function EditApplicantInputs() {
             <option value="D">Denied</option>
           </Form.Control>
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" style={{marginTop:"10px"}}>
           Update
         </Button>
       </Form>
