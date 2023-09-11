@@ -39,7 +39,7 @@ function Login() {
       localStorage.setItem("refreshToken", refreshToken);
 
       // Navigate to the /departments page
-      navigate("/departments");
+      navigate("/home");
     } catch (error) {
       console.error("Login failed:", error);
     }
