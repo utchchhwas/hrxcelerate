@@ -10,5 +10,5 @@ class TrackingSerializer(serializers.ModelSerializer):
             "employee",
             "start_time",
             "end_time",
-            "note",
+            "is_active",
         ]

@@ -14,6 +14,10 @@ class TrackingViewSet(ModelViewSet):
 
     permission_classes = [IsAuthenticated]
 
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ["id", "employee", "is_active"]
+    ordering = ["-id"]
+
     serializer_class = TrackingSerializer
 
     def get_queryset(self):
