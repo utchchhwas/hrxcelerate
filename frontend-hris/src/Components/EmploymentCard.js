@@ -1,15 +1,15 @@
-import React from "react";
-import { Card } from "react-bootstrap";
-import "./ApplicantsStyle.css"
+import React from 'react';
+import { Card } from 'react-bootstrap';
+import './ApplicantsStyle.css';
 
 function EmploymentCard({ employment }) {
   return (
     <Card>
       <Card.Header>Employment ID: {employment.id}</Card.Header>
       <Card.Body>
-        <Card.Title>Active: {employment.is_active ? "Yes" : "No"}</Card.Title>
+        <Card.Title>Active: {employment.is_active ? 'Yes' : 'No'}</Card.Title>
         <Card.Text>
-          Job Role: {employment.job_role}
+          Job Role: {employment.job_role.name}
           <br />
           Start Date: {employment.start_date}
           <br />
@@ -17,7 +17,7 @@ function EmploymentCard({ employment }) {
           <br />
           Employment Type: {employment.employment_type}
           <br />
-          Remote: {employment.is_remote ? "Yes" : "No"}
+          Remote: {employment.is_remote ? 'Yes' : 'No'}
           <br />
           Salary: {employment.salary} {employment.salary_currency}
           <br />

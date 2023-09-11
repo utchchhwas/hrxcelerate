@@ -4,6 +4,7 @@ const authProvider = {
   async signIn(data) {
     const accessToken = data.access;
     localStorage.setItem('accessToken', accessToken);
+    console.log('Logged in');
   },
 
   isAuthenticated() {

@@ -22,11 +22,11 @@ import { validateEmail } from '../utils';
 import apiObtainTokenPair from '../api/apiObtainTokenPair';
 
 export const loginLoader = async () => {
-  if (authProvider.isAuthenticated()) {
-    let passParams = new URLSearchParams();
-    passParams.set('message', 'You are already logged in.');
-    return redirect('/portal?' + passParams.toString());
-  }
+  // if (authProvider.isAuthenticated()) {
+  //   let passParams = new URLSearchParams();
+  //   passParams.set('message', 'You are already logged in.');
+  //   return redirect('/portal?' + passParams.toString());
+  // }
   return null;
 };
 
@@ -70,8 +70,9 @@ export const loginAction = async ({ request }) => {
     }
   }
 
-  const redirectTo = searchParams.get('from');
-  return redirect(redirectTo || '/portal');
+  return redirect('http://localhost:3000/home');
+  // const redirectTo = searchParams.get('from');
+  // return redirect(redirectTo || '/portal');
 };
 
 const Login = () => {
