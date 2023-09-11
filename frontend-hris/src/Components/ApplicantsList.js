@@ -42,7 +42,7 @@ function ApplicantsList() {
           variant={selectedApplicant ? "primary" : "secondary"}
           disabled={!selectedApplicant}
         >
-          Edit
+          Review
         </Button>
       </div>
       <div className="card-container">

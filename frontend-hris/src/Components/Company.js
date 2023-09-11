@@ -88,7 +88,7 @@ function Company() {
   };
 
   return (
-    <div className="container d-flex justify-content-center align-items-center vh-100">
+    <div className="container d-flex vh-100" style={{ marginTop: "50px" }}>
       <div className="text-center" style={{ width: "70%" }}>
         <div className="form-group row">
           <label className="col-sm-4 col-form-label text-right">Name:</label>

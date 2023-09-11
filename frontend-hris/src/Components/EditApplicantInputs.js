@@ -10,7 +10,7 @@ function EditApplicantInputs() {
     email: "",
     first_name: "",
     last_name: "",
-    resume: null, // Use null for file input
+    resume: "", // Use an empty string for displaying the link
     status: "",
   });
 
@@ -27,12 +27,13 @@ function EditApplicantInputs() {
         },
       })
       .then((response) => {
+        console.log("Applicant data fetched:", response.data);
         const { email, first_name, last_name, resume, status } = response.data;
         setApplicantData({
           email,
           first_name,
           last_name,
-          resume: null, // Set to null to avoid showing file path
+          resume, // Set to the resume link
           status,
         });
       })
@@ -41,14 +42,6 @@ function EditApplicantInputs() {
       });
   }, [id]);
 
-  const handleInputChange = (e) => {
-    const { name, value, files } = e.target;
-
-    setApplicantData((prevData) => ({
-      ...prevData,
-      [name]: files ? files[0] : value, // Handle file input separately
-    }));
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,7 +53,6 @@ function EditApplicantInputs() {
     formData.append("email", applicantData.email);
     formData.append("first_name", applicantData.first_name);
     formData.append("last_name", applicantData.last_name);
-    // formData.append("resume", applicantData.resume);
     formData.append("status", applicantData.status);
 
     // Send PUT request to update applicant data
@@ -82,7 +74,7 @@ function EditApplicantInputs() {
   };
 
   return (
-    <Container>
+    <Container style={{width:"60%", marginTop:"50px"}}>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="email">
           <Form.Label>Email</Form.Label>
@@ -90,7 +82,6 @@ function EditApplicantInputs() {
             type="email"
             name="email"
             value={applicantData.email}
-            onChange={handleInputChange}
             disabled
           />
         </Form.Group>
@@ -100,7 +91,6 @@ function EditApplicantInputs() {
             type="text"
             name="first_name"
             value={applicantData.first_name}
-            onChange={handleInputChange}
             disabled
           />
         </Form.Group>
@@ -110,19 +100,22 @@ function EditApplicantInputs() {
             type="text"
             name="last_name"
             value={applicantData.last_name}
-            onChange={handleInputChange}
             disabled
           />
         </Form.Group>
         <Form.Group controlId="resume">
-          <Form.Label>Resume (PDF)</Form.Label>
-          <Form.Control
-            type="file"
-            name="resume"
-            accept=".pdf"
-            onChange={handleInputChange}
-            disabled
-          />
+          <Form.Label>Resume :</Form.Label>
+          {applicantData.resume ? (
+            <a
+              href={applicantData.resume}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View Resume
+            </a>
+          ) : (
+            <span>Not Available</span>
+          )}
         </Form.Group>
         <Form.Group controlId="status">
           <Form.Label>Status</Form.Label>
@@ -130,7 +123,9 @@ function EditApplicantInputs() {
             as="select"
             name="status"
             value={applicantData.status}
-            onChange={handleInputChange}
+            onChange={(e) =>
+              setApplicantData({ ...applicantData, status: e.target.value })
+            }
           >
             <option value="A">Applied</option>
             <option value="Q">Qualified</option>
@@ -142,7 +137,7 @@ function EditApplicantInputs() {
             <option value="D">Denied</option>
           </Form.Control>
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" style={{ marginTop: "10px" }}>
           Update
         </Button>
       </Form>
