@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom"; // Import Link
 import EmploymentCard from "./EmploymentCard";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import "./ApplicantsStyle.css";
 
@@ -15,12 +16,11 @@ function EmploymentList() {
     const accessToken = localStorage.getItem("accessToken");
 
     axios
-      .get(`http://127.0.0.1:8000/api/employments/?employee=${employeeId}`,
-        {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        })
+      .get(`http://127.0.0.1:8000/api/employments/?employee=${employeeId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
       .then((response) => {
         console.log("Employment data fetched:", response.data.results);
         setEmployments(response.data.results);
@@ -31,13 +31,26 @@ function EmploymentList() {
   }, [employeeId]);
 
   return (
-    <Container >
-        <h2>Employment List for Employee ID {employeeId}</h2>
-        <div className="card-container">
-            {employments.map((employment) => (
-                <EmploymentCard employment={employment} />
-            ))}
-        </div>
+    <Container style={{marginTop:"20px"}}>
+      <Row>
+        <Col>
+          <h2>Employment List for Employee ID {employeeId}</h2>
+        </Col>
+        <Col className="text-right" style={{marginRight:"50px", marginTop:"10px"}}>
+          {/* Add button with Link */}
+          <Link
+            to={`/employee/employment/add/${employeeId}`}
+            className="btn btn-primary"
+          >
+            Add Employment
+          </Link>
+        </Col>
+      </Row>
+      <div className="card-container">
+        {employments.map((employment) => (
+          <EmploymentCard employment={employment} />
+        ))}
+      </div>
     </Container>
   );
 }
