@@ -19,13 +19,13 @@ function EmployeeEditInputs() {
     is_owner: false,
     is_admin: false,
     is_active: false,
-    gender: "", // Use an empty string initially
+    gender: "",
     date_of_birth: null,
     avatar: null,
   });
 
-  const [managers, setManagers] = useState([]); // State to store the list of managers
-  const [currentManager, setCurrentManager] = useState({}); // State to store the current manager's data
+  const [managers, setManagers] = useState([]);
+  const [selectedManagerId, setSelectedManagerId] = useState("");
 
   useEffect(() => {
     console.log("Fetching employee data for edit...");
@@ -53,7 +53,7 @@ function EmployeeEditInputs() {
           is_owner: employee.is_owner,
           is_admin: employee.is_admin,
           is_active: employee.is_active,
-          gender: employee.gender || "", // Set gender as an empty string if it's null
+          gender: employee.gender || "",
           date_of_birth: employee.date_of_birth,
           avatar: employee.avatar,
         });
@@ -77,12 +77,18 @@ function EmployeeEditInputs() {
       .catch((error) => {
         console.error("Error fetching managers:", error);
       });
+  }, []);
 
-    }, []);
-
-    
-        
-
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEmployeeData((prevData) => ({
+      ...prevData,
+      user: {
+        ...prevData.user,
+        [name]: value,
+      },
+    }));
+  };
 
 
   const handleIsActiveChange = (e) => {
@@ -112,7 +118,6 @@ function EmployeeEditInputs() {
 
     const accessToken = localStorage.getItem("accessToken");
 
-    // Create the payload for the PUT request
     const putData = {
       user: {
         email: employeeData.user.email,
@@ -136,7 +141,6 @@ function EmployeeEditInputs() {
       })
       .then((response) => {
         console.log("Employee updated:", response.data);
-        // Redirect to the employee list page or wherever needed
         navigate("/employees");
       })
       .catch((error) => {
@@ -162,7 +166,7 @@ function EmployeeEditInputs() {
             type="text"
             name="first_name"
             value={employeeData.user.first_name}
-            disabled
+            onChange={handleInputChange} // Enable editing
           />
         </Form.Group>
         <Form.Group controlId="last_name">
@@ -171,7 +175,7 @@ function EmployeeEditInputs() {
             type="text"
             name="last_name"
             value={employeeData.user.last_name}
-            disabled
+            onChange={handleInputChange} // Enable editing
           />
         </Form.Group>
         <Form.Group controlId="manager">
@@ -196,7 +200,7 @@ function EmployeeEditInputs() {
             name="is_owner"
             label="Owner"
             checked={employeeData.is_owner}
-            disabled
+            onChange={handleInputChange}
           />
         </Form.Group>
         <Form.Group controlId="is_admin">
@@ -205,7 +209,7 @@ function EmployeeEditInputs() {
             name="is_admin"
             label="Admin"
             checked={employeeData.is_admin}
-            disabled
+            onChange={handleInputChange}
           />
         </Form.Group>
         <Form.Group controlId="is_active">
@@ -232,9 +236,9 @@ function EmployeeEditInputs() {
           </Form.Control>
         </Form.Group>
         <Button
-            className="submit-button"
-            variant="primary"
-            onClick={handleSubmit}
+          className="submit-button"
+          variant="primary"
+          onClick={handleSubmit}
         >
           Update
         </Button>
