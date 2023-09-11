@@ -19,6 +19,7 @@ import EditEmployee from "./Components/EditEmployee";
 import EditDepartment from "./Components/EditDepartment";
 import EditApplicant from "./Components/EditApplicant";
 import Employments from "./Components/Employments";
+import AddEmployment from "./Components/AddEmployment";
 
 const App = () => {
   const [authenticated, setAuthenticated] = useState(false);
@@ -55,6 +56,7 @@ const App = () => {
             <Route path="/departments/:departmentID" element={<EditDepartment />} />
             <Route path="/applicants/:id" element={<EditApplicant />} />
             <Route path="/employee/employment/:employeeId" element={<Employments />} />
+            <Route path="/employee/employment/add/:employeeId" element={<AddEmployment />} />
           </>
         ) : (
           <Route
