@@ -15,6 +15,8 @@ import {
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+import { API_ROOT } from '../API';
+
 const ITEMS_PER_PAGE = 10;
 
 const JobSearch = () => {
@@ -26,7 +28,8 @@ const JobSearch = () => {
   const handleSearchClick = async () => {
     try {
       const response = await axios.get(
-        'http://127.0.0.1:8000/api/public-job-postings/',
+        // 'http://127.0.0.1:8000/api/public-job-postings/',
+        `${API_ROOT}/public-job-postings/`,
         {
           params: {
             search: searchText,

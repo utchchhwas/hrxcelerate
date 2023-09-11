@@ -20,6 +20,8 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+import { API_ROOT } from '../API';
+
 const JobApplyPage = () => {
   const { id } = useParams();
   const [jobDetails, setJobDetails] = useState(null);
@@ -35,7 +37,8 @@ const JobApplyPage = () => {
     const fetchJobDetails = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/public-job-postings/${id}/`
+          // `http://127.0.0.1:8000/api/public-job-postings/${id}/`
+          `${API_ROOT}/public-job-postings/${id}/`
         );
         const responseData = response.data;
         setJobDetails(responseData);
