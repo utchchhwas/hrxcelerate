@@ -80,14 +80,21 @@ function EmployeeEditInputs() {
   }, []);
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setEmployeeData((prevData) => ({
-      ...prevData,
-      user: {
-        ...prevData.user,
-        [name]: value,
-      },
-    }));
+    const { name, value, type } = e.target;
+    if (name === "email" || name === "first_name" || name === "last_name") {
+      setEmployeeData((prevData) => ({
+        ...prevData,
+        user: {
+          ...prevData.user,
+          [name]: value,
+        },
+      }));
+    } else {
+      setEmployeeData((prevData) => ({
+        ...prevData,
+        [name]: type === "checkbox" ? e.target.checked : value,
+      }));
+    }
   };
 
 
