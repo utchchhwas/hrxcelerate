@@ -105,13 +105,17 @@ function EditApplicantInputs() {
         </Form.Group>
         <Form.Group controlId="resume">
           <Form.Label>Resume :</Form.Label>
-          <a
-            href={applicantData.resume}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            View Resume
-          </a>
+          {applicantData.resume ? (
+            <a
+              href={applicantData.resume}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View Resume
+            </a>
+          ) : (
+            <span>Not Available</span>
+          )}
         </Form.Group>
         <Form.Group controlId="status">
           <Form.Label>Status</Form.Label>
