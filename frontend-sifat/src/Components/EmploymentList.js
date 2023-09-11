@@ -42,7 +42,7 @@ function EmploymentList() {
             to={`/employee/employment/add/${employeeId}`}
             className="btn btn-primary"
           >
-            Add Employment
+            Add
           </Link>
         </Col>
       </Row>
