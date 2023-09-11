@@ -70,8 +70,9 @@ export const loginAction = async ({ request }) => {
     }
   }
 
-  const redirectTo = searchParams.get('from');
-  return redirect(redirectTo || '/portal');
+  return redirect('https://hrx-portal.onrender.com/home');
+  // const redirectTo = searchParams.get('from');
+  // return redirect(redirectTo || '/portal');
 };
 
 const Login = () => {
