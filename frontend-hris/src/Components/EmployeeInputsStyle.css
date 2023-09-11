@@ -1,0 +1,38 @@
+.employee-form {
+    width: 70%;
+    max-width: 1000px; /* Limit the maximum width */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 8px auto;
+    align-items: center;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.employee-form {
+  width: 70%;
+  max-width: 1000px; /* Limit the maximum width */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 8px auto;
+  align-items: center;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.employee-form .form-group {
+  margin-bottom: 100px;
+}
+
+.submit-button {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #ccc;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}

@@ -48,7 +48,11 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # 3rd Party apps
     "rest_framework",
+    "django_filters",
     "rest_framework_simplejwt",
+    "cloudinary_storage",
+    "cloudinary",
+    "djmoney",
     # My apps
     "api",
     "upload",
@@ -56,6 +60,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -69,17 +74,22 @@ AUTH_USER_MODEL = "api.CustomUser"  # Custom User Model
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
     ],
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
 }
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=3),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "TOKEN_OBTAIN_SERIALIZER": "api.serializers.CustomTokenObtainPairSerializer",
 }
 
 ROOT_URLCONF = "backend.urls"
@@ -102,6 +112,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "backend.wsgi.application"
 
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -179,5 +190,17 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Cloudinary storage credentials
 
-APPEND_SLASH = True
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": os.environ["CLOUDINARY_CLOUD_NAME"],
+    "API_KEY": os.environ["CLOUDINARY_API_KEY"],
+    "API_SECRET": os.environ["CLOUDINARY_API_SECRET"],
+}
+
+# Email credentials
+
+EMAIL_HOST = os.environ["EMAIL_HOST"]
+EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
+EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
+EMAIL_PORT = os.environ["EMAIL_PORT"]
